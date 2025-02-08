@@ -1,0 +1,587 @@
+﻿
+@{
+    ViewBag.Title = "Venta por departamento";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <link href="~/Content/css/selectcomprim.css" rel="stylesheet" />
+    <link href="~/Content/css/estilosfiltroscss.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="wrapper">
+        <!--Inicio de sidebar-->
+        <nav class="main-sidebar-custom-lg navbar navbar-expand navbar-white navbar-light">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="pushmenu" href="#" role="button">
+                        <i class="fas fa-bars"></i>
+                    </a>
+                </li>
+                <li class="nav-item d-none d-sm-inline-block">
+                    <a class="nav-link" href="@Url.Action("InicioAdmin","AdminPages")">Inicio</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <!--aqui el icon de aumentar pantalla-->
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+                        <i class="fas fa-expand-arrows-alt"></i>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="@Url.Action("CerrarSesion","Acceso")">Salir</a>
+                </li>
+            </ul>
+        </nav>
+
+
+        <!--Inicio de paginacion-->
+        <div class="content-header">
+            <section class="content-header">
+                <!--Inicio de titulo-->
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1>REPORTE DE VENTAS POR DEPARTAMENTO</h1>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+
+
+                <!--Inicio de contenido-->
+                <div class="card">
+                    <!--Inicio de Botones del sidebar de la tabla de contenido-->
+                    <div class="card-header">
+                        @using (Html.BeginForm("AdminPages", "filtrarTablaA", FormMethod.Post, new { id = "filtrarBusqueda" }))
+                        {
+
+                            <div class="row">
+                                <div class="col-lg-2 col-md-4 col-sm-6 col-12">
+                                    <label for="fechaInicioR">Fecha inicio:</label>
+                                    <input type="text" id="fechaInicio" name="fechaInicio" class="form-control" placeholder="dd/mm/aaaa" autocomplete="off">
+                                </div>
+                                <div class="col-lg-2 col-md-4 col-sm-6 col-12">
+                                    <label for="fechaFinR">Fecha fin:</label>
+                                    <input type="text" id="fechaFin" name="fechaFin" class="form-control" placeholder="dd/mm/aaaa" autocomplete="off">
+                                </div>
+
+                                <div class="col-lg-2 col-md-4 col-sm-6 col-12">
+                                    <label for="almacen">Almacén</label>
+                                    <select class="form-control select2 almacen-select" style="width: 100%" id="almacen" name="almacen">
+                                        <option selected="selected">Selecciona un almacén</option>
+                                        @foreach (var almacen in ViewBag.Almacenes)
+                                        {
+                                            <option value="@almacen.Item1">@($"{almacen.Item1} - {almacen.Item2}")</option>
+                                        }
+                                    </select>
+                                </div>
+
+                                <div class="col-lg-2 col-md-4 col-sm-6 col-12 mt-2 mt-lg-0">
+                                    <label for="btn-filtrar">Filtrar:</label>
+                                    <div>
+                                        <button type="submit" id="btn-filtrar" class="btn btn-info">
+                                            <i class="fas fa-search"></i> Buscar
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        }
+
+
+                    </div>
+
+
+                    <!--Cuerpo del contenido(en este caso la tabla)-->
+                    <div class="card-body">
+                        <div class="table table-responsive">
+                            <table class="table table-striped" id="tablaVAlmacen">
+                                <thead>
+                                    <tr>
+                                        <th>Fecha</th>
+                                        <th>Alcohol</th>
+                                        <th>Souvenir</th>
+                                        <th>Artesanias</th>
+                                        <th>Artesanias Prem.</th>
+                                        <th>Textil</th>
+                                        <th>Farmacia</th>
+                                        <th>Cerveza</th>
+                                        <th>Refrescos</th>
+                                        <th>Aguas</th>
+                                        <th>Abarrotes</th>
+                                        <th>Energeticos</th>
+                                        <th>RTD</th>
+                                        <th>SC</th>
+                                        <th>S/Categoria</th>
+                                        <th>Importe Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!--Aqui ira el contenido de la peticion
+                                    por filtrado de busqueda
+                                    -->
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th></th>
+                                        <th id="sumaAlcohol">TotalAlcohol:</th>
+                                        <th id="sumaSouvenir">TotalSouvenir:</th>
+                                        <th id="sumaArtesania">TotalArtesania:</th>
+                                        <th id="sumaArtesaniaPrem">TotalArtesaniaPrem:</th>
+                                        <th id="sumaTextil">TotalTextil:</th>
+                                        <th id="sumaFarmacia">TotalFarmacia:</th>
+                                        <th id="sumaCerveza">TotalCerveza:</th>
+                                        <th id="sumaRefrescos">TotalRefrescos:</th>
+                                        <th id="sumaAguas">TotalAguas:</th>
+                                        <th id="sumaAbarrotes">TotalAbarrotes:</th>
+                                        <th id="sumaEnergeticos">TotalEnergeticos:</th>
+                                        <th id="sumaRTD">TotalRTD:</th>
+                                        <th id="sumaSC">TotalSC:</th>
+                                        <th id="sumaSinCategoria">TotalSinCategoria:</th>
+                                        <th id="sumaTotal">TotalTotal:</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+
+
+                        @section scripts {
+                            <script>
+                                $(document).ready(function () {
+
+                                    //Aqui empieza la tabla
+
+                                    var $filtrarBusqueda = $('#filtrarBusqueda');
+                                    var $tablaVAlmacen = $('#tablaVAlmacen');
+
+
+                                    // modificaciones de los selects fecha
+
+                                    $("#fechaInicio, #fechaFin").datepicker({
+                                        format: 'dd/mm/yyyy',
+                                        language: 'es',
+                                        autoclose: true,
+                                        todayHighlight: true
+                                    });
+
+                                    $("#fechaInicio, #fechaFin").on("keyup", function () {
+                                        var valor = $(this).val().replace(/\D/g, "").replace(/^(\d\d)(\d)/g, "$1/$2").replace(/\/(\d\d)(\d)/, "/$1/$2");
+                                        $(this).val(valor.substring(0, 10));  // Limitar a 10 caracteres
+                                    });
+
+                                    $("#fechaInicio, #fechaFin").keypress(function (e) {
+                                        // Permitir solo números y limitar a 10 caracteres (incluyendo '/')
+                                        var charCode = (e.which) ? e.which : e.keyCode;
+                                        if ($(this).val().length >= 10 && (charCode >= 48 && charCode <= 57)) {
+                                            return false;
+                                        } else if (charCode >= 48 && charCode <= 57) {
+                                            return true;
+                                        }
+                                        return false;
+                                    });
+
+                                    // Evitar que se pegue texto no deseado
+                                    $("#fechaInicio, #fechaFin").on('paste', function (e) {
+                                        e.preventDefault();
+                                    });
+
+                                    // Inicializar Select2 Elements
+                                    $('.select2').select2();
+
+                                    // Inicializar Select2 Elements
+                                    $('.select2bs4').select2({
+                                        theme: 'bootstrap4'
+                                    });
+
+                                    $tablaVAlmacen.DataTable({
+                                        language: {
+                                            "sProcessing": "Procesando...",
+                                            "sLengthMenu": "Mostrar _MENU_ registros",
+                                            "sZeroRecords": "No se encontraron resultados",
+                                            "sEmptyTable": "Ningún dato disponible en esta tabla",
+                                            "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                                            "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                                            "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                                            "sInfoPostFix": "",
+                                            "sSearch": "Buscar:",
+                                            "sUrl": "",
+                                            "sInfoThousands": ",",
+                                            "sLoadingRecords": "Cargando...",
+                                            "oPaginate": {
+                                                "sFirst": "Primero",
+                                                "sLast": "Último",
+                                                "sNext": "Siguiente",
+                                                "sPrevious": "Anterior"
+                                            },
+                                            "oAria": {
+                                                "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                                                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                                            }
+                                        },
+
+                                        "dom": 'Blfrtip',
+                                        "lengthMenu": [[10, 50, 100, 1000, 2000, -1], [10, 50, 100, 1000, 2000, "Todos"]],
+                                        "pageLength": -1,
+                                        buttons: [
+
+                                            {
+                                                extend: 'excel',
+                                                className: 'btn btn-excel rounded-0',
+                                                text: '<i class="fas fa-file-excel"></i> Excel',
+                                                filename: function () {
+                                                    // Obtiene la fecha y hora actual.
+                                                    var now = new Date();
+
+                                                    // Formatea la fecha actual en dd-mm-yyyy.
+                                                    var day = ("0" + now.getDate()).slice(-2);
+                                                    var month = ("0" + (now.getMonth() + 1)).slice(-2);
+                                                    var year = now.getFullYear();
+                                                    var dateString = day + '-' + month + '-' + year;
+
+                                                    // Convierte la hora a formato de 12 horas con AM o PM.
+                                                    var hours = now.getHours();
+                                                    var minutes = now.getMinutes();
+                                                    var ampm = hours >= 12 ? 'PM' : 'AM';
+                                                    hours = hours % 12;
+                                                    hours = hours ? hours : 12; // La hora '0' debería ser '12'.
+                                                    minutes = minutes < 10 ? '0' + minutes : minutes;
+                                                    var timeString = hours + '-' + minutes + ' ' + ampm;
+
+                                                    // Obtiene la información del almacén seleccionado.
+                                                    var almacenSeleccionado = $('#almacen option:selected').text();
+                                                    var nombreAlmacen = almacenSeleccionado.includes('-') ? almacenSeleccionado : 'SinNombre';
+
+                                                    // Obtiene las fechas de inicio y fin seleccionadas y las formatea.
+                                                    var fechaInicio = $('#fechaInicio').val().replace(/\//g, '-');
+                                                    var fechaFin = $('#fechaFin').val().replace(/\//g, '-');
+
+                                                    // Formato del nombre del archivo: 'HOKA_REPORTE VENTA POR DEPARTAMENTO_NombreDelAlmacen_FechaInicio_FechaFin_FechaActual_HoraActual AM/PM.xlsx'
+                                                    return 'HOKA_REPORTE VENTA POR DEPARTAMENTO_' + nombreAlmacen + '_DEL_' + fechaInicio + '_AL_' + fechaFin + '_IMPRESO EL_' + dateString + '_CON HORA_' + timeString;
+                                                },
+                                                footer: {
+                                                    columns: [3]
+                                                }
+                                            },
+
+                                            {
+                                                extend: 'pdf',
+                                                className: 'btn btn-pdf rounded-0',
+                                                text: '<i class="fas fa-file-pdf"></i> PDF',
+                                                title: null,
+                                                pageSize: 'A2',  // Establece el tamaño de página a A3
+                                                orientation: 'landscape',
+                                                filename: function () {
+                                                    // Obtiene la fecha actual en formato string.
+                                                    var now = new Date();
+                                                    var dateString = now.toISOString().slice(0, 10);
+
+                                                    // Obtiene la información del almacén seleccionado.
+                                                    var almacenSeleccionado = $('#almacen option:selected').text();
+                                                    var nombreAlmacen = almacenSeleccionado.includes('-') ? almacenSeleccionado : 'SinNombre';
+
+                                                    // Formato del nombre del archivo: 'HOKA - REPORTE VENTA POR PRODUCTO_NombreDelAlmacen_Fecha.pdf'
+                                                    return 'HOKA_REPORTE VENTA POR DEPARTAMENTO_SUCURSAL_' + nombreAlmacen + '_' + dateString;
+                                                },
+                                                customize: function (doc) {
+                                                    doc.defaultStyle.fontSize = 12; //tamaño de las letras dentro de la tablas al exportar
+
+                                                    // Obtiene la fecha y hora actuales.
+                                                    var currentDateTime = new Date();
+                                                    var currentDateTimeString = currentDateTime.toLocaleString();
+
+                                                    // Obtiene el rango de fechas ingresado.
+                                                    var fechaInicio = document.getElementById('fechaInicio').value;
+                                                    var fechaFin = document.getElementById('fechaFin').value;
+                                                    var fechaRango = 'DEL ' + fechaInicio + ' AL ' + fechaFin;
+
+                                                    // Obtiene la información del almacén seleccionado.
+                                                    var almacenSeleccionado = $('#almacen option:selected').text();
+                                                    var sucursal = 'SUCURSAL ' + almacenSeleccionado + ' - ' + fechaRango;
+
+                                                    // Fija el título del reporte a "HOKA - VENTA POR PRODUCTO".
+                                                    var tituloReporte = 'HOKA - REPORTE VENTA POR DEPARTAMENTO';
+                                                    var reporteDelDia = 'REPORTE DEL DÍA ' + currentDateTimeString;
+
+                                                    // Agrega el título en la parte superior del documento con texto en negrita.
+                                                    doc.content.splice(0, 0, {
+                                                        text: tituloReporte,
+                                                        alignment: 'center',
+                                                        margin: [0, 0, 20, 20],
+                                                        fontSize: 20,
+                                                        bold: true  // Texto en negrita
+                                                    });
+
+                                                    // Agrega la fecha del reporte y la información del almacén en la misma línea, alineados a la izquierda y a la derecha, respectivamente.
+                                                    doc.content.splice(1, 0, {
+                                                        columns: [
+                                                            {
+                                                                text: reporteDelDia,
+                                                                alignment: 'left',
+                                                                fontSize: 14
+                                                            },
+                                                            {
+                                                                text: sucursal,
+                                                                alignment: 'right',
+                                                                fontSize: 14
+                                                            }
+                                                        ],
+                                                        columnGap: 10  // Ajusta el espacio entre las columnas.
+                                                    });
+                                                },
+                                                footer: {
+                                                    columns: [3]
+                                                },
+                                            },
+                                            //boton de imprimir
+
+                                            @*{
+                                                extend: 'print',
+                                                className: 'btn btn-dark rounded-0',
+                                                text: '<i class="fas fa-print"></i> Imprimir',
+                                                footer: {
+                                                    columns: [3]
+                                                },
+
+                                            },*@
+                                        ],
+
+                                        columns: [
+                                            {
+                                                data: 'Gruop_fecha',
+                                                render: function (data, type, row) {
+                                                    return moment(data).utc().format('DD/MM/YYYY');
+                                                }
+                                            },
+                                            {
+                                                data: 'Group_Alcohol',
+                                                render: function (data, type, row) {
+                                                    return parseFloat(data).toLocaleString('es-MX', { style: 'currency', currency: 'MXN' });
+                                                }
+                                            },
+                                            {
+                                                data: 'Group_Souvenir',
+                                                render: function (data, type, row) {
+                                                    return parseFloat(data).toLocaleString('es-MX', { style: 'currency', currency: 'MXN' });
+                                                }
+                                            },
+                                            {
+                                                data: 'Group_Artesanias',
+                                                render: function (data, type, row) {
+                                                    return parseFloat(data).toLocaleString('es-MX', { style: 'currency', currency: 'MXN' });
+                                                }
+                                            },
+                                            {
+                                                data: 'Group_Artesanias_Premium',
+                                                render: function (data, type, row) {
+                                                    return parseFloat(data).toLocaleString('es-MX', { style: 'currency', currency: 'MXN' });
+                                                }
+                                            },
+                                            {
+                                                data: 'Group_Textil',
+                                                render: function (data, type, row) {
+                                                    return parseFloat(data).toLocaleString('es-MX', { style: 'currency', currency: 'MXN' });
+                                                }
+                                            },
+                                            {
+                                                data: 'Group_Farmacia',
+                                                render: function (data, type, row) {
+                                                    return parseFloat(data).toLocaleString('es-MX', { style: 'currency', currency: 'MXN' });
+                                                }
+                                            },
+                                            {
+                                                data: 'Group_Cerveza',
+                                                render: function (data, type, row) {
+                                                    return parseFloat(data).toLocaleString('es-MX', { style: 'currency', currency: 'MXN' });
+                                                }
+                                            },
+                                            {
+                                                data: 'Group_Refrescos',
+                                                render: function (data, type, row) {
+                                                    return parseFloat(data).toLocaleString('es-MX', { style: 'currency', currency: 'MXN' });
+                                                }
+                                            },
+                                            {
+                                                data: 'Group_Aguas',
+                                                render: function (data, type, row) {
+                                                    return parseFloat(data).toLocaleString('es-MX', { style: 'currency', currency: 'MXN' });
+                                                }
+                                            },
+                                            {
+                                                data: 'Group_Abarrotes',
+                                                render: function (data, type, row) {
+                                                    return parseFloat(data).toLocaleString('es-MX', { style: 'currency', currency: 'MXN' });
+                                                }
+                                            },
+                                            {
+                                                data: 'Group_Energeticos',
+                                                render: function (data, type, row) {
+                                                    return parseFloat(data).toLocaleString('es-MX', { style: 'currency', currency: 'MXN' });
+                                                }
+                                            },
+                                            {
+                                                data: 'Group_RTD',
+                                                render: function (data, type, row) {
+                                                    return parseFloat(data).toLocaleString('es-MX', { style: 'currency', currency: 'MXN' });
+                                                }
+                                            },
+                                            {
+                                                data: 'Group_SC',
+                                                render: function (data, type, row) {
+                                                    return parseFloat(data).toLocaleString('es-MX', { style: 'currency', currency: 'MXN' });
+                                                }
+                                            },
+                                            {
+                                                data: 'Group_SinCategoria',
+                                                render: function (data, type, row) {
+                                                    return parseFloat(data).toLocaleString('es-MX', { style: 'currency', currency: 'MXN' });
+                                                }
+                                            },
+                                            {
+                                                data: 'Group_TotalImporte',
+                                                render: function (data, type, row) {
+                                                    return parseFloat(data).toLocaleString('es-MX', { style: 'currency', currency: 'MXN' });
+                                                }
+                                            },
+                                        ],
+
+                                        deferRender: true, // Se habilita el renderizado diferido
+
+                                        drawCallback: function (settings) {
+
+                                        },
+
+                                        footerCallback: function (row, data, start, end, display) {
+                                            var api = this.api();
+
+                                            function roundToTwoDecimals(number) {
+                                                return +(Math.round(number + "e+2") + "e-2");
+                                            }
+
+                                            // Calcula las sumas directamente usando .data()
+                                            var TotalAlcohol = api.column(1, { page: 'current' }).data().reduce(function (a, b) { return a + (parseFloat(b) || 0); }, 0);
+                                            var TotalSouvenir = api.column(2, { page: 'current' }).data().reduce(function (a, b) { return a + (parseFloat(b) || 0); }, 0);
+                                            var TotalArtesania = api.column(3, { page: 'current' }).data().reduce(function (a, b) { return a + (parseFloat(b) || 0); }, 0);
+                                            var TotalArtesaniaPrem = api.column(4, { page: 'current' }).data().reduce(function (a, b) { return a + (parseFloat(b) || 0); }, 0);
+                                            var TotalTextil = api.column(5, { page: 'current' }).data().reduce(function (a, b) { return a + (parseFloat(b) || 0); }, 0);
+                                            var TotalFarmacia = api.column(6, { page: 'current' }).data().reduce(function (a, b) { return a + (parseFloat(b) || 0); }, 0);
+                                            var TotalCerveza = api.column(7, { page: 'current' }).data().reduce(function (a, b) { return a + (parseFloat(b) || 0); }, 0);
+                                            var TotalRefrescos = api.column(8, { page: 'current' }).data().reduce(function (a, b) { return a + (parseFloat(b) || 0); }, 0);
+                                            var TotalAguas = api.column(9, { page: 'current' }).data().reduce(function (a, b) { return a + (parseFloat(b) || 0); }, 0);
+                                            var TotalAbarrotes = api.column(10, { page: 'current' }).data().reduce(function (a, b) { return a + (parseFloat(b) || 0); }, 0);
+                                            var TotalEnergeticos = api.column(11, { page: 'current' }).data().reduce(function (a, b) { return a + (parseFloat(b) || 0); }, 0);
+                                            var TotalRTD = api.column(12, { page: 'current' }).data().reduce(function (a, b) { return a + (parseFloat(b) || 0); }, 0);
+                                            var TotalSC = api.column(13, { page: 'current' }).data().reduce(function (a, b) { return a + (parseFloat(b) || 0); }, 0);
+                                            var TotalSinCategoria = api.column(14, { page: 'current' }).data().reduce(function (a, b) { return a + (parseFloat(b) || 0); }, 0);
+                                            var TotalGeneral = api.column(15, { page: 'current' }).data().reduce(function (a, b) { return a + (parseFloat(b) || 0); }, 0);
+
+                                            // Redondear y formatear los totales:
+
+                                            TotalAlcohol = roundToTwoDecimals(TotalAlcohol);
+                                            TotalSouvenir = roundToTwoDecimals(TotalSouvenir);
+                                            TotalArtesania = roundToTwoDecimals(TotalArtesania);
+                                            TotalArtesaniaPrem = roundToTwoDecimals(TotalArtesaniaPrem);
+                                            TotalTextil = roundToTwoDecimals(TotalTextil);
+                                            TotalFarmacia = roundToTwoDecimals(TotalFarmacia);
+                                            TotalCerveza = roundToTwoDecimals(TotalCerveza);
+                                            TotalRefrescos = roundToTwoDecimals(TotalRefrescos);
+                                            TotalAguas = roundToTwoDecimals(TotalAguas);
+                                            TotalAbarrotes = roundToTwoDecimals(TotalAbarrotes);
+                                            TotalEnergeticos = roundToTwoDecimals(TotalEnergeticos);
+                                            TotalRTD = roundToTwoDecimals(TotalRTD);
+                                            TotalSC = roundToTwoDecimals(TotalSC);
+                                            TotalSinCategoria = roundToTwoDecimals(TotalSinCategoria);
+                                            TotalGeneral = roundToTwoDecimals(TotalGeneral);
+
+                                            // Actualizar los elementos HTML con los totales:
+
+                                            $('#sumaAlcohol').html('Total Alcohol: $' + TotalAlcohol.toLocaleString('es-MX'));
+                                            $('#sumaSouvenir').html('Total Souvenir: $' + TotalSouvenir.toLocaleString('es-MX'));
+                                            $('#sumaArtesania').html('Total Artesania: $' + TotalArtesania.toLocaleString('es-MX'));
+                                            $('#sumaArtesaniaPrem').html('Total Artesania Prem.: $' + TotalArtesaniaPrem.toLocaleString('es-MX'));
+                                            $('#sumaTextil').html('Total Textil: $' + TotalTextil.toLocaleString('es-MX'));
+                                            $('#sumaFarmacia').html('Total Farmacia: $' + TotalFarmacia.toLocaleString('es-MX'));
+                                            $('#sumaCerveza').html('Total Cerveza: $' + TotalCerveza.toLocaleString('es-MX'));
+                                            $('#sumaRefrescos').html('Total Refrescos: $' + TotalRefrescos.toLocaleString('es-MX'));
+                                            $('#sumaAguas').html('Total Aguas: $' + TotalAguas.toLocaleString('es-MX'));
+                                            $('#sumaAbarrotes').html('Total Abarrotes: $' + TotalAbarrotes.toLocaleString('es-MX'));
+                                            $('#sumaEnergeticos').html('Total Energeticos: $' + TotalEnergeticos.toLocaleString('es-MX'));
+                                            $('#sumaRTD').html('Total RTD: $' + TotalRTD.toLocaleString('es-MX'));
+                                            $('#sumaSC').html('Total SC: $' + TotalSC.toLocaleString('es-MX'));
+                                            $('#sumaSinCategoria').html('Total SinCategoria: $' + TotalSinCategoria.toLocaleString('es-MX'));
+                                            $('#sumaTotal').html('Total General: $' + TotalGeneral.toLocaleString('es-MX'));
+                                        },
+
+                                    });
+
+                                    $filtrarBusqueda.on('submit', function (event) {
+                                        event.preventDefault();
+
+                                        var fechaInicio = $('#fechaInicio').val();
+                                        var fechaFin = $('#fechaFin').val();
+                                        var almacen = $('#almacen').val();
+
+                                        // Validar campos
+                                        if (!fechaInicio || !fechaFin || !almacen) {
+                                            Swal.fire({
+                                                icon: 'error',
+                                                title: 'Ups...',
+                                                text: 'Por favor, complete todos los campos antes de realizar la búsqueda.',
+                                            });
+                                            return;
+                                        }
+
+                                        var formData = {
+                                            fechaInicio: fechaInicio,
+                                            fechaFin: fechaFin,
+                                            almacen: almacen,
+                                        };
+
+                                        var PaginaActual = $tablaVAlmacen.DataTable().page();
+                                        var PaginaCantidad = $('#PaginaCantidad').val();
+                                        formData.page = PaginaActual;
+                                        formData.PaginaCantidad = PaginaCantidad;
+
+                                        $.ajax({
+                                            url: '/AdminPages/filtrarTablaA',
+                                            type: 'POST',
+                                            data: formData,
+                                            success: function (data) {
+                                                // Comprobar si los datos están vacíos
+                                                if (!data || data.length === 0) {
+                                                    Swal.fire({
+                                                        icon: 'error',
+                                                        title: 'No se han registrado datos para este filtro',
+                                                        text: 'Seleccione los campos donde si haya datos y vuelva a intentar',
+                                                    });
+                                                } else {
+                                                    // Actualizar los datos de la tabla con la respuesta del servidor
+                                                    $tablaVAlmacen.DataTable().clear().rows.add(data).draw();
+
+                                                }
+                                            },
+                                            error: function (jqXHR, textStatus, errorThrown) {
+                                                alert('Error al filtrar/verificar filtrobusqueda');
+                                            }
+                                        });
+                                    });
+
+                                    $tablaVAlmacen.on('length.dt', function (e, settings, len) {
+
+                                    });
+                                });
+
+                            </script>
+                        }
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+    <script src="~/Scripts/ScriptsAdmins/ScriptVentasAdminTotal.js"></script>
+
+</body>
+</html>

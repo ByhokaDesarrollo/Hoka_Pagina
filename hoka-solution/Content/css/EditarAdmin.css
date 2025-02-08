@@ -1,0 +1,29 @@
+.select2-container .select2-selection--multiple {
+    max-height: 50px;
+    overflow-y: auto;
+}
+
+
+.card {
+    overflow-x: hidden;
+}
+
+.table-responsive {
+    overflow-x: hidden;
+}
+
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+.btn-align-right {
+    display: flex;
+    justify-content: flex-end; /* Alineación horizontal al final (derecha) */
+}

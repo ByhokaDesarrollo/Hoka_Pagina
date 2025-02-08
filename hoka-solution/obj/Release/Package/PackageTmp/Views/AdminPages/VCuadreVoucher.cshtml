@@ -1,0 +1,488 @@
+﻿@{
+    ViewBag.Title = "";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <link href="~/Content/css/selectcomprim.css" rel="stylesheet" />
+    <link href="~/Content/css/estilosfiltroscss.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="wrapper">
+        <!--Inicio de sidebar-->
+        <nav class="main-sidebar-custom-lg navbar navbar-expand navbar-white navbar-light">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="pushmenu" href="#" role="button">
+                        <i class="fas fa-bars"></i>
+                    </a>
+                </li>
+                <li class="nav-item d-none d-sm-inline-block">
+                    <a class="nav-link" href="@Url.Action("InicioAdmin","AdminPages")">Inicio</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <!--aqui el icon de aumentar pantalla-->
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+                        <i class="fas fa-expand-arrows-alt"></i>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="@Url.Action("CerrarSesion","Acceso")">Salir</a>
+                </li>
+            </ul>
+        </nav>
+
+
+        <!--Inicio de paginacion-->
+        <div class="content-header">
+            <section class="content-header">
+                <!--Inicio de titulo-->
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1>CUADRE VOUCHER</h1>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+
+                <!--Inicio de contenido-->
+                <div class="card">
+                    <!--Inicio de Botones del sidebar de la tabla de contenido-->
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-lg-2 col-md-4 col-sm-6 col-12">
+                                <label for="fechaInicioR">Fecha</label>
+                                <input type="text" id="fecha" name="fecha" class="form-control" placeholder="dd/mm/aaaa" autocomplete="off">
+                            </div>
+                            @*<div class="col-lg-2 col-md-4 col-sm-6 col-12">
+                                    <label for="fechaFinR">Fecha Fin</label>
+                                    <input type="text" id="fechaFin" name="fechaFin" class="form-control" placeholder="dd/mm/aaaa" autocomplete="off">
+                                </div>*@
+                            <div class="col-lg-2 col-md-4 col-sm-6 col-12">
+                                <label for="fechaFinR">Almacen</label>
+                                <select name="idAlmacen" class="form-control">
+                                    <option value="0">Seleccionar</option>
+                                    @foreach (var item in ViewBag.Almacenes)
+                                    {
+                                        <option value="@item.Item1">@item.Item2</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-lg-2 col-md-4 col-sm-6 col-12 mt-2 mt-lg-0">
+                                <label for="btn-filtrar">Filtrar</label>
+                                <div>
+                                    <button type="button" id="btnSearch" class="btn btn-info">
+                                        <i class="fas fa-search"></i> Buscar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="table table-responsive">
+                            <table class="table table-striped" id="tableContainer">
+                                <thead>
+                                    <tr>
+                                        <th>Voucher</th>
+                                        <th>Cantidad</th>
+                                        <th>Importe</th>
+                                        <th>Recepción</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                                @*<tfoot>
+                                    <th></th>
+                                    <th></th>
+                                    <th>Total:$</th>
+                                    <th></th>
+                                    </tfoot>*@
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</body>
+</html>
+<!-- Modal -->
+<div class="modal fade" id="containerModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="/admin/caja-actualizar-cuadre-vouchers" method="post">
+                <div class="modal-header">
+                    <h5 class="modal-title">Información</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="idSummary" />
+                    <input type="hidden" name="fecha" />
+                    <input type="hidden" name="idAlmacen" />
+                    <input type="hidden" name="idVoucher" />
+                    <div class="form-group">
+                        <label>Recepción</label>
+                        <input type="number" name="recepcion" class="form-control" min="0"/>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Actualizar</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+
+    <script>
+
+        $(document).ready(function () {
+
+            var $filterSearch = $('#btnSearch');
+            var $table = $('#tableContainer');
+
+            $("#fecha").datepicker({
+                format: 'dd/mm/yyyy',
+                language: 'es',
+                autoclose: true,
+                todayHighlight: true
+            });
+
+            $("#fecha").on("keyup", function () {
+                var valor = $(this).val().replace(/\D/g, "").replace(/^(\d\d)(\d)/g, "$1/$2").replace(/\/(\d\d)(\d)/, "/$1/$2");
+                $(this).val(valor.substring(0, 10));  // Limitar a 10 caracteres
+            });
+
+            $("#fecha").keypress(function (e) {
+                // Permitir solo números y limitar a 10 caracteres (incluyendo '/')
+                var charCode = (e.which) ? e.which : e.keyCode;
+                if ($(this).val().length >= 10 && (charCode >= 48 && charCode <= 57)) {
+                    return false;
+                } else if (charCode >= 48 && charCode <= 57) {
+                    return true;
+                }
+                return false;
+            });
+
+            // Evitar que se pegue texto no deseado
+            $("#fecha").on('paste', function (e) {
+                e.preventDefault();
+            });
+
+            // Inicializar Select2 Elements
+            $('.select2').select2();
+
+            // Inicializar Select2 Elements
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            });
+
+            $(document).on("click", "#openModal", function () {
+
+                $("input[name=idSummary]").val($(this).attr("data-idsummary"))
+                $("input[name=recepcion]").val($(this).attr("data-recepcion"))
+                $("input[name=fecha]").val($(this).attr("data-fecha"))
+                $("input[name=idAlmacen]").val($(this).attr("data-idalmacen"))
+                $("input[name=idVoucher]").val($(this).attr("data-idvoucher"))
+
+            })
+
+            var idAlmacen = ""
+            var fecha = ""
+
+            $filterSearch.on('click', function (event) {
+                event.preventDefault();
+
+                idAlmacen = $('select[name=idAlmacen]').val();
+                fecha = $('input[name=fecha]').val();
+                //var fechaFin = $('input[name=fechaFin]').val();
+
+                var formData = { fecha: fecha, idAlmacen: idAlmacen }
+
+                $.ajax({
+                    url: '/admin/caja-obtener-cuadre-vouchers',
+                    type: 'POST',
+                    data: formData,
+                    success: function (data) {
+
+                        console.log(data)
+                        var content = ""
+
+                        $.each(data, function (index, value) {
+                            content += "<tr>"
+                            content += "<td>" + value.VoucherNombre + "</td>"
+                            content += "<td>" + value.Cantidad + "</td>"
+                            content += "<td>" + value.Importe + "</td>"
+                            content += "<td>" + value.Recepcion + "</td>"
+                            content += "<td><a data-idalmacen='" + idAlmacen + "' data-fecha='" + fecha + "' data-idvoucher='" + value.Id + "'  data-recepcion='" + value.Recepcion + "'  data-idsummary='" + value.IdSummary + "' id='openModal' class='btn btn-info' data-bs-toggle='modal' data-bs-target='#containerModal'>Editar</a></td>"
+                            content += "</tr>"
+                        })
+
+                        //$("#tableContainer tbody").html(data);
+
+                        $table.DataTable().clear().rows.add(data).draw();
+
+
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.log("jqXHR", jqXHR)
+                        console.log("textStatus", textStatus)
+                        console.log("errorThrown", errorThrown)
+                        alert('Error al filtrar/verificar filtrobusqueda');
+                    }
+                });
+            });
+
+            $table.DataTable({
+                searching: false, paging: false, info: false,
+                processing: true,
+                responsive: true,
+                "autoWidth": false,
+                language: {
+                    "processing": '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> ',
+                    "sLengthMenu": "Mostrar _MENU_ registros",
+                    "sZeroRecords": "No se encontraron resultados",
+                    "sEmptyTable": "Ningún dato disponible en esta tabla",
+                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                    "sInfoPostFix": "",
+                    "sSearch": "Buscar:",
+                    "sUrl": "",
+                    "sInfoThousands": ",",
+                    "sLoadingRecords": "Cargando...",
+                    "oPaginate": {
+                        "sFirst": "Primero",
+                        "sLast": "Último",
+                        "sNext": "Siguiente",
+                        "sPrevious": "Anterior"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                    }
+                },
+
+                "dom": 'Blfrtip',
+                "lengthMenu": [[10, 50, 100, 1000, 2000, -1], [10, 50, 100, 1000, 2000, "Todos"]],
+                "pageLength": -1,
+                scrollX: true,
+                buttons: [
+                    {
+                        extend: 'excel',
+                        className: 'btn btn-excel rounded-0',
+                        text: '<i class="fas fa-file-excel"></i> Excel',
+                        filename: function () {
+                            // Obtiene la fecha y hora actual.
+                            var now = new Date();
+
+                            // Formatea la fecha actual en dd-mm-yyyy.
+                            var day = ("0" + now.getDate()).slice(-2);
+                            var month = ("0" + (now.getMonth() + 1)).slice(-2);
+                            var year = now.getFullYear();
+                            var dateString = day + '-' + month + '-' + year;
+
+                            // Convierte la hora a formato de 12 horas con AM o PM.
+                            var hours = now.getHours();
+                            var minutes = now.getMinutes();
+                            var ampm = hours >= 12 ? 'PM' : 'AM';
+                            hours = hours % 12;
+                            hours = hours ? hours : 12; // La hora '0' debería ser '12'.
+                            minutes = minutes < 10 ? '0' + minutes : minutes;
+                            var timeString = hours + ':' + minutes + ' ' + ampm;
+
+                            // Obtiene la información del almacén seleccionado.
+                            //var almacenSeleccionado = $('#almacen option:selected').text();
+                            //var nombreAlmacen = almacenSeleccionado.includes('-') ? almacenSeleccionado : 'SinNombre';
+
+                            // Obtiene las fechas de inicio y fin seleccionadas y las formatea.
+                            //var fechaInicio = $('#fechaInicio').val().replace(/\//g, '-');
+                            //var fechaFin = $('#fechaFin').val().replace(/\//g, '-');
+
+                            // Formato del nombre del archivo: 'HOKA_REPORTE VENTA POR DEPARTAMENTO_NombreDelAlmacen_FechaInicio_FechaFin_FechaActual_HoraActual AM/PM.xlsx'
+                            return 'HOKA REPORTE ' + dateString + ' ' + timeString;
+                        },
+                        footer: {
+                            columns: [3]
+                        },
+                        exportOptions: {
+                            columns: [0, 1, 2, 3]
+                        }
+                    },
+                    {
+                        extend: 'pdf',
+                        className: 'btn btn-pdf rounded-0',
+                        text: '<i class="fas fa-file-pdf"></i> PDF',
+                        title: null,
+                        pageSize: 'A2',  // Establece el tamaño de página a A3
+                        orientation: 'landscape',
+                        filename: function () {
+                            // Obtiene la fecha actual en formato string.
+                            var now = new Date();
+                            var dateString = now.toISOString().slice(0, 10);
+
+                            // Convierte la hora a formato de 12 horas con AM o PM.
+                            var hours = now.getHours();
+                            var minutes = now.getMinutes();
+                            var ampm = hours >= 12 ? 'PM' : 'AM';
+                            hours = hours % 12;
+                            hours = hours ? hours : 12; // La hora '0' debería ser '12'.
+                            minutes = minutes < 10 ? '0' + minutes : minutes;
+                            var timeString = hours + ':' + minutes + ' ' + ampm;
+
+
+                            // Obtiene la información del almacén seleccionado.
+                            //var almacenSeleccionado = $('#almacen option:selected').text();
+                            //var nombreAlmacen = almacenSeleccionado.includes('-') ? almacenSeleccionado : 'SinNombre';
+
+                            // Formato del nombre del archivo: 'HOKA - REPORTE VENTA POR PRODUCTO_NombreDelAlmacen_Fecha.pdf'
+                            return 'HOKA REPORTE - ' + dateString + ' ' + timeString;
+                        },
+                        customize: function (doc) {
+                            doc.defaultStyle.fontSize = 14; //tamaño de las letras dentro de la tablas al exportar
+
+                            // Obtiene la fecha y hora actuales.
+                            var currentDateTime = new Date();
+                            var currentDateTimeString = currentDateTime.toLocaleString();
+
+                            // Obtiene el rango de fechas ingresado.
+                            //var fechaInicio = document.getElementById('fechaInicio').value;
+                            //var fechaFin = document.getElementById('fechaFin').value;
+                            //var fechaRango = 'DEL ' + fechaInicio + ' AL ' + fechaFin;
+
+                            // Obtiene la información del almacén seleccionado.
+                            //var almacenSeleccionado = $('#almacen option:selected').text();
+                            //var sucursal = 'SUCURSAL ' + almacenSeleccionado + ' - ' + fechaRango;
+
+                            // Fija el título del reporte a "HOKA - VENTA POR PRODUCTO".
+                            var tituloReporte = 'HOKA - REPORTE';
+                            var reporteDelDia = 'REPORTE DEL DÍA ' + currentDateTimeString;
+
+                            // Agrega el título en la parte superior del documento con texto en negrita.
+                            doc.content.splice(0, 0, {
+                                text: tituloReporte,
+                                alignment: 'center',
+                                margin: [0, 0, 20, 20],
+                                fontSize: 24,
+                                bold: true  // Texto en negrita
+                            });
+
+                            // Agrega la fecha del reporte y la información del almacén en la misma línea, alineados a la izquierda y a la derecha, respectivamente.
+                            doc.content.splice(1, 0, {
+                                columns: [
+                                    {
+                                        text: reporteDelDia,
+                                        alignment: 'left',
+                                        fontSize: 18
+                                    },
+                                ],
+                                columnGap: 10  // Ajusta el espacio entre las columnas.
+                            });
+                        },
+                        footer: {
+                            columns: [11]
+                        },
+                        exportOptions: {
+                            columns: [0, 1, 2, 3]
+                        }
+                    }
+                ],
+                columnDefs: [{
+                    "defaultContent": "-",
+                    "targets": "_all"
+                }],
+                columns: [
+
+
+                    { data: 'VoucherNombre' },
+                    { data: 'Cantidad' },
+                    { data: 'Importe' },
+                    { data: 'Recepcion' },
+                    {
+                        render: function (data, type, row) {
+
+
+
+                            //return "<td><a data-idalmacen='" + idAlmacen + "' data-fecha='" + fecha + "' data-idmoneda='" + row.Id + "'  data-recepcion='" + row.Recepcion + "'  data-idsummary='" + row.IdSummary + "' id='openModal' class='btn btn-info' data-bs-toggle='modal' data-bs-target='#containerModal'>Editar</a></td>"
+
+                            return "<td><a data-idalmacen='" + idAlmacen + "' data-fecha='" + fecha + "' data-idvoucher='" + row.Id + "'  data-recepcion='" + row.Recepcion + "'  data-idsummary='" + row.IdSummary + "' id='openModal' class='btn btn-info' data-bs-toggle='modal' data-bs-target='#containerModal'>Editar</a></td>"
+
+
+                        }
+                    }
+
+
+                ],
+
+                deferRender: true, // Se habilita el renderizado diferido
+
+                drawCallback: function (settings) {
+
+                },
+                footerCallback: function (row, data, start, end, display) {
+                    var api = this.api();
+
+                    var intval = function (i) {
+                        //Excuse this ugliness, it comes from the datatables sample
+                        return typeof i === 'string' ?
+                            i.replace(/[\$,]/g, '') * 1 :
+                            typeof i === 'number' ?
+                                i : 0;
+                    };
+
+                    function roundToTwoDecimals(number) {
+                        return +(Math.round(number + "e+2") + "e-2");
+                    }
+
+                    //var stotalColumnIndex = $('th').filter(function (i) { return $(this).text() == 'Stotal'; }).first().index();
+                    //var stotalData = api.column(stotalColumnIndex).data();
+                    //var stotal = stotalData.reduce(function (a, b) { return intval(a) + intval(b); }, 0).toFixed(2);
+
+
+                    //var stotal = api.column(3, { page: 'current' }).data().reduce(function (a, b) { return a + (parseFloat(b) || 0); }, 0);
+                    var totalx = api.column(1, { page: 'current' }).data().reduce(function (a, b) { return a + (parseFloat(b) || 0); }, 0);
+                    var ventaTienda = api.column(2, { page: 'current' }).data().reduce(function (a, b) { return a + (parseFloat(b) || 0); }, 0);
+                    var calendarios = api.column(3, { page: 'current' }).data().reduce(function (a, b) { return a + (parseFloat(b) || 0); }, 0);
+                    var ventas = api.column(4, { page: 'current' }).data().reduce(function (a, b) { return a + (parseFloat(b) || 0); }, 0);
+
+
+                    //totalx = roundToTwoDecimals(totalx);
+                    totalx = totalx.toLocaleString('es-MX')
+                    calendarios = calendarios.toLocaleString('es-MX')
+                    ventas = ventas.toLocaleString('es-MX')
+                    ventaTienda = ventaTienda.toLocaleString('es-MX')
+
+                    //stotal = roundToTwoDecimals(stotal);
+                    //$('#sumaTotal').html('Totalx: $' + totalx);
+
+                    //$('#stotalSum').html('sTotal: $' + stotalx.toLocaleString('es-MX'));
+                    console.log(totalx)
+
+                    //$(api.column(1).footer()).html('totalVenta: $' + totalx);
+                    //$(api.column(2).footer()).html('VentaTienda: $' + ventaTienda);
+                    //$(api.column(3).footer()).html('totalComisiones: $' + calendarios);
+                    //$(api.column(4).footer()).html('totalNetoVenta: $' + ventas);
+
+
+                    //$("#totalVenta").html("$"+totalVenta.toFixed(2))
+                    //$("#totalComisiones").html("$"+totalComisiones.toFixed(2))
+                    //$("#totalNetoVenta").html("$"+totalNetoVenta.toFixed(2))
+
+
+                }
+            })
+
+        })
+
+    </script>
+
+}

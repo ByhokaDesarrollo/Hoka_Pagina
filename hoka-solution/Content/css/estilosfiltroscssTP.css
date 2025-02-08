@@ -1,0 +1,22 @@
+﻿/* Estilo por defecto para pantallas grandes */
+.card-header .row > div {
+    padding: 0 15px; /* un poco de espacio entre columnas */
+}
+
+/* Estilos específicos para pantallas de hasta 768px de ancho */
+@media (max-width: 768px) {
+    .card-header .row {
+        flex-direction: column; /* hace que los hijos de .row se apilen verticalmente */
+    }
+
+        .card-header .row > div {
+            width: 100%; /* fuerza a los hijos a tomar todo el ancho disponible */
+            padding: 10px 0; /* espacio vertical entre elementos */
+        }
+
+    /* Podrías añadir más estilos específicos aquí si es necesario */
+}
+
+#mensajeTabla {
+    display: none;
+}

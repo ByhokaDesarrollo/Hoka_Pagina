@@ -1,0 +1,90 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>HOKA - Acceso Denegado</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--===============================================================================================-->
+    <link rel="icon" type="image/png" href="~/Content/img/icons/BLANCO.png" />
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/Content/vendor/bootstrap/css/bootstrap.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/Content/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/Content/vendor/animate/animate.css">
+    <!--===============================================================================================-->
+    <!-- <link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css"> -->
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/Content/vendor/select2/select2.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/Content/css/utilA.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/css/mainA.css">
+    <!--===============================================================================================-->
+
+
+
+</head>
+
+<body>
+
+    <div class="limiter">
+        <div class="container-login100">
+            <div class="wrap-login100">
+
+                <div class="login100-pic js-tilt" data-tilt>
+                    <img src="~/Content/img/icons/error.gif" alt="IMG">
+                </div>
+
+                <form id="form-accesodenegado" class="login100-form validate-form">
+
+                    <span class="login100-form-title">
+                        Oops! Parece que no tienes acceso a esta pagina.
+                    </span>
+
+                    <p style="color:lightslategray;">
+                        Esto se debe a que a pasado el tiempo de conexión del usuario o
+                        la configuración de tu usuario de permisos o ingresaste incorrectamente tu inicio de sesión.
+                        Contactese con un administrador o vuelva a
+                        <a href="/Acceso/Login" style="color: white;">Iniciar Sesión</a> e intente de nuevo.
+                    </p>
+
+                    <div class="container-login100-form-btn">
+                        <a id="btn" type="submit" class="login100-form-btn" href="/Acceso/Login">
+                            Iniciar Sesión
+                        </a>
+                    </div>
+                </form>
+                
+            </div>
+        </div>
+    </div>
+
+    <!--===============================================================================================-->
+    <script src="~/Content/vendor/jquery/jquery-3.2.1.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/Content/vendor/bootstrap/js/popper.js"></script>
+    <script src="~/Content/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/Content/vendor/select2/select2.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/Content/vendor/tilt/tilt.jquery.min.js"></script>
+    <script>
+        $('.js-tilt').tilt({
+            scale: 1.1
+        })
+    </script>
+    <!--===============================================================================================-->
+    <script src="~/Content/js/main.js"></script>
+    <script src="~/Scripts/sweetalert2.all.min.js"></script>
+
+</body>
+
+
+</html>

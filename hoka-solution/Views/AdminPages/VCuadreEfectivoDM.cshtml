@@ -1,0 +1,89 @@
+﻿@{
+    ViewBag.Title = "";
+    Layout = "~/Views/Shared/_LayoutAdminTotal.cshtml";
+}
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <link href="~/Content/css/selectcomprim.css" rel="stylesheet" />
+    <link href="~/Content/css/estilosfiltroscss.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="wrapper">
+        <!--Inicio de sidebar-->
+        <nav class="main-sidebar-custom-lg navbar navbar-expand navbar-white navbar-light">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="pushmenu" href="#" role="button">
+                        <i class="fas fa-bars"></i>
+                    </a>
+                </li>
+                <li class="nav-item d-none d-sm-inline-block">
+                    <a class="nav-link" href="@Url.Action("InicioAdminTotal","AdminPages")">Inicio</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <!--aqui el icon de aumentar pantalla-->
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+                        <i class="fas fa-expand-arrows-alt"></i>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="@Url.Action("CerrarSesion","Acceso")">Salir</a>
+                </li>
+            </ul>
+        </nav>
+
+
+        <!--Inicio de paginacion-->
+        <div class="content-header">
+            <section class="content-header">
+                <!--Inicio de titulo-->
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1>CUADRE EFECTIVO DEL ALMACEN LOGUEADO, sera del dia actual la suma?</h1>
+                        </div>
+                    </div>
+                </div>
+                <hr/>
+
+                <!--Inicio de contenido-->
+                <div class="card">
+                    <!--Inicio de Botones del sidebar de la tabla de contenido-->
+                    <div class="card-header">
+                         
+
+                    </div>
+
+                    <!--Cuerpo del contenido(en este caso la tabla)-->
+                    <div class="card-body">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Moneda</th>
+                                    <th>Importe en moneda de origen</th>
+                                    <th>Importe en pesos</th>
+                                   
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in ViewBag.CuadreEfectivo)
+                                {
+                                    <tr>
+                                        <td>@item.Id</td>
+                                        <td>@item.ImporteMonedaOrigen</td>
+                                        <td>@item.ImportePesos</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</body>
+</html>
+

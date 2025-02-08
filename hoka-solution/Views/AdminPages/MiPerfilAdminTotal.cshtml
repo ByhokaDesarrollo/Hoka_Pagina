@@ -1,0 +1,302 @@
+﻿@model hoka.Models.AllModels
+@{
+    ViewBag.Title = "MiPerfilAdminTotal";
+    Layout = "~/Views/Shared/_LayoutAdminTotal.cshtml";
+}
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    @*<link href="~/Content/css/EditarAdmin.css" rel="stylesheet" />*@
+    <link href="~/Content/css/EditarhabilitarAdmin.css" rel="stylesheet" />
+    
+</head>
+<body>
+    <div class="wrapper">
+        <!-- Navbar -->
+        <nav class="main-sidebar-custom-lg navbar navbar-expand navbar-white navbar-light">
+            <!-- Left navbar links -->
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+                </li>
+                <li class="nav-item d-none d-sm-inline-block">
+                    <a href="#" class="nav-link">Inicio</a>
+                </li>
+            </ul>
+
+            <!-- Right navbar links -->
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+                        <i class="fas fa-expand-arrows-alt"></i>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="@Url.Action("CerrarSesion", "Acceso")" class="nav-link">Cerrar Sesión</a>
+                </li>
+            </ul>
+        </nav>
+        <!-- /.navbar -->
+        <!-- Content Header -->
+        <div class="content-header">
+            <section class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1>MIS DATOS</h1>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+
+
+
+                <!-- Row to wrap both cards -->
+                <div class="row">
+                    <!-- Card 1 -->
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header d-flex justify-content-between">
+                                <h5 class="card-title">Datos Personales</h5>
+                                <div class="custom-switch">
+                                    <input type="checkbox" id="switch" class="custom-switch-input" />
+                                    <label for="switch" class="custom-switch-label">Toggle</label>
+                                </div>
+                            </div>
+
+                            <div class="card-body">
+                                <div class="table table-responsive">
+                                    <div class="panel-body">
+                                        <form id="form-editar1" method="post" action="@Url.Action("EditarMiPerfilPersonalAdminTotal", "AdminPages", new { idUsuario = Model.UsuarioMNoList.Id_Usuario })">
+                                            <div class="row">
+                                                <div class="col-md-6">
+
+                                                    <input type="hidden" id="Id_Usuario" name="Id_Usuario" value="@Model.UsuarioMNoList.Id_Usuario" />
+
+                                                    <label for="NombreU">Nombre:</label>
+                                                    <div class="input-group mb-3">
+                                                        <input type="text" class="form-control" id="NombreU" name="NombreU" value="@Model.UsuarioMNoList.NombreU" placeholder="Nombre: Ej. Juan" disabled>
+                                                        <div class="input-group-append">
+                                                            <div class="input-group-text">
+                                                                <span class="fas fa-user"></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <label for="ApellidoU">Apellido:</label>
+                                                    <div class="input-group mb-3">
+                                                        <input type="text" class="form-control" id="ApellidoU" name="ApellidoU" value="@Model.UsuarioMNoList.ApellidoU" placeholder="Apellido: Ej. Lopez" disabled>
+                                                        <div class="input-group-append">
+                                                            <div class="input-group-text">
+                                                                <span class="fas fa-user"></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label for="FechaNacimientoU">Fecha de Nacimiento:</label>
+                                                    <div class="input-group mb-3">
+                                                        <input type="text" class="form-control" id="FechaNacimientoU" name="FechaNacimientoU" value="@Model.UsuarioMNoList.FechaNacimientoU.ToString("dd/MM/yyyy")" placeholder="dd/mm/aaaa" autocomplete="off" disabled>
+                                                        <div class="input-group-append">
+                                                            <div class="input-group-text">
+                                                                <i class="far fa-calendar"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <label for="Telefono">Telefono:</label>
+                                                    <div class="input-group mb-3">
+                                                        <input type="number" class="form-control" id="Telefono" name="Telefono" value="@Model.UsuarioMNoList.Telefono" placeholder="000-000-0000" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" maxlength="10" disabled>
+                                                        <div class="input-group-append">
+                                                            <div class="input-group-text">
+                                                                <i class="fas fa-phone"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <div class="row">
+
+                                                    <div class="col-md-6">
+                                                        <button id="btn-editar1" type="submit" class="btn btn-success btn-block" disabled><i class="fas fa-cloud-upload-alt"></i>Actualizar</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form> <!-- Closing the form tag here -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End of Card 1 -->
+                    <!-- Card 2 -->
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="card-title">Datos del Usuario (Requiere inicio de sesión)</h5>
+                                
+                            </div>
+                            <div class="card-body">
+                                <div class="table table-responsive">
+                                    <div class="panel-body">
+                                        <form id="form-editar2" method="post" action="@Url.Action("EditarMiPerfiPermisoslAdminTotal", "AdminPages", new { idUsuario = Model.UsuarioMNoList.Id_Usuario })">
+                                            <div class="row">
+                                                <div class="col-md-6">
+
+                                                    <input type="hidden" id="Id_Usuario" name="Id_Usuario" value="@Model.UsuarioMNoList.Id_Usuario" />
+                                                    <label for="Correo">Correo:</label>
+                                                    <div class="input-group mb-3">
+                                                        <input type="email" class="form-control" id="Correo" name="Correo" value="@Model.UsuarioMNoList.Correo" placeholder="Correo" disabled>
+                                                        <div class="input-group-append">
+                                                            <div class="input-group-text">
+                                                                <span class="fas fa-envelope"></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <label for="Rol">Rol:</label>
+                                                    <div class="input-group mb-3">
+                                                        <select class="form-control select2 rol-select-editar" style="width: 100%" id="Id_Rol" name="Id_Rol" data-url="@Url.Action("AdminPages", "ObtenerPerfiles")" disabled>
+                                                            <option selected="selected">Selecciona un Rol</option>
+                                                            @foreach (var rol in Model.RolesM)
+                                                            {
+                                                                <option value="@rol.Id_Rol" @(Model.UsuarioMNoList.Id_Rol == rol.Id_Rol ? "selected" : "")>@rol.Nombre_Rol</option>
+                                                            }
+                                                        </select>
+                                                    </div>
+                                                    <label for="Perfil">Perfil:</label>
+                                                    <div class="input-group mb-3">
+                                                        <select class="form-control select2 perfil-select-editar" style="width: 100%" id="Id_Perfil" name="Id_Perfil" data-url="@Url.Action("AdminPages", "ObtenerAlmacenes")" disabled>
+                                                            <option selected="selected">Selecciona un Perfil</option>
+                                                            <option value="@(Model.UsuarioMNoList.Id_Perfil.HasValue ? Model.UsuarioMNoList.Id_Perfil.ToString() : "")"
+                                                                    selected>
+                                                                @{
+                                                                    var perfil = Model.PerfilM.FirstOrDefault(p => p.Id_Perfil == Model.UsuarioMNoList.Id_Perfil);
+                                                                    if (perfil != null)
+                                                                    {
+                                                                        @perfil.Nombre_Perfil
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        @: Sin Perfil
+                                                                    }
+                                                                }
+                                                            </option>
+
+
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="input-group mb-3">
+                                                        <label for="Almacenes">Almacenes:</label>
+                                                        <select class="form-control select2 almacen-select-editar" style="width: 100%" id="Almacenes" name="Almacenes[]" multiple disabled>
+                                                            <option selected="selected">Selecciona un Almacen</option>
+                                                            @foreach (var almacen in Model.AlmacenesM)
+                                                            {
+                                                                <option value="@almacen.Id_Almacen">@almacen.Almacen - @almacen.Nombre</option>
+                                                            }
+                                                        </select>
+                                                        <input type="checkbox" class="form-check checkboxAlmacen-select" name="allalmacen" value="allalmacen" disabled> Selecciona todos los almacenes
+                                                    </div>
+
+                                                    <label for="Estado">Estado:</label>
+                                                    <div class="input-group mb-3">
+                                                        <select class="form-control select2 estado-select-editar" style="width: 100%" id="Id_Estado" name="Id_Estado" disabled>
+                                                            <option selected="selected">Selecciona una Tienda</option>
+                                                            @foreach (var estado in Model.EstadoUM)
+                                                            {
+                                                                <option value="@estado.Id_Estado" @(Model.UsuarioMNoList.Id_Estado == estado.Id_Estado ? "selected" : "")>@estado.Nombre_Estado</option>
+                                                            }
+                                                        </select>
+                                                    </div>
+
+                                                    <input type="hidden" id="FechaRegistroU" name="FechaRegistroU" value="@Model.UsuarioMNoList.FechaRegistroU.ToString("yyyy-MM-dd")" />
+
+                                                </div>
+                                                <div class="row">
+
+                                                    <div class="col-md-6">
+                                                        <button id="btn-editar2" type="submit" class="btn btn-success btn-block" disabled><i class="fas fa-cloud-upload-alt"></i>Actualizar</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form> <!-- Closing the form tag here -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End of Card 2 -->
+                    
+                </div>
+                <!-- End of Row -->
+
+            </section>
+        </div> <!-- Closing content-header div -->
+    </div> <!-- Closing wrapper div -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <script src="~/Scripts/ScriptsAdmins/ScriptEditarMiUsuarioAdminTotal.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var switchControl = document.getElementById('switch');
+
+            switchControl.addEventListener('change', function () {
+                // Antes de hacer cambios, guardamos el valor actual del select
+                var almacenSelect = document.querySelector('.almacen-select-editar');
+                var currentValue = [...almacenSelect.options].filter(option => option.selected).map(option => option.value);
+
+                var inputs = document.querySelectorAll('.card-body input:not(.almacen-select-editar), .card-body select:not(.almacen-select-editar)');
+                for (var i = 0; i < inputs.length; i++) {
+                    if (switchControl.checked) {
+                        inputs[i].disabled = false;
+                    } else {
+                        inputs[i].disabled = true;
+                    }
+                }
+
+                // Después de haber hecho los cambios, reasignamos el valor guardado al select
+                currentValue.forEach(val => {
+                    var option = document.querySelector('.almacen-select-editar option[value="' + val + '"]');
+                    if (option) {
+                        option.selected = true;
+                    }
+                });
+
+                var button = document.getElementById('btn-editar1');
+                button.disabled = !switchControl.checked;
+                var button2 = document.getElementById('btn-editar2');
+                button2.disabled = !switchControl.checked;
+            });
+        });
+
+
+    </script>
+
+</body>
+</html>
+
+@*<label for="Clave">Clave:</label>
+    <div class="input-group mb-3">
+        <input type="password" class="form-control" id="Clave" name="Clave" value="@Model.UsuarioMNoList.Clave" placeholder="Contraseña">
+        <div class="input-group-append">
+            <div class="input-group-text">
+                <span class="fas fa-lock"></span>
+            </div>
+        </div>
+    </div>
+
+    <label for="ConfirmarClave">Confirmar Clave:</label>
+    <div class="input-group mb-3">
+        <input type="password" class="form-control" id="ConfirmarClave" name="ConfirmarClave" value="@Model.UsuarioMNoList.ConfirmarClave" placeholder="Confirmar Contraseña">
+        <div class="input-group-append">
+            <div class="input-group-text">
+                <span class="fas fa-lock"></span>
+            </div>
+        </div>
+    </div>*@
+

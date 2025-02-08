@@ -1,0 +1,219 @@
+﻿@model hoka.Models.AllModels
+
+@{
+    ViewBag.Title = "Editar Usuario";
+    Layout = "~/Views/Shared/_LayoutAdminTotal.cshtml";
+}
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link href="~/Content/css/EditarAdmin.css" rel="stylesheet" />
+
+</head>
+<body>
+
+    <div class="wrapper">
+
+        <!-- Navbar -->
+
+        <nav class="main-sidebar-custom-lg navbar navbar-expand navbar-white navbar-light">
+            <!-- Left navbar links -->
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+                </li>
+                <li class="nav-item d-none d-sm-inline-block">
+                    <a href="#" class="nav-link">Inicio</a>
+                </li>
+
+            </ul>
+
+            <!-- Right navbar links -->
+            <ul class="navbar-nav ml-auto">
+                <!--AQUI VA PARA AUMENTAR LA PANTALLA-->
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+                        <i class="fas fa-expand-arrows-alt"></i>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="@Url.Action("CerrarSesion", "Acceso")" class="nav-link">Cerrar Sesión</a>
+                </li>
+            </ul>
+        </nav>
+        <!-- /.navbar -->
+        @*CONTENIDO*@
+        <div class="content-header">
+            @*CONTENIDO*@
+            <section class="content-header">
+                @*TITULO DEL AREA*@
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-md-9 col-sm-8">
+                            <!-- Ajusta las columnas para pantallas medianas y pequeñas -->
+                            <h1>ACTUALIZAR USUARIO</h1>
+                        </div>
+                        <div class="col-md-3 col-sm-4 btn-align-right">
+                            <!-- Aquí cambiamos el ancho de la columna y aplicamos la clase que creamos -->
+                            <a class="btn btn-warning" href="@Url.Action("LUsuariosAdminTotal", "AdminPages")">
+                                <i class="fas fa-arrow-left"></i> Volver
+                            </a>
+                        </div>
+                    </div>
+                </div><!-- /.container-fluid -->
+
+
+
+                <hr />
+
+
+                <!-- Row to wrap both cards -->
+                <div class="row">
+                    <!-- Card 1 -->
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header d-flex justify-content-between">
+                                <h5 class="card-title">Actualizar datos completos del usuario</h5>
+
+                            </div>
+
+                            <div class="card-body">
+                                <div class="table table-responsive">
+                                    <div class="panel-body">
+                                        <form id="form-editar1" method="post" action="@Url.Action("EditarUsuario", "AdminPages", new { idUsuario = Model.UsuarioMNoList.Id_Usuario })">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <input type="hidden" id="Id_Usuario" name="Id_Usuario" value="@Model.UsuarioMNoList.Id_Usuario" />
+
+                                                    <label for="NombreU">Nombre:</label>
+                                                    <div class="input-group mb-3">
+                                                        <input type="text" class="form-control" id="NombreU" name="NombreU" value="@Model.UsuarioMNoList.NombreU" placeholder="Nombre: Ej. Juan">
+                                                        <div class="input-group-append">
+                                                            <div class="input-group-text">
+                                                                <span class="fas fa-user"></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <label for="ApellidoU">Apellido:</label>
+                                                    <div class="input-group mb-3">
+                                                        <input type="text" class="form-control" id="ApellidoU" name="ApellidoU" value="@Model.UsuarioMNoList.ApellidoU" placeholder="Apellido: Ej. Lopez">
+                                                        <div class="input-group-append">
+                                                            <div class="input-group-text">
+                                                                <span class="fas fa-user"></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <label for="Correo">Correo:</label>
+                                                    <div class="input-group mb-3">
+                                                        <input type="email" class="form-control" id="Correo" name="Correo" value="@Model.UsuarioMNoList.Correo" placeholder="Correo">
+                                                        <div class="input-group-append">
+                                                            <div class="input-group-text">
+                                                                <span class="fas fa-envelope"></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label for="FechaNacimientoU">Fecha de Nacimiento:</label>
+                                                    <div class="input-group mb-3">
+                                                        <input type="text" class="form-control" id="FechaNacimientoU" name="FechaNacimientoU" value="@Model.UsuarioMNoList.FechaNacimientoU.ToString("dd/MM/yyyy")" placeholder="dd/mm/aaaa" autocomplete="off">
+                                                        <div class="input-group-append">
+                                                            <div class="input-group-text">
+                                                                <i class="far fa-calendar"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <label for="Telefono">Telefono:</label>
+                                                    <div class="input-group mb-3">
+                                                        <input type="number" class="form-control" id="Telefono" name="Telefono" value="@Model.UsuarioMNoList.Telefono" placeholder="000-000-0000" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" maxlength="10">
+                                                        <div class="input-group-append">
+                                                            <div class="input-group-text">
+                                                                <i class="fas fa-phone"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                </div>
+
+                                            </div>
+                                            <div class="row">
+
+                                                <div class="col-md-6">
+                                                    <button id="btn-editar1" type="submit" class="btn btn-success btn-block"><i class="fas fa-cloud-upload-alt"></i>Actualizar</button>
+                                                </div>
+                                            </div>
+                                        </form> <!-- Closing the form tag here -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End of Card 1 -->
+                    <!-- Card 2 -->
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="card-title">Actualizar contraseña del usuario</h5>
+
+                            </div>
+                            <div class="card-body">
+                                <div class="table table-responsive">
+                                    <div class="panel-body">
+                                        <form id="form-editar2" method="post" action="@Url.Action("EditarContraseña", "AdminPages", new { idUsuario = Model.UsuarioMNoList.Id_Usuario })">
+                                            <div class="row">
+                                                <div class="col-md-6">
+
+                                                    <input type="hidden" id="Id_Usuario" name="Id_Usuario" value="@Model.UsuarioMNoList.Id_Usuario" />
+
+                                                    <label for="Clave">Clave:</label>
+                                                    <div class="input-group mb-3">
+                                                        <input type="password" class="form-control" id="Clave" name="Clave" value="@Model.UsuarioMNoList.Clave" placeholder="Contraseña" autocomplete="new-password">
+                                                        <div class="input-group-append">
+                                                            <div class="input-group-text">
+                                                                <span class="fas fa-lock"></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label for="ConfirmarClave">Confirmar Clave:</label>
+                                                    <div class="input-group mb-3">
+                                                        <input type="password" class="form-control" id="ConfirmarClave" name="ConfirmarClave" value="@Model.UsuarioMNoList.ConfirmarClave" placeholder="Confirmar Contraseña">
+                                                        <div class="input-group-append">
+                                                            <div class="input-group-text">
+                                                                <span class="fas fa-lock"></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <button id="btn-editar2" type="submit" class="btn btn-success btn-block"><i class="fas fa-cloud-upload-alt"></i>Actualizar</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form> <!-- Closing the form tag here -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End of Card 2 -->
+
+                </div>
+                <!-- End of Row -->
+                <!-- /.card -->
+            </section>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <script src="~/Scripts/ScriptsAdmins/ScriptEditarUsuarioAdminTotal.js"></script>
+</body>
+</html>

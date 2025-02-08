@@ -1,0 +1,354 @@
+﻿@{
+    ViewBag.Title = "REPORTE";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <link href="~/Content/css/selectcomprim.css" rel="stylesheet" />
+    <link href="~/Content/css/estilosfiltroscss.css" rel="stylesheet" />
+    <style>
+        .readonly {
+            background: #dee2e6;
+            border: 1px solid #dee2e6;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <!--Inicio de sidebar-->
+        <nav class="main-sidebar-custom-lg navbar navbar-expand navbar-white navbar-light">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="pushmenu" href="#" role="button">
+                        <i class="fas fa-bars"></i>
+                    </a>
+                </li>
+                <li class="nav-item d-none d-sm-inline-block">
+                    <a class="nav-link" href="@Url.Action("InicioAdmin","AdminPages")">Inicio</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <!--aqui el icon de aumentar pantalla-->
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+                        <i class="fas fa-expand-arrows-alt"></i>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="@Url.Action("CerrarSesion","Acceso")">Salir</a>
+                </li>
+            </ul>
+        </nav>
+
+
+        <!--Inicio de paginacion-->
+        <div class="content-header">
+            <section class="content-header">
+                <!--Inicio de titulo-->
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1>VALORES ENTREGADOS  </h1>
+                            <p>
+                                Fecha Registro: @ViewBag.Fecha
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <input type="hidden" name="IdRegistroDiaVoucher" value="@ViewBag.IdRegistroDiaVoucher" />
+                <div class="col-2">
+                    <label>Modificar Estado</label><br />
+                    <button type="button" class="btn btn-info next" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        Abrir
+                    </button>
+                </div>
+
+
+
+
+
+
+                @foreach (var voucher in ViewBag.Vouchers)
+                {
+                    int listarResultados = 0;
+                    float TipoCambioValue = 0;
+
+                    @*@voucher.Id;
+            @voucher.Nombre;
+            @ViewBag.IdVoucher;*@
+
+
+                    if (voucher.Id == ViewBag.IdVoucher && ViewBag.registroDiaVoucher[0].IdVoucher == voucher.Id)
+                    {
+
+                        foreach (var registroValorEntregado in ViewBag.registroDiaVoucher)
+                        {
+
+                            @*@registroValorEntregado.Id;
+                    @ViewBag.Fecha;
+                    @registroValorEntregado.Fecha;
+                    @registroValorEntregado.IdVoucher;*@
+
+                            if (voucher.Id == registroValorEntregado.IdVoucher && @ViewBag.Fecha == registroValorEntregado.Fecha)
+                            {
+                                listarResultados = 1;
+                                TipoCambioValue = 1;
+                                break;
+                            }
+
+                        }
+                        <div class="card">
+                            <!--Inicio de Botones del sidebar de la tabla de contenido-->
+                            <div class="card-header">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <b>Voucher: @voucher.Nombre</b>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--Cuerpo del contenido(en este caso la tabla)-->
+
+                            <div class="card-body">
+
+
+                                @using (Html.BeginForm("procesarValoresEntregadosVoucher", "UserPages", FormMethod.Post))
+                                {
+                                    var c = 0; int TipoCambio = 0;
+
+
+                                    <input type="hidden" name="FechaParam" value="@ViewBag.Fecha" />
+                                    <input type="hidden" name="IdAlmacenParam" value="@ViewBag.Almacen" />
+                                    <input type="hidden" name="IdVoucherParam" value="@ViewBag.IdVoucher" />
+
+
+
+                                    <input type="hidden" name="IdVoucher" value="@voucher.Id" />
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Importe</th>
+                                                <th>Referencia</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            @*@foreach (var monedaDenominacion in ViewBag.MonedaDenominacion)
+                                    {
+                                        if (monedaDenominacion.IdVoucher == voucher.Id)
+                                        {
+                                            c++;
+                                            var importeclass = "importe" + monedaDenominacion.Id;*@
+
+                                            @if (listarResultados == 1)
+                                            {
+
+                                                foreach (var valoresEntregados in ViewBag.RegistroVouchers)
+                                                {
+                                                    if (valoresEntregados.IdVoucher == voucher.Id)
+                                                    {
+                                                        <tr>
+                                                            <td>
+                                                                <input type="hidden" name="IdValoresEntregados[@c]" value="@valoresEntregados.Id" />
+                                                                <input type="hidden" name="denominacion[@c]" value="1" />
+                                                                1
+                                                            </td>
+                                                            @*<td>
+                                                        <input type="number" name="cantidad[@c]" min="0" value="@valoresEntregados.Cantidad" class="calcularImporte readonly" data-id-moneda="@voucher.Id" data-id-denominacion="1" />
+                                                    </td>*@
+                                                            <td>
+                                                                <input type="text" name="importe[@c]" value="@valoresEntregados.Importe" class=" readonly" />
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" name="referencia[@c]" value="@valoresEntregados.Referencia" class=" readonly" />
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                }
+
+                                            }
+                                            else
+                                            {
+
+                                                <tr>
+                                                    <td>
+                                                        <input type="hidden" name="IdValoresEntregados" value="0" />
+                                                        <input type="hidden" name="denominacion[@c]" value="1" />
+                                                    </td>
+                                                    @*<td>
+                                                <input type="number" name="cantidad[@c]" min="0" class="calcularImporte" data-id-voucher="@voucher.Id" data-id-denominacion="1" />
+                                            </td>*@
+                                                    <td>
+                                                        <input type="text" name="importe[@c]" class="readonly" readonly />
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="referencia[@c]" class="readonly" readonly />
+                                                    </td>
+                                                </tr>
+
+                                            }
+
+                                            @*}
+                                    }*@
+
+                                        </tbody>
+                                    </table>
+
+                                    <button type="submit" class="btn btn-primary float-right">Guardar</button>
+                                }
+                            </div>
+                        </div>
+
+                        break;
+                    }
+
+                }
+
+            </section>
+        </div>
+    </div>
+</body>
+</html>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Información</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="form2">
+                    <div class="form-group">
+                        <div class="form-group">
+                            <label>Estado</label>
+                            <select class="form-control" name="Estado">
+                                <option value="0">Borrador</option>
+                                <option value="1">Publicado</option>
+                            </select>
+                        </div>
+                        <p>
+                            Publicado: no podrá hacer modificaciones.<br />
+                            Borrador: podrá hacer modificaciones.
+                        </p>
+                        @*<label>Ingresar el código en pantalla para actualizar la información.</label>
+                            <p>Código: <span id="code"></span></p>
+                            <input name="code" class="form-control" />*@
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary send" data-code="yes">Actualizar</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts {
+    <script>
+        var _changeInterval = null;
+
+        $(".calcularImporte").change(function (e) {
+
+            var cantidad = $(this).val()
+            var idVoucher = $(this).attr("data-id-voucher")
+            var IdDenominacion = 1
+            var denominacion = $(this).attr("data-voucher-denominacion")
+
+            console.log(cantidad)
+            console.log(denominacion)
+
+            clearInterval(_changeInterval)
+
+            _changeInterval = setInterval(function () {
+                var importe
+
+                if (cantidad == "" || cantidad == 0 || isNaN(cantidad)) {
+                    cantidad = 0;
+                    importe = 0;
+                }
+                else {
+                    importe = parseFloat(cantidad)
+                }
+
+                console.log(importe)
+                $(".importe" + IdDenominacion).val(importe.toFixed(2))
+                clearInterval(_changeInterval)
+
+            }, 500);
+
+        });
+
+        //
+        var IdRegistroDiaVoucher = 0
+
+        $(".send").on('click', function (event) {
+
+            isValid = true;
+            var url = "";
+
+            code = $(this).attr("data-code")
+
+            //if (code == "yes") {
+            //if ($("input[name=code]").val() == $("#code").html()) {
+            //isValid = true;
+            //url = "/update-status-coin"
+            //IdRegistroVentas = $(".edition").attr("data-idregistroventas")
+
+            //}
+            //else {
+            //    isValid = false;
+            //}
+            //}
+            //else {
+            //isValid = true;
+            //url = "/update-data-sales"
+            //}
+
+            url = "/update-status-voucher"
+
+            IdRegistroDiaVoucher = $("input[name=IdRegistroDiaVoucher]").val()
+
+            console.log(isValid)
+
+            //return null
+
+            var Estado = $('select[name=Estado]').val()
+
+            // Validar campos
+            var formData = {
+                Estado: Estado,
+                IdRegistroDiaVoucher: IdRegistroDiaVoucher
+            };
+
+            console.log(formData)
+
+            if (isValid) {
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: formData,
+                    success: function (data) {
+                        location.reload()
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        alert('Error al filtrar/verificar filtrobusqueda');
+                    }
+                });
+            }
+        });
+
+        //
+
+    </script>
+
+}
+

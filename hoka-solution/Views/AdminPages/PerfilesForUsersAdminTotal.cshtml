@@ -1,0 +1,237 @@
+﻿@model List<hoka.Models.AllModels>
+
+
+@{
+    ViewBag.Title = "PerfilesForUsersAdminTotal";
+    Layout = "~/Views/Shared/_LayoutAdminTotal.cshtml";
+}
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link href="~/Content/css/StylesParaTablasPerfiles.css" rel="stylesheet" />
+    <link href="~/Content/css/LPerfilesAdminCSS.css" rel="stylesheet" />
+
+</head>
+<body>
+
+    <div class="wrapper">
+        <!-- Navbar -->
+        <nav class="main-sidebar-custom-lg navbar navbar-expand navbar-white navbar-light">
+            <!-- Left navbar links -->
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+                </li>
+                <li class="nav-item d-none d-sm-inline-block">
+                    <a href="@Url.Action("InicioAdminTotal", "AdminPages")" class="nav-link">Inicio</a>
+                </li>
+
+            </ul>
+
+            <!-- Right navbar links -->
+            <ul class="navbar-nav ml-auto">
+                <!--AQUI VA PARA AUMENTAR LA PANTALLA-->
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+                        <i class="fas fa-expand-arrows-alt"></i>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="@Url.Action("CerrarSesion","Acceso")" class="nav-link">Cerrar Sesión</a>
+                </li>
+            </ul>
+        </nav>
+        <!-- /.navbar -->
+        @*CONTENIDO*@
+        <div class="content-header">
+            @*CONTENIDO*@
+            <section class="content-header">
+                @*TITULO DEL AREA*@
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1>LISTA DE PERFILES DE USUARIOS</h1>
+
+                        </div>
+                    </div>
+                </div><!-- /.container-fluid -->
+                <hr />
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between">
+                        <a class="btn btn-orange" id="abrirModalBoton">
+                            <i class="fas fa-user-plus"></i> Registrar Perfil
+                        </a>
+                        <div class="card-tools">
+                            <form method="get" action="@Url.Action("PerfilesForUsersAdminTotal", "AdminPages")">
+                                <div class="input-group input-group-sm responsive-search">
+                                    <input type="text" name="buscar" class="form-control float-right" placeholder="Buscar" value="@Request.QueryString["buscar"]">
+                                    <div class="input-group-append">
+                                        <button type="submit" class="btn btn-default">
+                                            <i class="fas fa-search"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                    <div class="card-body">
+                        <div class="card-body table-responsive p-0">
+                            <table class="table table-head-fixed text-nowrap tabla-ajustada">
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th >Nombres Perfiles</th>
+                                        <th>Roles</th>
+                                        <th>Configuración</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    @if (Model != null && Model.Any())
+                                    {
+                                        foreach (var item in Model)
+                                        {
+                                            foreach (var perfiles in item.PerfilM)
+                                            {
+                                                <tr>
+                                                    <td>@perfiles.Id_Perfil</td>
+                                                    <td>@perfiles.Nombre_Perfil</td>
+                                                    <td>@GetRolNombre(perfiles.Id_Rol)</td>
+                                                    <td>
+                                                        <a class="btn btn-primary btn-sm" href="@Url.Action("EditarPerfil","AdminPages", new { idPerfil = perfiles.Id_Perfil})">
+                                                            <i class="fas fa-edit"></i>Editar Perfil
+                                                        </a>
+                                                        @*<a onclick="AlertaBorrarUsuario('@perfiles.Id_Perfil')" class="btn btn-danger btn-sm">
+                                                            <i class="fas fa-trash"></i> Eliminar
+                                                        </a>*@
+
+                                                    </td>
+                                                </tr>
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <tr>
+                                            <td colspan="14">No se encontraron resultados.</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        <!--Modal para registro-->
+                        <div class="modal" id="ModalRegistro">
+                            <div class="modal-container">
+                                <div class="modal-content">
+                                    <span class="close">&times;</span>
+                                    <p class="login-box-msg">Registro de Perfil</p>
+
+                                    <div class="card-body register-card-body">
+
+                                        <!--Aqui vamos a inciar con el formulario para el registro-->
+                                        <form id="form-registro" action="@Url.Action("RegistrarPerfil", "AdminPages")" method="post">
+
+                                            <div class="row">
+
+
+                                                <!-- DATOS PERSONALES DE LOS USUARIOS AL REGISTRARSE -->
+
+                                                <input type="hidden" class="form-control" id="Id_Perfil_edit" name="Id_Perfil" />
+                                                <label for="Nombre">Nombre del perfil:</label>
+                                                <div class="input-group mb-3">
+                                                    <input type="text" class="form-control" name="Nombre_Perfil" placeholder="Ejem. Gerente, Vendedor, Etc.">
+                                                    <div class="input-group-append">
+                                                        <div class="input-group-text">
+                                                            <span class="fas fa-user"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <label for="Nombre">Seleccione un rol:</label>
+                                                <div class="input-group mb-3">
+                                                    <select class="form-control select2 rol-select" style="width: 100%" id="Id_Rol" name="Id_Rol">
+                                                        <option selected="selected">Selecciona un Rol</option>
+                                                        @foreach (var rolmodel in Model)
+                                                        {
+                                                            foreach (var rol in rolmodel.RolesM)
+                                                            {
+                                                                <option value="@rol.Id_Rol">@rol.Nombre_Rol</option>
+                                                            }
+                                                        }
+                                                    </select>
+                                                </div>
+
+                                            </div>
+                                            <div class="row button-container">
+                                                <!-- /.col -->
+                                                <div class="col-md-6">
+                                                    <button id="btn-cerrarmodal" type="submit" class="btn btn-warning btn-block"><i class="fas fa-user-times"></i>Volver</button>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <button id="btn-registro" type="submit" class="btn btn-primary btn-block"><i class="fas fa-user-check"></i>Registrar</button>
+                                                </div>
+                                                <!-- /.col -->
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--FINAL Modal para REGISTRO USUARIO-->
+                        <style>
+                            .pagination {
+                                justify-content: flex-end;
+                            }
+                        </style>
+
+                        <div class="pagination" style="display:none;">
+                            <ul class="pagination">
+                                <li class="page-item @(ViewBag.CurrentPage == 1 ? "disabled" : "")">
+                                    <a class="page-link" href="@Url.Action("PerfilesForUsersAdminTotal", new { buscar = ViewBag.Buscar, page = ViewBag.CurrentPage - 1 })">&laquo;</a>
+                                </li>
+
+                                @for (int i = 1; i <= ViewBag.TotalPages; i++)
+                                {
+                                    <li class="page-item @(i == ViewBag.CurrentPage ? "active" : "")">
+                                        <a class="page-link" href="@Url.Action("PerfilesForUsersAdminTotal", new { buscar = ViewBag.Buscar, page = i })">@i</a>
+                                    </li>
+                                }
+
+                                <li class="page-item @(ViewBag.CurrentPage == ViewBag.TotalPages ? "disabled" : "")">
+                                    <a class="page-link" href="@Url.Action("PerfilesForUsersAdminTotal", new { buscar = ViewBag.Buscar, page = ViewBag.CurrentPage + 1 })">&raquo;</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <!--SCRIPT-->
+
+                    </div>
+                </div>
+                <!-- /.card -->
+            </section>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <script src="~/Scripts/ScriptsAdmins/AlertaEliminarPerfilesAdmins.js"></script>
+    <script src="~/Scripts/ScriptsAdmins/ScriptPerfilesAdmintTotal.js"></script>
+
+
+
+    @functions {
+        // Función para obtener el nombre de un Rol por su ID
+        public string GetRolNombre(int idRol)
+        {
+            var rol = Model.FirstOrDefault().RolesM.FirstOrDefault(r => r.Id_Rol == idRol);
+            return rol != null ? rol.Nombre_Rol : "";
+        }
+
+    }
+
+
+</body>
+</html>

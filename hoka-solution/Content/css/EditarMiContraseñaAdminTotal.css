@@ -1,0 +1,12 @@
+﻿.card {
+    overflow-x: hidden;
+}
+
+.table-responsive {
+    overflow-x: hidden;
+}
+
+
+.btn i.fas {
+    margin-right: 8px;
+}

@@ -1,0 +1,49 @@
+/*.select2-container .select2-selection--multiple {
+    max-height: 50px;
+    overflow-y: auto;
+}
+*/
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+.btn-align-right {
+    display: flex;
+    justify-content: flex-end; /* Alineación horizontal al final (derecha) */
+}
+
+.card {
+    overflow-x: hidden;
+}
+
+.table-responsive {
+    overflow-x: hidden;
+}
+
+/* CSS para el botón actualizar */
+.btn-update-centered {
+    margin-top: 20px; /* Separación desde los elementos anteriores */
+    width: 100%; /* Hace que el botón tome todo el ancho disponible */
+    max-width: 300px; /* Limita el ancho máximo del botón */
+    display: block; /* Hace que el botón sea un bloque */
+    margin-left: 400px; /* Junto con el margin-right, centra el botón */
+    margin-right: auto;
+}
+
+/* Estilos para pantallas pequeñas */
+@media (max-width: 576px) {
+    .btn-update-centered {
+        margin-left: auto; /* Junto con el margin-right, centra el botón */
+        margin-top: 15px; /* Puede que desees reducir el margen superior en dispositivos más pequeños */
+        font-size: 0.9em; /* Reduce el tamaño de la fuente para que se vea bien en pantallas pequeñas */
+    }
+}
+
+

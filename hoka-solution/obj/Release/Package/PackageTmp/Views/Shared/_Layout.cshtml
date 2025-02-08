@@ -1,0 +1,296 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>HOKA - @ViewBag.Title</title>
+
+    <link rel="icon" type="image/png" href="~/Content/img/icons/BLANCO.png" />
+    <!--bootstrap DE TODO-->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css" rel="stylesheet" />
+    @*<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">*@
+
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+
+    <!--dateranger-->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
+    <!--para las fechas-->
+    <link href="~/Content/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+
+    <!-- Select2 -->
+    @*<link href="~/Content/select2/css/select2.min.css" rel="stylesheet" />
+    <link href="~/Content/select2-bootstrap4-theme/select2-bootstrap4.min.css" rel="stylesheet" />*@
+
+
+    <!-- Theme style ESTILO DE TODA LA PAGINA-->
+    <link rel="stylesheet" href="~/Content/dist/css/adminlte.min.css">
+    <link href="~/Content/css/Inicio.css" rel="stylesheet" />
+
+    <!-- overlayScrollbars CONTENIDO DE LISTA DE LA IZQ -->
+    <link rel="stylesheet" href="~/Content/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+
+    <!--CSS PARA LAS TABLAS DE DATATABLES-->
+   @* <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.3/css/jquery.dataTables.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.3.4/css/buttons.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/fixedheader/3.3.1/css/fixedHeader.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/searchpanes/2.1.2/css/searchPanes.dataTables.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/select/1.6.2/css/select.dataTables.min.css" />*@
+
+    @*<link href="~/Content/css/tablaexport.css" rel="stylesheet" />*@
+
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+    <div class="wrapper">
+
+        <!-- Recarga de pagina -->
+        <div class="preloader flex-column justify-content-center align-items-center">
+            <img class="animation__shake" src="~/Content/img/logo/LOGOBLANCO.png" alt="LogoHOKA" height="100" width="200">
+        </div>
+
+
+        @*AQUI IBA LA BARRA SIDEBAR*@
+
+        <!-- Main Sidebar Container -->
+        <aside class="main-sidebar sidebar-dark-primary elevation-4">
+            <!-- Brand Logo -->
+            <a id="textotitulo" class="brand-link">
+                <img src="~/Content/img/logo/SOLOBLANCO.png" alt="LogoHOKA" class="brand-image img-circle elevation-3" style="opacity: .8">
+                <span class="text-light font-weight-bold">HOKA</span>
+            </a>
+
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <!-- Sidebar user panel (optional) -->
+                <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                    <div class="image">
+                        <img src="~/Content/img/users/IconoUser.jpg" class="img-circle elevation-2" alt="User Image">
+                    </div>
+
+                    @{
+                        // Obtener el correo electrónico de la sesión
+                        string NombreU = Session["NombreU"] as string;
+                    }
+
+                    @if (NombreU != null)
+                    {
+                        <div class="info">
+                            <a id="textotitulo" class="text-light font-weight-bold">Hola, @NombreU!</a>
+                        </div>
+                    }
+                </div>
+
+                <!-- SidebarSearch Form -->
+                <div class="form-inline">
+                    <div class="input-group" data-widget="sidebar-search">
+                        <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
+                        <div class="input-group-append">
+                            <button class="btn btn-sidebar">
+                                <i class="fas fa-search fa-fw"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sidebar Menu -->
+                <nav class="mt-2">
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+
+
+                        @*<li class="nav-item">
+            <a href="@Url.Action("Inicio","Home")" class="nav-link">
+                <i class="nav-icon fas fa-file"></i>
+                <p>Pagina Principal</p>
+            </a>
+        </li>*@
+                        <li class="nav-header">CONFIGURACIÓN</li>
+
+                        <li class="nav-item">
+                            <a href="@Url.Action("ValidarAcceso", "Acceso")" id="accesoRe" class="nav-link">
+                                <i class="fas fa-user-plus"></i>
+                                <p>Crear Usuario</p>
+                            </a>
+
+                        </li>
+                        <li class="nav-header">GRAFICAS GENERALES</li>
+
+                        <li class="nav-item">
+                            <a href="@Url.Action("Graficas", "Home")" class="nav-link">
+                                <i class="fas fa-chart-pie"></i>
+                                <p>Grafica de Productos</p>
+                            </a>
+                        </li>
+                        <li class="nav-header">LISTA</li>
+
+                        <li class="nav-item">
+                            <a href="@Url.Action("InicioAlmacen", "Almacen")" class="nav-link">
+                                <i class="fas fa-store"></i>
+                                <p>Lista de Almacen</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="@Url.Action("InicioRemisiod", "RemisioD")" class="nav-link">
+                                <i class="fas fa-box-open"></i>
+                                <p>Lista de Productos</p>
+                            </a>
+                        </li>
+
+                        @{
+                            var usuarioSesion = Session["usuario"] as UsuarioModel;
+
+                        }
+
+                        <!--BOTON DESPLEGABLE PARA VENTAS-->
+                        @if (usuarioSesion != null && usuarioSesion.Id_Rol == 1 && (usuarioSesion.Permisos.Contains(1) || usuarioSesion.Permisos.Contains(2) || usuarioSesion.Permisos.Contains(3)))
+                        {
+                            <li class="nav-item">
+                                <a href="#" class="nav-link toggle-menu">
+                                    <i class="fas fa-file"></i>
+                                    <p>
+                                        REPORTES DE VENTA
+                                        <i class="fas fa-angle-left right"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview1">
+                                    @if (usuarioSesion.Permisos.Contains(1))
+                                    {
+                                        <li class="nav-item @(ViewBag.ActivePage == "VProductosAdmin" ? "active" : "")">
+                                            <a href="@Url.Action("VProductosAdmin", "AdminPages")" class="nav-link">
+                                                <i class="fas fa-file-alt"></i>
+                                                <p>Reporte venta por producto</p>
+                                            </a>
+                                        </li>
+                                    }
+
+                                    @if (usuarioSesion.Permisos.Contains(2))
+                                    {
+                                        <li class="nav-item @(ViewBag.ActivePage == "VAlmacenAdmin" ? "active" : "")">
+                                            <a href="@Url.Action("VAlmacenAdmin", "AdminPages")" class="nav-link">
+                                                <i class="fas fa-file-alt"></i>
+                                                <p>Reporte venta por departamento</p>
+                                            </a>
+                                        </li>
+                                    }
+
+                                    @if (usuarioSesion.Permisos.Contains(3))
+                                    {
+                                        <li class="nav-item @(ViewBag.ActivePage == "VVendedorAdmin" ? "active" : "")">
+                                            <a href="@Url.Action("VVendedorAdmin", "AdminPages")" class="nav-link">
+                                                <i class="fas fa-file-alt"></i>
+                                                <p>Reporte de venta y comision por vendedor</p>
+                                            </a>
+                                        </li>
+                                    }
+                                </ul>
+                            </li>
+                        }
+
+
+                    </ul>
+                </nav>
+                <!-- Sidebar user panel (optional) -->
+                <nav class="navlay">
+                    <hr class="line">
+                    <!-- Sidebar user panel (optional) -->
+                    <div class="user-panel mt-3 pb-3 mb-3 d-flex brand-link">
+                        <nav class="mt-2">
+                            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                                <li class="nav-item">
+                                    <a href="@Url.Action("CerrarSesion","Home")" class="nav-link">
+                                        <i class="fas fa-sign-out-alt"></i>
+                                        <p>Cerrar Sesión</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </nav>
+                <!-- /.sidebar-menu -->
+            </div>
+            <!-- /.sidebar -->
+        </aside>
+        <!-- Content Wrapper. Contains page content -->
+
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <!-- Main content -->
+            @RenderBody()
+
+        </div>
+        <!-- /.content-wrapper -->
+
+        <footer class="main-header">
+            <p>&copy; @DateTime.Now.Year - SOFTRITON</p>
+        </footer>
+
+    </div>
+    <!-- ./wrapper -->
+    <!-- jQuery -->
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+
+    <!-- jQuery -->
+    @*<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>*@
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    @*<script src="~/Content/plugins/jquery/jquery.min.js"></script>*@
+    <!-- overlayScrollbars -->
+    <script src="~/Content/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+
+    <!-- BOOTSTRAP -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Select2 -->
+    <script src="~/Content/select2/js/select2.full.min.js"></script>
+
+    <!-- Fechas hacer rango para datatables -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js" defer></script>
+
+    <!-- Formato de fechas -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.0/moment.min.js"></script>
+
+    <!-- Tempusdominus -->
+    <script src="~/Content/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+    @*<script src="" integrity="sha512-k6/Bkb8Fxf/c1Tkyl39yJwcOZ1P4cRrJu77p83zJjN2Z55prbFHxPs9vN7q3l3+tSMGPDdoH51AEU8Vgo1cgAA==" crossorigin="anonymous"></script>*@
+
+    <!-- Jquery Scripts para la DATATABLE -->
+    @*<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/v/bs5/dt-1.11.3/datatables.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/searchpanes/2.1.2/js/dataTables.searchPanes.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/select/1.6.2/js/dataTables.select.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://code.highcharts.com/highcharts.js"></script>*@
+
+    <!-- Lenguaje en español para el DATATABLE -->
+@*    <script src="https://cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json"></script>*@
+
+    <!-- Para hacer la suma -->
+@*    <script src="https://cdn.datatables.net/plug-ins/1.10.20/api/sum().js"></script>
+
+    <script src="https://cdn.datatables.net/fixedheader/3.3.1/js/dataTables.fixedHeader.min.js"></script>*@
+
+    <!-- Botones para imprimir -->
+@*    <script src="https://cdn.datatables.net/buttons/2.3.4/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.4/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.4/js/buttons.print.min.js"></script>*@
+
+
+    @RenderSection("scripts", required: false)
+
+    <!-- AdminLTE App -->
+    <script src="~/Content/dist/js/adminlte.js"></script>
+</body>
+</html>
+
+<script src="~/Scripts/sweetalert2.all.min.js"></script>
+<script src="~/Scripts/validarRegistro.js"></script>
+<script src="~/Scripts/validarLogin.js"></script>

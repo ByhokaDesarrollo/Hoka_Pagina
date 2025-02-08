@@ -1,0 +1,86 @@
+﻿
+@{
+    ViewBag.Title = "CONSULTA DE INVENTARIO";
+    Layout = "~/Views/Shared/_LayoutAdminTotal.cshtml";
+}
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link href="~/Content/css/inicio_imagen360.css" rel="stylesheet" />
+</head>
+<body>
+
+    <div class="wrapper">
+        <!-- Navbar -->
+        <nav class="main-sidebar-custom-lg navbar navbar-expand navbar-white navbar-light">
+            <!-- Left navbar links -->
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+                </li>
+                <li class="nav-item d-none d-sm-inline-block">
+                    <a href="@Url.Action("InicioAdmin", "AdminPages")" class="nav-link">Inicio</a>
+                </li>
+
+            </ul>
+
+            <!-- Right navbar links -->
+            <ul class="navbar-nav ml-auto">
+                <!--AQUI VA PARA AUMENTAR LA PANTALLA-->
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+                        <i class="fas fa-expand-arrows-alt"></i>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="@Url.Action("CerrarSesion","Acceso")" class="nav-link">Salir</a>
+                </li>
+            </ul>
+        </nav>
+        <!-- /.navbar -->
+        @*CONTENIDO*@
+        <div>
+            <!--Inicio de titulo-->
+
+            <div class="container">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1>Bienvenido</h1> <!--titulo-->
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <!--contenido-->
+                    <img id="imagenGiratoria" src="~/Content/img/logo/Logo360.png" alt="Descripción de la imagen">
+
+                </div>
+            </div>
+
+        </div>
+
+
+        <script src="~/Scripts/sweetalert2.all.min.js"></script>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#imagenGiratoria").mouseenter(function () {
+                $(this).css("transform", "rotateY(360deg)");
+                // Una vez que la animación se completa, quitamos el estilo para que no se repita.
+                setTimeout(function () {
+                    $("#imagenGiratoria").css("transform", "");
+                }, 1000); // 1000ms que es igual al tiempo de transición definido en CSS.
+            });
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,961 @@
+C:\Users\leoca\source\repos\pruebas\hoka\bin\hoka.dll.config
+C:\Users\leoca\source\repos\pruebas\hoka\bin\hoka.dll
+C:\Users\leoca\source\repos\pruebas\hoka\bin\hoka.pdb
+C:\Users\leoca\source\repos\pruebas\hoka\bin\roslyn\csc.exe
+C:\Users\leoca\source\repos\pruebas\hoka\bin\roslyn\csc.exe.config
+C:\Users\leoca\source\repos\pruebas\hoka\bin\roslyn\csc.rsp
+C:\Users\leoca\source\repos\pruebas\hoka\bin\roslyn\csi.exe
+C:\Users\leoca\source\repos\pruebas\hoka\bin\roslyn\csi.exe.config
+C:\Users\leoca\source\repos\pruebas\hoka\bin\roslyn\csi.rsp
+C:\Users\leoca\source\repos\pruebas\hoka\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\Users\leoca\source\repos\pruebas\hoka\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\leoca\source\repos\pruebas\hoka\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+C:\Users\leoca\source\repos\pruebas\hoka\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\Users\leoca\source\repos\pruebas\hoka\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+C:\Users\leoca\source\repos\pruebas\hoka\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\leoca\source\repos\pruebas\hoka\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\Users\leoca\source\repos\pruebas\hoka\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+C:\Users\leoca\source\repos\pruebas\hoka\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+C:\Users\leoca\source\repos\pruebas\hoka\bin\roslyn\Microsoft.Managed.Core.targets
+C:\Users\leoca\source\repos\pruebas\hoka\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Users\leoca\source\repos\pruebas\hoka\bin\roslyn\Microsoft.Win32.Primitives.dll
+C:\Users\leoca\source\repos\pruebas\hoka\bin\roslyn\System.AppContext.dll
+C:\Users\leoca\source\repos\pruebas\hoka\bin\roslyn\System.Collections.Immutable.dll
+C:\Users\leoca\source\repos\pruebas\hoka\bin\roslyn\System.Console.dll
+C:\Users\leoca\source\repos\pruebas\hoka\bin\roslyn\System.Diagnostics.DiagnosticSource.dll
+C:\Users\leoca\source\repos\pruebas\hoka\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+C:\Users\leoca\source\repos\pruebas\hoka\bin\roslyn\System.Diagnostics.StackTrace.dll
+C:\Users\leoca\source\repos\pruebas\hoka\bin\roslyn\System.Globalization.Calendars.dll
+C:\Users\leoca\source\repos\pruebas\hoka\bin\roslyn\System.IO.Compression.dll
+C:\Users\leoca\source\repos\pruebas\hoka\bin\roslyn\System.IO.Compression.ZipFile.dll
+C:\Users\leoca\source\repos\pruebas\hoka\bin\roslyn\System.IO.FileSystem.dll
+C:\Users\leoca\source\repos\pruebas\hoka\bin\roslyn\System.IO.FileSystem.Primitives.dll
+C:\Users\leoca\source\repos\pruebas\hoka\bin\roslyn\System.Net.Http.dll
+C:\Users\leoca\source\repos\pruebas\hoka\bin\roslyn\System.Net.Sockets.dll
+C:\Users\leoca\source\repos\pruebas\hoka\bin\roslyn\System.Reflection.Metadata.dll
+C:\Users\leoca\source\repos\pruebas\hoka\bin\roslyn\System.Runtime.InteropServices.RuntimeInformation.dll
+C:\Users\leoca\source\repos\pruebas\hoka\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+C:\Users\leoca\source\repos\pruebas\hoka\bin\roslyn\System.Security.Cryptography.Encoding.dll
+C:\Users\leoca\source\repos\pruebas\hoka\bin\roslyn\System.Security.Cryptography.Primitives.dll
+C:\Users\leoca\source\repos\pruebas\hoka\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+C:\Users\leoca\source\repos\pruebas\hoka\bin\roslyn\System.Text.Encoding.CodePages.dll
+C:\Users\leoca\source\repos\pruebas\hoka\bin\roslyn\System.Threading.Tasks.Extensions.dll
+C:\Users\leoca\source\repos\pruebas\hoka\bin\roslyn\System.ValueTuple.dll
+C:\Users\leoca\source\repos\pruebas\hoka\bin\roslyn\System.Xml.ReaderWriter.dll
+C:\Users\leoca\source\repos\pruebas\hoka\bin\roslyn\System.Xml.XmlDocument.dll
+C:\Users\leoca\source\repos\pruebas\hoka\bin\roslyn\System.Xml.XPath.dll
+C:\Users\leoca\source\repos\pruebas\hoka\bin\roslyn\System.Xml.XPath.XDocument.dll
+C:\Users\leoca\source\repos\pruebas\hoka\bin\roslyn\vbc.exe
+C:\Users\leoca\source\repos\pruebas\hoka\bin\roslyn\vbc.exe.config
+C:\Users\leoca\source\repos\pruebas\hoka\bin\roslyn\vbc.rsp
+C:\Users\leoca\source\repos\pruebas\hoka\bin\roslyn\VBCSCompiler.exe
+C:\Users\leoca\source\repos\pruebas\hoka\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\leoca\source\repos\pruebas\hoka\bin\Antlr3.Runtime.dll
+C:\Users\leoca\source\repos\pruebas\hoka\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\leoca\source\repos\pruebas\hoka\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\leoca\source\repos\pruebas\hoka\bin\Newtonsoft.Json.dll
+C:\Users\leoca\source\repos\pruebas\hoka\bin\PagedList.dll
+C:\Users\leoca\source\repos\pruebas\hoka\bin\PagedList.Mvc.dll
+C:\Users\leoca\source\repos\pruebas\hoka\bin\System.Web.Helpers.dll
+C:\Users\leoca\source\repos\pruebas\hoka\bin\System.Web.Mvc.dll
+C:\Users\leoca\source\repos\pruebas\hoka\bin\System.Web.Optimization.dll
+C:\Users\leoca\source\repos\pruebas\hoka\bin\System.Web.Razor.dll
+C:\Users\leoca\source\repos\pruebas\hoka\bin\System.Web.WebPages.Deployment.dll
+C:\Users\leoca\source\repos\pruebas\hoka\bin\System.Web.WebPages.dll
+C:\Users\leoca\source\repos\pruebas\hoka\bin\System.Web.WebPages.Razor.dll
+C:\Users\leoca\source\repos\pruebas\hoka\bin\WebGrease.dll
+C:\Users\leoca\source\repos\pruebas\hoka\bin\PagedList.xml
+C:\Users\leoca\source\repos\pruebas\hoka\bin\PagedList.Mvc.xml
+C:\Users\leoca\source\repos\pruebas\hoka\bin\System.Web.Helpers.xml
+C:\Users\leoca\source\repos\pruebas\hoka\bin\System.Web.Mvc.xml
+C:\Users\leoca\source\repos\pruebas\hoka\bin\System.Web.Optimization.xml
+C:\Users\leoca\source\repos\pruebas\hoka\bin\System.Web.Razor.xml
+C:\Users\leoca\source\repos\pruebas\hoka\bin\System.Web.WebPages.xml
+C:\Users\leoca\source\repos\pruebas\hoka\bin\System.Web.WebPages.Deployment.xml
+C:\Users\leoca\source\repos\pruebas\hoka\bin\System.Web.WebPages.Razor.xml
+C:\Users\leoca\source\repos\pruebas\hoka\bin\Newtonsoft.Json.xml
+C:\Users\leoca\source\repos\pruebas\hoka\bin\Antlr3.Runtime.pdb
+C:\Users\leoca\source\repos\pruebas\hoka\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\leoca\source\repos\pruebas\hoka\bin\es\System.Web.Helpers.resources.dll
+C:\Users\leoca\source\repos\pruebas\hoka\bin\es\System.Web.Mvc.resources.dll
+C:\Users\leoca\source\repos\pruebas\hoka\bin\es\System.Web.Optimization.resources.dll
+C:\Users\leoca\source\repos\pruebas\hoka\bin\es\System.Web.Razor.resources.dll
+C:\Users\leoca\source\repos\pruebas\hoka\bin\es\System.Web.WebPages.resources.dll
+C:\Users\leoca\source\repos\pruebas\hoka\bin\es\System.Web.WebPages.Deployment.resources.dll
+C:\Users\leoca\source\repos\pruebas\hoka\bin\es\System.Web.WebPages.Razor.resources.dll
+C:\Users\leoca\source\repos\pruebas\hoka\obj\Debug\hoka.csproj.AssemblyReference.cache
+C:\Users\leoca\source\repos\pruebas\hoka\obj\Debug\hoka.csproj.CoreCompileInputs.cache
+C:\Users\leoca\source\repos\pruebas\hoka\obj\Debug\hoka.csproj.CopyComplete
+C:\Users\leoca\source\repos\pruebas\hoka\obj\Debug\hoka.dll
+C:\Users\leoca\source\repos\pruebas\hoka\obj\Debug\hoka.pdb
+C:\Users\leoca\OneDrive\Escritorio\hoka\bin\hoka.dll.config
+C:\Users\leoca\OneDrive\Escritorio\hoka\bin\hoka.dll
+C:\Users\leoca\OneDrive\Escritorio\hoka\bin\hoka.pdb
+C:\Users\leoca\OneDrive\Escritorio\hoka\bin\roslyn\csc.exe
+C:\Users\leoca\OneDrive\Escritorio\hoka\bin\roslyn\csc.exe.config
+C:\Users\leoca\OneDrive\Escritorio\hoka\bin\roslyn\csc.rsp
+C:\Users\leoca\OneDrive\Escritorio\hoka\bin\roslyn\csi.exe
+C:\Users\leoca\OneDrive\Escritorio\hoka\bin\roslyn\csi.exe.config
+C:\Users\leoca\OneDrive\Escritorio\hoka\bin\roslyn\csi.rsp
+C:\Users\leoca\OneDrive\Escritorio\hoka\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\Users\leoca\OneDrive\Escritorio\hoka\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\leoca\OneDrive\Escritorio\hoka\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+C:\Users\leoca\OneDrive\Escritorio\hoka\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\Users\leoca\OneDrive\Escritorio\hoka\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+C:\Users\leoca\OneDrive\Escritorio\hoka\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\leoca\OneDrive\Escritorio\hoka\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\Users\leoca\OneDrive\Escritorio\hoka\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+C:\Users\leoca\OneDrive\Escritorio\hoka\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+C:\Users\leoca\OneDrive\Escritorio\hoka\bin\roslyn\Microsoft.Managed.Core.targets
+C:\Users\leoca\OneDrive\Escritorio\hoka\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Users\leoca\OneDrive\Escritorio\hoka\bin\roslyn\Microsoft.Win32.Primitives.dll
+C:\Users\leoca\OneDrive\Escritorio\hoka\bin\roslyn\System.AppContext.dll
+C:\Users\leoca\OneDrive\Escritorio\hoka\bin\roslyn\System.Collections.Immutable.dll
+C:\Users\leoca\OneDrive\Escritorio\hoka\bin\roslyn\System.Console.dll
+C:\Users\leoca\OneDrive\Escritorio\hoka\bin\roslyn\System.Diagnostics.DiagnosticSource.dll
+C:\Users\leoca\OneDrive\Escritorio\hoka\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+C:\Users\leoca\OneDrive\Escritorio\hoka\bin\roslyn\System.Diagnostics.StackTrace.dll
+C:\Users\leoca\OneDrive\Escritorio\hoka\bin\roslyn\System.Globalization.Calendars.dll
+C:\Users\leoca\OneDrive\Escritorio\hoka\bin\roslyn\System.IO.Compression.dll
+C:\Users\leoca\OneDrive\Escritorio\hoka\bin\roslyn\System.IO.Compression.ZipFile.dll
+C:\Users\leoca\OneDrive\Escritorio\hoka\bin\roslyn\System.IO.FileSystem.dll
+C:\Users\leoca\OneDrive\Escritorio\hoka\bin\roslyn\System.IO.FileSystem.Primitives.dll
+C:\Users\leoca\OneDrive\Escritorio\hoka\bin\roslyn\System.Net.Http.dll
+C:\Users\leoca\OneDrive\Escritorio\hoka\bin\roslyn\System.Net.Sockets.dll
+C:\Users\leoca\OneDrive\Escritorio\hoka\bin\roslyn\System.Reflection.Metadata.dll
+C:\Users\leoca\OneDrive\Escritorio\hoka\bin\roslyn\System.Runtime.InteropServices.RuntimeInformation.dll
+C:\Users\leoca\OneDrive\Escritorio\hoka\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+C:\Users\leoca\OneDrive\Escritorio\hoka\bin\roslyn\System.Security.Cryptography.Encoding.dll
+C:\Users\leoca\OneDrive\Escritorio\hoka\bin\roslyn\System.Security.Cryptography.Primitives.dll
+C:\Users\leoca\OneDrive\Escritorio\hoka\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+C:\Users\leoca\OneDrive\Escritorio\hoka\bin\roslyn\System.Text.Encoding.CodePages.dll
+C:\Users\leoca\OneDrive\Escritorio\hoka\bin\roslyn\System.Threading.Tasks.Extensions.dll
+C:\Users\leoca\OneDrive\Escritorio\hoka\bin\roslyn\System.ValueTuple.dll
+C:\Users\leoca\OneDrive\Escritorio\hoka\bin\roslyn\System.Xml.ReaderWriter.dll
+C:\Users\leoca\OneDrive\Escritorio\hoka\bin\roslyn\System.Xml.XmlDocument.dll
+C:\Users\leoca\OneDrive\Escritorio\hoka\bin\roslyn\System.Xml.XPath.dll
+C:\Users\leoca\OneDrive\Escritorio\hoka\bin\roslyn\System.Xml.XPath.XDocument.dll
+C:\Users\leoca\OneDrive\Escritorio\hoka\bin\roslyn\vbc.exe
+C:\Users\leoca\OneDrive\Escritorio\hoka\bin\roslyn\vbc.exe.config
+C:\Users\leoca\OneDrive\Escritorio\hoka\bin\roslyn\vbc.rsp
+C:\Users\leoca\OneDrive\Escritorio\hoka\bin\roslyn\VBCSCompiler.exe
+C:\Users\leoca\OneDrive\Escritorio\hoka\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\leoca\OneDrive\Escritorio\hoka\bin\Antlr3.Runtime.dll
+C:\Users\leoca\OneDrive\Escritorio\hoka\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\leoca\OneDrive\Escritorio\hoka\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\leoca\OneDrive\Escritorio\hoka\bin\Newtonsoft.Json.dll
+C:\Users\leoca\OneDrive\Escritorio\hoka\bin\PagedList.dll
+C:\Users\leoca\OneDrive\Escritorio\hoka\bin\PagedList.Mvc.dll
+C:\Users\leoca\OneDrive\Escritorio\hoka\bin\System.Web.Helpers.dll
+C:\Users\leoca\OneDrive\Escritorio\hoka\bin\System.Web.Mvc.dll
+C:\Users\leoca\OneDrive\Escritorio\hoka\bin\System.Web.Optimization.dll
+C:\Users\leoca\OneDrive\Escritorio\hoka\bin\System.Web.Razor.dll
+C:\Users\leoca\OneDrive\Escritorio\hoka\bin\System.Web.WebPages.Deployment.dll
+C:\Users\leoca\OneDrive\Escritorio\hoka\bin\System.Web.WebPages.dll
+C:\Users\leoca\OneDrive\Escritorio\hoka\bin\System.Web.WebPages.Razor.dll
+C:\Users\leoca\OneDrive\Escritorio\hoka\bin\WebGrease.dll
+C:\Users\leoca\OneDrive\Escritorio\hoka\bin\PagedList.xml
+C:\Users\leoca\OneDrive\Escritorio\hoka\bin\PagedList.Mvc.xml
+C:\Users\leoca\OneDrive\Escritorio\hoka\bin\System.Web.Helpers.xml
+C:\Users\leoca\OneDrive\Escritorio\hoka\bin\System.Web.Mvc.xml
+C:\Users\leoca\OneDrive\Escritorio\hoka\bin\System.Web.Optimization.xml
+C:\Users\leoca\OneDrive\Escritorio\hoka\bin\System.Web.Razor.xml
+C:\Users\leoca\OneDrive\Escritorio\hoka\bin\System.Web.WebPages.xml
+C:\Users\leoca\OneDrive\Escritorio\hoka\bin\System.Web.WebPages.Deployment.xml
+C:\Users\leoca\OneDrive\Escritorio\hoka\bin\System.Web.WebPages.Razor.xml
+C:\Users\leoca\OneDrive\Escritorio\hoka\bin\Newtonsoft.Json.xml
+C:\Users\leoca\OneDrive\Escritorio\hoka\bin\Antlr3.Runtime.pdb
+C:\Users\leoca\OneDrive\Escritorio\hoka\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\leoca\OneDrive\Escritorio\hoka\bin\es\System.Web.Helpers.resources.dll
+C:\Users\leoca\OneDrive\Escritorio\hoka\bin\es\System.Web.Mvc.resources.dll
+C:\Users\leoca\OneDrive\Escritorio\hoka\bin\es\System.Web.Optimization.resources.dll
+C:\Users\leoca\OneDrive\Escritorio\hoka\bin\es\System.Web.Razor.resources.dll
+C:\Users\leoca\OneDrive\Escritorio\hoka\bin\es\System.Web.WebPages.resources.dll
+C:\Users\leoca\OneDrive\Escritorio\hoka\bin\es\System.Web.WebPages.Deployment.resources.dll
+C:\Users\leoca\OneDrive\Escritorio\hoka\bin\es\System.Web.WebPages.Razor.resources.dll
+C:\Users\leoca\OneDrive\Escritorio\hoka\obj\Debug\hoka.csproj.AssemblyReference.cache
+C:\Users\leoca\OneDrive\Escritorio\hoka\obj\Debug\hoka.csproj.CoreCompileInputs.cache
+C:\Users\leoca\OneDrive\Escritorio\hoka\obj\Debug\hoka.csproj.CopyComplete
+C:\Users\leoca\OneDrive\Escritorio\hoka\obj\Debug\hoka.dll
+C:\Users\leoca\OneDrive\Escritorio\hoka\obj\Debug\hoka.pdb
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\bin\hoka.dll.config
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\bin\hoka.dll
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\bin\hoka.pdb
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\bin\roslyn\csc.exe
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\bin\roslyn\csc.exe.config
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\bin\roslyn\csc.rsp
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\bin\roslyn\csi.exe
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\bin\roslyn\csi.exe.config
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\bin\roslyn\csi.rsp
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\bin\roslyn\Microsoft.Managed.Core.targets
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\bin\roslyn\Microsoft.Win32.Primitives.dll
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\bin\roslyn\System.AppContext.dll
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\bin\roslyn\System.Collections.Immutable.dll
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\bin\roslyn\System.Console.dll
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\bin\roslyn\System.Diagnostics.DiagnosticSource.dll
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\bin\roslyn\System.Diagnostics.StackTrace.dll
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\bin\roslyn\System.Globalization.Calendars.dll
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\bin\roslyn\System.IO.Compression.dll
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\bin\roslyn\System.IO.Compression.ZipFile.dll
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\bin\roslyn\System.IO.FileSystem.dll
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\bin\roslyn\System.IO.FileSystem.Primitives.dll
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\bin\roslyn\System.Net.Http.dll
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\bin\roslyn\System.Net.Sockets.dll
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\bin\roslyn\System.Reflection.Metadata.dll
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\bin\roslyn\System.Runtime.InteropServices.RuntimeInformation.dll
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\bin\roslyn\System.Security.Cryptography.Encoding.dll
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\bin\roslyn\System.Security.Cryptography.Primitives.dll
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\bin\roslyn\System.Text.Encoding.CodePages.dll
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\bin\roslyn\System.Threading.Tasks.Extensions.dll
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\bin\roslyn\System.ValueTuple.dll
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\bin\roslyn\System.Xml.ReaderWriter.dll
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\bin\roslyn\System.Xml.XmlDocument.dll
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\bin\roslyn\System.Xml.XPath.dll
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\bin\roslyn\System.Xml.XPath.XDocument.dll
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\bin\roslyn\vbc.exe
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\bin\roslyn\vbc.exe.config
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\bin\roslyn\vbc.rsp
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\bin\roslyn\VBCSCompiler.exe
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\bin\Antlr3.Runtime.dll
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\bin\Newtonsoft.Json.dll
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\bin\PagedList.dll
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\bin\PagedList.Mvc.dll
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\bin\System.Web.Helpers.dll
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\bin\System.Web.Mvc.dll
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\bin\System.Web.Optimization.dll
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\bin\System.Web.Razor.dll
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\bin\System.Web.WebPages.Deployment.dll
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\bin\System.Web.WebPages.dll
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\bin\System.Web.WebPages.Razor.dll
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\bin\WebGrease.dll
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\bin\PagedList.xml
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\bin\PagedList.Mvc.xml
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\bin\System.Web.Helpers.xml
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\bin\System.Web.Mvc.xml
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\bin\System.Web.Optimization.xml
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\bin\System.Web.Razor.xml
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\bin\System.Web.WebPages.xml
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\bin\System.Web.WebPages.Deployment.xml
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\bin\System.Web.WebPages.Razor.xml
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\bin\Newtonsoft.Json.xml
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\bin\Antlr3.Runtime.pdb
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\bin\es\System.Web.Helpers.resources.dll
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\bin\es\System.Web.Mvc.resources.dll
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\bin\es\System.Web.Optimization.resources.dll
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\bin\es\System.Web.Razor.resources.dll
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\bin\es\System.Web.WebPages.resources.dll
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\bin\es\System.Web.WebPages.Deployment.resources.dll
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\bin\es\System.Web.WebPages.Razor.resources.dll
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\obj\Debug\hoka.csproj.AssemblyReference.cache
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\obj\Debug\hoka.csproj.CoreCompileInputs.cache
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\obj\Debug\hoka.csproj.CopyComplete
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\obj\Debug\hoka.dll
+C:\Users\PCLEO\OneDrive\Escritorio\hoka\obj\Debug\hoka.pdb
+C:\Users\PCLEO\source\repos\pruebas\hoka\bin\hoka.dll.config
+C:\Users\PCLEO\source\repos\pruebas\hoka\bin\hoka.dll
+C:\Users\PCLEO\source\repos\pruebas\hoka\bin\hoka.pdb
+C:\Users\PCLEO\source\repos\pruebas\hoka\bin\roslyn\csc.exe
+C:\Users\PCLEO\source\repos\pruebas\hoka\bin\roslyn\csc.exe.config
+C:\Users\PCLEO\source\repos\pruebas\hoka\bin\roslyn\csc.rsp
+C:\Users\PCLEO\source\repos\pruebas\hoka\bin\roslyn\csi.exe
+C:\Users\PCLEO\source\repos\pruebas\hoka\bin\roslyn\csi.exe.config
+C:\Users\PCLEO\source\repos\pruebas\hoka\bin\roslyn\csi.rsp
+C:\Users\PCLEO\source\repos\pruebas\hoka\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\Users\PCLEO\source\repos\pruebas\hoka\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\PCLEO\source\repos\pruebas\hoka\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+C:\Users\PCLEO\source\repos\pruebas\hoka\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\Users\PCLEO\source\repos\pruebas\hoka\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+C:\Users\PCLEO\source\repos\pruebas\hoka\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\PCLEO\source\repos\pruebas\hoka\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\Users\PCLEO\source\repos\pruebas\hoka\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+C:\Users\PCLEO\source\repos\pruebas\hoka\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+C:\Users\PCLEO\source\repos\pruebas\hoka\bin\roslyn\Microsoft.Managed.Core.targets
+C:\Users\PCLEO\source\repos\pruebas\hoka\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Users\PCLEO\source\repos\pruebas\hoka\bin\roslyn\Microsoft.Win32.Primitives.dll
+C:\Users\PCLEO\source\repos\pruebas\hoka\bin\roslyn\System.AppContext.dll
+C:\Users\PCLEO\source\repos\pruebas\hoka\bin\roslyn\System.Collections.Immutable.dll
+C:\Users\PCLEO\source\repos\pruebas\hoka\bin\roslyn\System.Console.dll
+C:\Users\PCLEO\source\repos\pruebas\hoka\bin\roslyn\System.Diagnostics.DiagnosticSource.dll
+C:\Users\PCLEO\source\repos\pruebas\hoka\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+C:\Users\PCLEO\source\repos\pruebas\hoka\bin\roslyn\System.Diagnostics.StackTrace.dll
+C:\Users\PCLEO\source\repos\pruebas\hoka\bin\roslyn\System.Globalization.Calendars.dll
+C:\Users\PCLEO\source\repos\pruebas\hoka\bin\roslyn\System.IO.Compression.dll
+C:\Users\PCLEO\source\repos\pruebas\hoka\bin\roslyn\System.IO.Compression.ZipFile.dll
+C:\Users\PCLEO\source\repos\pruebas\hoka\bin\roslyn\System.IO.FileSystem.dll
+C:\Users\PCLEO\source\repos\pruebas\hoka\bin\roslyn\System.IO.FileSystem.Primitives.dll
+C:\Users\PCLEO\source\repos\pruebas\hoka\bin\roslyn\System.Net.Http.dll
+C:\Users\PCLEO\source\repos\pruebas\hoka\bin\roslyn\System.Net.Sockets.dll
+C:\Users\PCLEO\source\repos\pruebas\hoka\bin\roslyn\System.Reflection.Metadata.dll
+C:\Users\PCLEO\source\repos\pruebas\hoka\bin\roslyn\System.Runtime.InteropServices.RuntimeInformation.dll
+C:\Users\PCLEO\source\repos\pruebas\hoka\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+C:\Users\PCLEO\source\repos\pruebas\hoka\bin\roslyn\System.Security.Cryptography.Encoding.dll
+C:\Users\PCLEO\source\repos\pruebas\hoka\bin\roslyn\System.Security.Cryptography.Primitives.dll
+C:\Users\PCLEO\source\repos\pruebas\hoka\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+C:\Users\PCLEO\source\repos\pruebas\hoka\bin\roslyn\System.Text.Encoding.CodePages.dll
+C:\Users\PCLEO\source\repos\pruebas\hoka\bin\roslyn\System.Threading.Tasks.Extensions.dll
+C:\Users\PCLEO\source\repos\pruebas\hoka\bin\roslyn\System.ValueTuple.dll
+C:\Users\PCLEO\source\repos\pruebas\hoka\bin\roslyn\System.Xml.ReaderWriter.dll
+C:\Users\PCLEO\source\repos\pruebas\hoka\bin\roslyn\System.Xml.XmlDocument.dll
+C:\Users\PCLEO\source\repos\pruebas\hoka\bin\roslyn\System.Xml.XPath.dll
+C:\Users\PCLEO\source\repos\pruebas\hoka\bin\roslyn\System.Xml.XPath.XDocument.dll
+C:\Users\PCLEO\source\repos\pruebas\hoka\bin\roslyn\vbc.exe
+C:\Users\PCLEO\source\repos\pruebas\hoka\bin\roslyn\vbc.exe.config
+C:\Users\PCLEO\source\repos\pruebas\hoka\bin\roslyn\vbc.rsp
+C:\Users\PCLEO\source\repos\pruebas\hoka\bin\roslyn\VBCSCompiler.exe
+C:\Users\PCLEO\source\repos\pruebas\hoka\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\PCLEO\source\repos\pruebas\hoka\bin\Antlr3.Runtime.dll
+C:\Users\PCLEO\source\repos\pruebas\hoka\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\PCLEO\source\repos\pruebas\hoka\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\PCLEO\source\repos\pruebas\hoka\bin\Newtonsoft.Json.dll
+C:\Users\PCLEO\source\repos\pruebas\hoka\bin\PagedList.dll
+C:\Users\PCLEO\source\repos\pruebas\hoka\bin\PagedList.Mvc.dll
+C:\Users\PCLEO\source\repos\pruebas\hoka\bin\System.Web.Helpers.dll
+C:\Users\PCLEO\source\repos\pruebas\hoka\bin\System.Web.Mvc.dll
+C:\Users\PCLEO\source\repos\pruebas\hoka\bin\System.Web.Optimization.dll
+C:\Users\PCLEO\source\repos\pruebas\hoka\bin\System.Web.Razor.dll
+C:\Users\PCLEO\source\repos\pruebas\hoka\bin\System.Web.WebPages.Deployment.dll
+C:\Users\PCLEO\source\repos\pruebas\hoka\bin\System.Web.WebPages.dll
+C:\Users\PCLEO\source\repos\pruebas\hoka\bin\System.Web.WebPages.Razor.dll
+C:\Users\PCLEO\source\repos\pruebas\hoka\bin\WebGrease.dll
+C:\Users\PCLEO\source\repos\pruebas\hoka\bin\PagedList.xml
+C:\Users\PCLEO\source\repos\pruebas\hoka\bin\PagedList.Mvc.xml
+C:\Users\PCLEO\source\repos\pruebas\hoka\bin\System.Web.Helpers.xml
+C:\Users\PCLEO\source\repos\pruebas\hoka\bin\System.Web.Mvc.xml
+C:\Users\PCLEO\source\repos\pruebas\hoka\bin\System.Web.Optimization.xml
+C:\Users\PCLEO\source\repos\pruebas\hoka\bin\System.Web.Razor.xml
+C:\Users\PCLEO\source\repos\pruebas\hoka\bin\System.Web.WebPages.xml
+C:\Users\PCLEO\source\repos\pruebas\hoka\bin\System.Web.WebPages.Deployment.xml
+C:\Users\PCLEO\source\repos\pruebas\hoka\bin\System.Web.WebPages.Razor.xml
+C:\Users\PCLEO\source\repos\pruebas\hoka\bin\Newtonsoft.Json.xml
+C:\Users\PCLEO\source\repos\pruebas\hoka\bin\Antlr3.Runtime.pdb
+C:\Users\PCLEO\source\repos\pruebas\hoka\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\PCLEO\source\repos\pruebas\hoka\bin\es\System.Web.Helpers.resources.dll
+C:\Users\PCLEO\source\repos\pruebas\hoka\bin\es\System.Web.Mvc.resources.dll
+C:\Users\PCLEO\source\repos\pruebas\hoka\bin\es\System.Web.Optimization.resources.dll
+C:\Users\PCLEO\source\repos\pruebas\hoka\bin\es\System.Web.Razor.resources.dll
+C:\Users\PCLEO\source\repos\pruebas\hoka\bin\es\System.Web.WebPages.resources.dll
+C:\Users\PCLEO\source\repos\pruebas\hoka\bin\es\System.Web.WebPages.Deployment.resources.dll
+C:\Users\PCLEO\source\repos\pruebas\hoka\bin\es\System.Web.WebPages.Razor.resources.dll
+C:\Users\PCLEO\source\repos\pruebas\hoka\obj\Debug\hoka.csproj.CoreCompileInputs.cache
+C:\Users\PCLEO\source\repos\pruebas\hoka\obj\Debug\hoka.csproj.CopyComplete
+C:\Users\PCLEO\source\repos\pruebas\hoka\obj\Debug\hoka.dll
+C:\Users\PCLEO\source\repos\pruebas\hoka\obj\Debug\hoka.pdb
+C:\Users\PCLEO\source\repos\pruebas\hoka\obj\Debug\hoka.csproj.AssemblyReference.cache
+C:\Users\josia\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\obj\Debug\hoka.csproj.AssemblyReference.cache
+C:\Users\josia\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\obj\Debug\hoka.csproj.CoreCompileInputs.cache
+C:\Users\josia\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\obj\Debug\hoka.dll
+C:\Users\josia\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\obj\Debug\hoka.pdb
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\obj\Debug\hoka.csproj.AssemblyReference.cache
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\obj\Debug\hoka.csproj.CoreCompileInputs.cache
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\bin\hoka.dll.config
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\bin\hoka.dll
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\bin\hoka.pdb
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\bin\roslyn\csc.exe
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\bin\roslyn\csc.exe.config
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\bin\roslyn\csc.rsp
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\bin\roslyn\csi.exe
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\bin\roslyn\csi.exe.config
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\bin\roslyn\csi.rsp
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\bin\roslyn\Microsoft.Managed.Core.targets
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\bin\roslyn\Microsoft.Win32.Primitives.dll
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\bin\roslyn\System.AppContext.dll
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\bin\roslyn\System.Collections.Immutable.dll
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\bin\roslyn\System.Console.dll
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\bin\roslyn\System.Diagnostics.DiagnosticSource.dll
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\bin\roslyn\System.Diagnostics.StackTrace.dll
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\bin\roslyn\System.Globalization.Calendars.dll
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\bin\roslyn\System.IO.Compression.dll
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\bin\roslyn\System.IO.Compression.ZipFile.dll
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\bin\roslyn\System.IO.FileSystem.dll
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\bin\roslyn\System.IO.FileSystem.Primitives.dll
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\bin\roslyn\System.Net.Http.dll
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\bin\roslyn\System.Net.Sockets.dll
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\bin\roslyn\System.Reflection.Metadata.dll
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\bin\roslyn\System.Runtime.InteropServices.RuntimeInformation.dll
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\bin\roslyn\System.Security.Cryptography.Encoding.dll
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\bin\roslyn\System.Security.Cryptography.Primitives.dll
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\bin\roslyn\System.Text.Encoding.CodePages.dll
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\bin\roslyn\System.Threading.Tasks.Extensions.dll
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\bin\roslyn\System.ValueTuple.dll
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\bin\roslyn\System.Xml.ReaderWriter.dll
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\bin\roslyn\System.Xml.XmlDocument.dll
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\bin\roslyn\System.Xml.XPath.dll
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\bin\roslyn\System.Xml.XPath.XDocument.dll
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\bin\roslyn\vbc.exe
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\bin\roslyn\vbc.exe.config
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\bin\roslyn\vbc.rsp
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\bin\roslyn\VBCSCompiler.exe
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\bin\Antlr3.Runtime.dll
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\bin\Newtonsoft.Json.dll
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\bin\PagedList.dll
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\bin\PagedList.Mvc.dll
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\bin\System.Web.Helpers.dll
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\bin\System.Web.Mvc.dll
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\bin\System.Web.Optimization.dll
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\bin\System.Web.Razor.dll
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\bin\System.Web.WebPages.Deployment.dll
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\bin\System.Web.WebPages.dll
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\bin\System.Web.WebPages.Razor.dll
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\bin\WebGrease.dll
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\bin\PagedList.xml
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\bin\PagedList.Mvc.xml
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\bin\System.Web.Helpers.xml
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\bin\System.Web.Mvc.xml
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\bin\System.Web.Optimization.xml
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\bin\System.Web.Razor.xml
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\bin\System.Web.WebPages.xml
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\bin\System.Web.WebPages.Deployment.xml
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\bin\System.Web.WebPages.Razor.xml
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\bin\Newtonsoft.Json.xml
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\bin\Antlr3.Runtime.pdb
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\bin\es\System.Web.Helpers.resources.dll
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\bin\es\System.Web.Mvc.resources.dll
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\bin\es\System.Web.Optimization.resources.dll
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\bin\es\System.Web.Razor.resources.dll
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\bin\es\System.Web.WebPages.resources.dll
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\bin\es\System.Web.WebPages.Deployment.resources.dll
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\bin\es\System.Web.WebPages.Razor.resources.dll
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\obj\Debug\hoka.csproj.CopyComplete
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\obj\Debug\hoka.dll
+C:\Users\100169137\OneDrive\Escritorio\compumaya documentacion\hoka\hoka\obj\Debug\hoka.pdb
+C:\Users\100169137\OneDrive\Escritorio\hoka\obj\Debug\hoka.csproj.AssemblyReference.cache
+C:\Users\100169137\OneDrive\Escritorio\hoka\obj\Debug\hoka.csproj.CoreCompileInputs.cache
+C:\Users\100169137\OneDrive\Escritorio\hoka\obj\Debug\hoka.dll
+C:\Users\100169137\OneDrive\Escritorio\hoka\obj\Debug\hoka.pdb
+C:\Users\100169137\OneDrive\Escritorio\hoka\bin\hoka.dll.config
+C:\Users\100169137\OneDrive\Escritorio\hoka\bin\hoka.dll
+C:\Users\100169137\OneDrive\Escritorio\hoka\bin\hoka.pdb
+C:\Users\100169137\OneDrive\Escritorio\hoka\bin\roslyn\csc.exe
+C:\Users\100169137\OneDrive\Escritorio\hoka\bin\roslyn\csc.exe.config
+C:\Users\100169137\OneDrive\Escritorio\hoka\bin\roslyn\csc.rsp
+C:\Users\100169137\OneDrive\Escritorio\hoka\bin\roslyn\csi.exe
+C:\Users\100169137\OneDrive\Escritorio\hoka\bin\roslyn\csi.exe.config
+C:\Users\100169137\OneDrive\Escritorio\hoka\bin\roslyn\csi.rsp
+C:\Users\100169137\OneDrive\Escritorio\hoka\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\Users\100169137\OneDrive\Escritorio\hoka\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\100169137\OneDrive\Escritorio\hoka\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+C:\Users\100169137\OneDrive\Escritorio\hoka\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\Users\100169137\OneDrive\Escritorio\hoka\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+C:\Users\100169137\OneDrive\Escritorio\hoka\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\100169137\OneDrive\Escritorio\hoka\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\Users\100169137\OneDrive\Escritorio\hoka\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+C:\Users\100169137\OneDrive\Escritorio\hoka\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+C:\Users\100169137\OneDrive\Escritorio\hoka\bin\roslyn\Microsoft.Managed.Core.targets
+C:\Users\100169137\OneDrive\Escritorio\hoka\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Users\100169137\OneDrive\Escritorio\hoka\bin\roslyn\Microsoft.Win32.Primitives.dll
+C:\Users\100169137\OneDrive\Escritorio\hoka\bin\roslyn\System.AppContext.dll
+C:\Users\100169137\OneDrive\Escritorio\hoka\bin\roslyn\System.Collections.Immutable.dll
+C:\Users\100169137\OneDrive\Escritorio\hoka\bin\roslyn\System.Console.dll
+C:\Users\100169137\OneDrive\Escritorio\hoka\bin\roslyn\System.Diagnostics.DiagnosticSource.dll
+C:\Users\100169137\OneDrive\Escritorio\hoka\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+C:\Users\100169137\OneDrive\Escritorio\hoka\bin\roslyn\System.Diagnostics.StackTrace.dll
+C:\Users\100169137\OneDrive\Escritorio\hoka\bin\roslyn\System.Globalization.Calendars.dll
+C:\Users\100169137\OneDrive\Escritorio\hoka\bin\roslyn\System.IO.Compression.dll
+C:\Users\100169137\OneDrive\Escritorio\hoka\bin\roslyn\System.IO.Compression.ZipFile.dll
+C:\Users\100169137\OneDrive\Escritorio\hoka\bin\roslyn\System.IO.FileSystem.dll
+C:\Users\100169137\OneDrive\Escritorio\hoka\bin\roslyn\System.IO.FileSystem.Primitives.dll
+C:\Users\100169137\OneDrive\Escritorio\hoka\bin\roslyn\System.Net.Http.dll
+C:\Users\100169137\OneDrive\Escritorio\hoka\bin\roslyn\System.Net.Sockets.dll
+C:\Users\100169137\OneDrive\Escritorio\hoka\bin\roslyn\System.Reflection.Metadata.dll
+C:\Users\100169137\OneDrive\Escritorio\hoka\bin\roslyn\System.Runtime.InteropServices.RuntimeInformation.dll
+C:\Users\100169137\OneDrive\Escritorio\hoka\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+C:\Users\100169137\OneDrive\Escritorio\hoka\bin\roslyn\System.Security.Cryptography.Encoding.dll
+C:\Users\100169137\OneDrive\Escritorio\hoka\bin\roslyn\System.Security.Cryptography.Primitives.dll
+C:\Users\100169137\OneDrive\Escritorio\hoka\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+C:\Users\100169137\OneDrive\Escritorio\hoka\bin\roslyn\System.Text.Encoding.CodePages.dll
+C:\Users\100169137\OneDrive\Escritorio\hoka\bin\roslyn\System.Threading.Tasks.Extensions.dll
+C:\Users\100169137\OneDrive\Escritorio\hoka\bin\roslyn\System.ValueTuple.dll
+C:\Users\100169137\OneDrive\Escritorio\hoka\bin\roslyn\System.Xml.ReaderWriter.dll
+C:\Users\100169137\OneDrive\Escritorio\hoka\bin\roslyn\System.Xml.XmlDocument.dll
+C:\Users\100169137\OneDrive\Escritorio\hoka\bin\roslyn\System.Xml.XPath.dll
+C:\Users\100169137\OneDrive\Escritorio\hoka\bin\roslyn\System.Xml.XPath.XDocument.dll
+C:\Users\100169137\OneDrive\Escritorio\hoka\bin\roslyn\vbc.exe
+C:\Users\100169137\OneDrive\Escritorio\hoka\bin\roslyn\vbc.exe.config
+C:\Users\100169137\OneDrive\Escritorio\hoka\bin\roslyn\vbc.rsp
+C:\Users\100169137\OneDrive\Escritorio\hoka\bin\roslyn\VBCSCompiler.exe
+C:\Users\100169137\OneDrive\Escritorio\hoka\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\100169137\OneDrive\Escritorio\hoka\bin\Antlr3.Runtime.dll
+C:\Users\100169137\OneDrive\Escritorio\hoka\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\100169137\OneDrive\Escritorio\hoka\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\100169137\OneDrive\Escritorio\hoka\bin\Newtonsoft.Json.dll
+C:\Users\100169137\OneDrive\Escritorio\hoka\bin\PagedList.dll
+C:\Users\100169137\OneDrive\Escritorio\hoka\bin\PagedList.Mvc.dll
+C:\Users\100169137\OneDrive\Escritorio\hoka\bin\System.Web.Helpers.dll
+C:\Users\100169137\OneDrive\Escritorio\hoka\bin\System.Web.Mvc.dll
+C:\Users\100169137\OneDrive\Escritorio\hoka\bin\System.Web.Optimization.dll
+C:\Users\100169137\OneDrive\Escritorio\hoka\bin\System.Web.Razor.dll
+C:\Users\100169137\OneDrive\Escritorio\hoka\bin\System.Web.WebPages.Deployment.dll
+C:\Users\100169137\OneDrive\Escritorio\hoka\bin\System.Web.WebPages.dll
+C:\Users\100169137\OneDrive\Escritorio\hoka\bin\System.Web.WebPages.Razor.dll
+C:\Users\100169137\OneDrive\Escritorio\hoka\bin\WebGrease.dll
+C:\Users\100169137\OneDrive\Escritorio\hoka\bin\PagedList.xml
+C:\Users\100169137\OneDrive\Escritorio\hoka\bin\PagedList.Mvc.xml
+C:\Users\100169137\OneDrive\Escritorio\hoka\bin\System.Web.Helpers.xml
+C:\Users\100169137\OneDrive\Escritorio\hoka\bin\System.Web.Mvc.xml
+C:\Users\100169137\OneDrive\Escritorio\hoka\bin\System.Web.Optimization.xml
+C:\Users\100169137\OneDrive\Escritorio\hoka\bin\System.Web.Razor.xml
+C:\Users\100169137\OneDrive\Escritorio\hoka\bin\System.Web.WebPages.xml
+C:\Users\100169137\OneDrive\Escritorio\hoka\bin\System.Web.WebPages.Deployment.xml
+C:\Users\100169137\OneDrive\Escritorio\hoka\bin\System.Web.WebPages.Razor.xml
+C:\Users\100169137\OneDrive\Escritorio\hoka\bin\Newtonsoft.Json.xml
+C:\Users\100169137\OneDrive\Escritorio\hoka\bin\Antlr3.Runtime.pdb
+C:\Users\100169137\OneDrive\Escritorio\hoka\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\100169137\OneDrive\Escritorio\hoka\bin\es\System.Web.Helpers.resources.dll
+C:\Users\100169137\OneDrive\Escritorio\hoka\bin\es\System.Web.Mvc.resources.dll
+C:\Users\100169137\OneDrive\Escritorio\hoka\bin\es\System.Web.Optimization.resources.dll
+C:\Users\100169137\OneDrive\Escritorio\hoka\bin\es\System.Web.Razor.resources.dll
+C:\Users\100169137\OneDrive\Escritorio\hoka\bin\es\System.Web.WebPages.resources.dll
+C:\Users\100169137\OneDrive\Escritorio\hoka\bin\es\System.Web.WebPages.Deployment.resources.dll
+C:\Users\100169137\OneDrive\Escritorio\hoka\bin\es\System.Web.WebPages.Razor.resources.dll
+C:\Users\100169137\OneDrive\Escritorio\hoka\obj\Debug\hoka.csproj.CopyComplete
+D:\aplicaciones web\hoka\bin\hoka.dll.config
+D:\aplicaciones web\hoka\bin\hoka.dll
+D:\aplicaciones web\hoka\bin\hoka.pdb
+D:\aplicaciones web\hoka\bin\roslyn\csc.exe
+D:\aplicaciones web\hoka\bin\roslyn\csc.exe.config
+D:\aplicaciones web\hoka\bin\roslyn\csc.rsp
+D:\aplicaciones web\hoka\bin\roslyn\csi.exe
+D:\aplicaciones web\hoka\bin\roslyn\csi.exe.config
+D:\aplicaciones web\hoka\bin\roslyn\csi.rsp
+D:\aplicaciones web\hoka\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+D:\aplicaciones web\hoka\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+D:\aplicaciones web\hoka\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+D:\aplicaciones web\hoka\bin\roslyn\Microsoft.CodeAnalysis.dll
+D:\aplicaciones web\hoka\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+D:\aplicaciones web\hoka\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+D:\aplicaciones web\hoka\bin\roslyn\Microsoft.CSharp.Core.targets
+D:\aplicaciones web\hoka\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+D:\aplicaciones web\hoka\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+D:\aplicaciones web\hoka\bin\roslyn\Microsoft.Managed.Core.targets
+D:\aplicaciones web\hoka\bin\roslyn\Microsoft.VisualBasic.Core.targets
+D:\aplicaciones web\hoka\bin\roslyn\Microsoft.Win32.Primitives.dll
+D:\aplicaciones web\hoka\bin\roslyn\System.AppContext.dll
+D:\aplicaciones web\hoka\bin\roslyn\System.Collections.Immutable.dll
+D:\aplicaciones web\hoka\bin\roslyn\System.Console.dll
+D:\aplicaciones web\hoka\bin\roslyn\System.Diagnostics.DiagnosticSource.dll
+D:\aplicaciones web\hoka\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+D:\aplicaciones web\hoka\bin\roslyn\System.Diagnostics.StackTrace.dll
+D:\aplicaciones web\hoka\bin\roslyn\System.Globalization.Calendars.dll
+D:\aplicaciones web\hoka\bin\roslyn\System.IO.Compression.dll
+D:\aplicaciones web\hoka\bin\roslyn\System.IO.Compression.ZipFile.dll
+D:\aplicaciones web\hoka\bin\roslyn\System.IO.FileSystem.dll
+D:\aplicaciones web\hoka\bin\roslyn\System.IO.FileSystem.Primitives.dll
+D:\aplicaciones web\hoka\bin\roslyn\System.Net.Http.dll
+D:\aplicaciones web\hoka\bin\roslyn\System.Net.Sockets.dll
+D:\aplicaciones web\hoka\bin\roslyn\System.Reflection.Metadata.dll
+D:\aplicaciones web\hoka\bin\roslyn\System.Runtime.InteropServices.RuntimeInformation.dll
+D:\aplicaciones web\hoka\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+D:\aplicaciones web\hoka\bin\roslyn\System.Security.Cryptography.Encoding.dll
+D:\aplicaciones web\hoka\bin\roslyn\System.Security.Cryptography.Primitives.dll
+D:\aplicaciones web\hoka\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+D:\aplicaciones web\hoka\bin\roslyn\System.Text.Encoding.CodePages.dll
+D:\aplicaciones web\hoka\bin\roslyn\System.Threading.Tasks.Extensions.dll
+D:\aplicaciones web\hoka\bin\roslyn\System.ValueTuple.dll
+D:\aplicaciones web\hoka\bin\roslyn\System.Xml.ReaderWriter.dll
+D:\aplicaciones web\hoka\bin\roslyn\System.Xml.XmlDocument.dll
+D:\aplicaciones web\hoka\bin\roslyn\System.Xml.XPath.dll
+D:\aplicaciones web\hoka\bin\roslyn\System.Xml.XPath.XDocument.dll
+D:\aplicaciones web\hoka\bin\roslyn\vbc.exe
+D:\aplicaciones web\hoka\bin\roslyn\vbc.exe.config
+D:\aplicaciones web\hoka\bin\roslyn\vbc.rsp
+D:\aplicaciones web\hoka\bin\roslyn\VBCSCompiler.exe
+D:\aplicaciones web\hoka\bin\roslyn\VBCSCompiler.exe.config
+D:\aplicaciones web\hoka\bin\Antlr3.Runtime.dll
+D:\aplicaciones web\hoka\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+D:\aplicaciones web\hoka\bin\Microsoft.Web.Infrastructure.dll
+D:\aplicaciones web\hoka\bin\Newtonsoft.Json.dll
+D:\aplicaciones web\hoka\bin\PagedList.dll
+D:\aplicaciones web\hoka\bin\PagedList.Mvc.dll
+D:\aplicaciones web\hoka\bin\System.Web.Helpers.dll
+D:\aplicaciones web\hoka\bin\System.Web.Mvc.dll
+D:\aplicaciones web\hoka\bin\System.Web.Optimization.dll
+D:\aplicaciones web\hoka\bin\System.Web.Razor.dll
+D:\aplicaciones web\hoka\bin\System.Web.WebPages.Deployment.dll
+D:\aplicaciones web\hoka\bin\System.Web.WebPages.dll
+D:\aplicaciones web\hoka\bin\System.Web.WebPages.Razor.dll
+D:\aplicaciones web\hoka\bin\WebGrease.dll
+D:\aplicaciones web\hoka\bin\PagedList.xml
+D:\aplicaciones web\hoka\bin\PagedList.Mvc.xml
+D:\aplicaciones web\hoka\bin\System.Web.Helpers.xml
+D:\aplicaciones web\hoka\bin\System.Web.Mvc.xml
+D:\aplicaciones web\hoka\bin\System.Web.Optimization.xml
+D:\aplicaciones web\hoka\bin\System.Web.Razor.xml
+D:\aplicaciones web\hoka\bin\System.Web.WebPages.xml
+D:\aplicaciones web\hoka\bin\System.Web.WebPages.Deployment.xml
+D:\aplicaciones web\hoka\bin\System.Web.WebPages.Razor.xml
+D:\aplicaciones web\hoka\bin\Newtonsoft.Json.xml
+D:\aplicaciones web\hoka\bin\Antlr3.Runtime.pdb
+D:\aplicaciones web\hoka\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+D:\aplicaciones web\hoka\bin\es\System.Web.Helpers.resources.dll
+D:\aplicaciones web\hoka\bin\es\System.Web.Mvc.resources.dll
+D:\aplicaciones web\hoka\bin\es\System.Web.Optimization.resources.dll
+D:\aplicaciones web\hoka\bin\es\System.Web.Razor.resources.dll
+D:\aplicaciones web\hoka\bin\es\System.Web.WebPages.resources.dll
+D:\aplicaciones web\hoka\bin\es\System.Web.WebPages.Deployment.resources.dll
+D:\aplicaciones web\hoka\bin\es\System.Web.WebPages.Razor.resources.dll
+D:\aplicaciones web\hoka\obj\Debug\hoka.csproj.AssemblyReference.cache
+D:\aplicaciones web\hoka\obj\Debug\hoka.csproj.CoreCompileInputs.cache
+D:\aplicaciones web\hoka\obj\Debug\hoka.csproj.Up2Date
+D:\aplicaciones web\hoka\obj\Debug\hoka.dll
+D:\aplicaciones web\hoka\obj\Debug\hoka.pdb
+D:\aplicaciones web\triton-web\bin\hoka.dll.config
+D:\aplicaciones web\triton-web\bin\hoka.dll
+D:\aplicaciones web\triton-web\bin\hoka.pdb
+D:\aplicaciones web\triton-web\bin\roslyn\csc.exe
+D:\aplicaciones web\triton-web\bin\roslyn\csc.exe.config
+D:\aplicaciones web\triton-web\bin\roslyn\csc.rsp
+D:\aplicaciones web\triton-web\bin\roslyn\csi.exe
+D:\aplicaciones web\triton-web\bin\roslyn\csi.exe.config
+D:\aplicaciones web\triton-web\bin\roslyn\csi.rsp
+D:\aplicaciones web\triton-web\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+D:\aplicaciones web\triton-web\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+D:\aplicaciones web\triton-web\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+D:\aplicaciones web\triton-web\bin\roslyn\Microsoft.CodeAnalysis.dll
+D:\aplicaciones web\triton-web\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+D:\aplicaciones web\triton-web\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+D:\aplicaciones web\triton-web\bin\roslyn\Microsoft.CSharp.Core.targets
+D:\aplicaciones web\triton-web\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+D:\aplicaciones web\triton-web\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+D:\aplicaciones web\triton-web\bin\roslyn\Microsoft.Managed.Core.targets
+D:\aplicaciones web\triton-web\bin\roslyn\Microsoft.VisualBasic.Core.targets
+D:\aplicaciones web\triton-web\bin\roslyn\Microsoft.Win32.Primitives.dll
+D:\aplicaciones web\triton-web\bin\roslyn\System.AppContext.dll
+D:\aplicaciones web\triton-web\bin\roslyn\System.Collections.Immutable.dll
+D:\aplicaciones web\triton-web\bin\roslyn\System.Console.dll
+D:\aplicaciones web\triton-web\bin\roslyn\System.Diagnostics.DiagnosticSource.dll
+D:\aplicaciones web\triton-web\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+D:\aplicaciones web\triton-web\bin\roslyn\System.Diagnostics.StackTrace.dll
+D:\aplicaciones web\triton-web\bin\roslyn\System.Globalization.Calendars.dll
+D:\aplicaciones web\triton-web\bin\roslyn\System.IO.Compression.dll
+D:\aplicaciones web\triton-web\bin\roslyn\System.IO.Compression.ZipFile.dll
+D:\aplicaciones web\triton-web\bin\roslyn\System.IO.FileSystem.dll
+D:\aplicaciones web\triton-web\bin\roslyn\System.IO.FileSystem.Primitives.dll
+D:\aplicaciones web\triton-web\bin\roslyn\System.Net.Http.dll
+D:\aplicaciones web\triton-web\bin\roslyn\System.Net.Sockets.dll
+D:\aplicaciones web\triton-web\bin\roslyn\System.Reflection.Metadata.dll
+D:\aplicaciones web\triton-web\bin\roslyn\System.Runtime.InteropServices.RuntimeInformation.dll
+D:\aplicaciones web\triton-web\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+D:\aplicaciones web\triton-web\bin\roslyn\System.Security.Cryptography.Encoding.dll
+D:\aplicaciones web\triton-web\bin\roslyn\System.Security.Cryptography.Primitives.dll
+D:\aplicaciones web\triton-web\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+D:\aplicaciones web\triton-web\bin\roslyn\System.Text.Encoding.CodePages.dll
+D:\aplicaciones web\triton-web\bin\roslyn\System.Threading.Tasks.Extensions.dll
+D:\aplicaciones web\triton-web\bin\roslyn\System.ValueTuple.dll
+D:\aplicaciones web\triton-web\bin\roslyn\System.Xml.ReaderWriter.dll
+D:\aplicaciones web\triton-web\bin\roslyn\System.Xml.XmlDocument.dll
+D:\aplicaciones web\triton-web\bin\roslyn\System.Xml.XPath.dll
+D:\aplicaciones web\triton-web\bin\roslyn\System.Xml.XPath.XDocument.dll
+D:\aplicaciones web\triton-web\bin\roslyn\vbc.exe
+D:\aplicaciones web\triton-web\bin\roslyn\vbc.exe.config
+D:\aplicaciones web\triton-web\bin\roslyn\vbc.rsp
+D:\aplicaciones web\triton-web\bin\roslyn\VBCSCompiler.exe
+D:\aplicaciones web\triton-web\bin\roslyn\VBCSCompiler.exe.config
+D:\aplicaciones web\triton-web\bin\Antlr3.Runtime.dll
+D:\aplicaciones web\triton-web\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+D:\aplicaciones web\triton-web\bin\Microsoft.Web.Infrastructure.dll
+D:\aplicaciones web\triton-web\bin\Newtonsoft.Json.dll
+D:\aplicaciones web\triton-web\bin\PagedList.dll
+D:\aplicaciones web\triton-web\bin\PagedList.Mvc.dll
+D:\aplicaciones web\triton-web\bin\System.Web.Helpers.dll
+D:\aplicaciones web\triton-web\bin\System.Web.Mvc.dll
+D:\aplicaciones web\triton-web\bin\System.Web.Optimization.dll
+D:\aplicaciones web\triton-web\bin\System.Web.Razor.dll
+D:\aplicaciones web\triton-web\bin\System.Web.WebPages.Deployment.dll
+D:\aplicaciones web\triton-web\bin\System.Web.WebPages.dll
+D:\aplicaciones web\triton-web\bin\System.Web.WebPages.Razor.dll
+D:\aplicaciones web\triton-web\bin\WebGrease.dll
+D:\aplicaciones web\triton-web\bin\PagedList.xml
+D:\aplicaciones web\triton-web\bin\PagedList.Mvc.xml
+D:\aplicaciones web\triton-web\bin\System.Web.Helpers.xml
+D:\aplicaciones web\triton-web\bin\System.Web.Mvc.xml
+D:\aplicaciones web\triton-web\bin\System.Web.Optimization.xml
+D:\aplicaciones web\triton-web\bin\System.Web.Razor.xml
+D:\aplicaciones web\triton-web\bin\System.Web.WebPages.xml
+D:\aplicaciones web\triton-web\bin\System.Web.WebPages.Deployment.xml
+D:\aplicaciones web\triton-web\bin\System.Web.WebPages.Razor.xml
+D:\aplicaciones web\triton-web\bin\Newtonsoft.Json.xml
+D:\aplicaciones web\triton-web\bin\Antlr3.Runtime.pdb
+D:\aplicaciones web\triton-web\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+D:\aplicaciones web\triton-web\bin\es\System.Web.Helpers.resources.dll
+D:\aplicaciones web\triton-web\bin\es\System.Web.Mvc.resources.dll
+D:\aplicaciones web\triton-web\bin\es\System.Web.Optimization.resources.dll
+D:\aplicaciones web\triton-web\bin\es\System.Web.Razor.resources.dll
+D:\aplicaciones web\triton-web\bin\es\System.Web.WebPages.resources.dll
+D:\aplicaciones web\triton-web\bin\es\System.Web.WebPages.Deployment.resources.dll
+D:\aplicaciones web\triton-web\bin\es\System.Web.WebPages.Razor.resources.dll
+D:\aplicaciones web\triton-web\obj\Debug\hoka.csproj.AssemblyReference.cache
+D:\aplicaciones web\triton-web\obj\Debug\hoka.csproj.CoreCompileInputs.cache
+D:\aplicaciones web\triton-web\obj\Debug\hoka.csproj.Up2Date
+D:\aplicaciones web\triton-web\obj\Debug\hoka.dll
+D:\aplicaciones web\triton-web\obj\Debug\hoka.pdb
+D:\Hoka\repositorios\hoka-solution\bin\hoka.dll.config
+D:\Hoka\repositorios\hoka-solution\bin\hoka.dll
+D:\Hoka\repositorios\hoka-solution\bin\hoka.pdb
+D:\Hoka\repositorios\hoka-solution\bin\roslyn\csc.exe
+D:\Hoka\repositorios\hoka-solution\bin\roslyn\csc.exe.config
+D:\Hoka\repositorios\hoka-solution\bin\roslyn\csc.rsp
+D:\Hoka\repositorios\hoka-solution\bin\roslyn\csi.exe
+D:\Hoka\repositorios\hoka-solution\bin\roslyn\csi.exe.config
+D:\Hoka\repositorios\hoka-solution\bin\roslyn\csi.rsp
+D:\Hoka\repositorios\hoka-solution\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+D:\Hoka\repositorios\hoka-solution\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+D:\Hoka\repositorios\hoka-solution\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+D:\Hoka\repositorios\hoka-solution\bin\roslyn\Microsoft.CodeAnalysis.dll
+D:\Hoka\repositorios\hoka-solution\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+D:\Hoka\repositorios\hoka-solution\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+D:\Hoka\repositorios\hoka-solution\bin\roslyn\Microsoft.CSharp.Core.targets
+D:\Hoka\repositorios\hoka-solution\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+D:\Hoka\repositorios\hoka-solution\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+D:\Hoka\repositorios\hoka-solution\bin\roslyn\Microsoft.Managed.Core.CurrentVersions.targets
+D:\Hoka\repositorios\hoka-solution\bin\roslyn\Microsoft.Managed.Core.targets
+D:\Hoka\repositorios\hoka-solution\bin\roslyn\Microsoft.VisualBasic.Core.targets
+D:\Hoka\repositorios\hoka-solution\bin\roslyn\System.Buffers.dll
+D:\Hoka\repositorios\hoka-solution\bin\roslyn\System.Collections.Immutable.dll
+D:\Hoka\repositorios\hoka-solution\bin\roslyn\System.Memory.dll
+D:\Hoka\repositorios\hoka-solution\bin\roslyn\System.Numerics.Vectors.dll
+D:\Hoka\repositorios\hoka-solution\bin\roslyn\System.Reflection.Metadata.dll
+D:\Hoka\repositorios\hoka-solution\bin\roslyn\System.Runtime.CompilerServices.Unsafe.dll
+D:\Hoka\repositorios\hoka-solution\bin\roslyn\System.Text.Encoding.CodePages.dll
+D:\Hoka\repositorios\hoka-solution\bin\roslyn\System.Threading.Tasks.Extensions.dll
+D:\Hoka\repositorios\hoka-solution\bin\roslyn\vbc.exe
+D:\Hoka\repositorios\hoka-solution\bin\roslyn\vbc.exe.config
+D:\Hoka\repositorios\hoka-solution\bin\roslyn\vbc.rsp
+D:\Hoka\repositorios\hoka-solution\bin\roslyn\VBCSCompiler.exe
+D:\Hoka\repositorios\hoka-solution\bin\roslyn\VBCSCompiler.exe.config
+D:\Hoka\repositorios\hoka-solution\bin\Antlr3.Runtime.dll
+D:\Hoka\repositorios\hoka-solution\bin\EntityFramework.dll
+D:\Hoka\repositorios\hoka-solution\bin\EntityFramework.SqlServer.dll
+D:\Hoka\repositorios\hoka-solution\bin\hoka_cli.exe
+D:\Hoka\repositorios\hoka-solution\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+D:\Hoka\repositorios\hoka-solution\bin\Microsoft.Web.Infrastructure.dll
+D:\Hoka\repositorios\hoka-solution\bin\Newtonsoft.Json.dll
+D:\Hoka\repositorios\hoka-solution\bin\PagedList.dll
+D:\Hoka\repositorios\hoka-solution\bin\PagedList.Mvc.dll
+D:\Hoka\repositorios\hoka-solution\bin\System.Web.Helpers.dll
+D:\Hoka\repositorios\hoka-solution\bin\System.Web.Mvc.dll
+D:\Hoka\repositorios\hoka-solution\bin\System.Web.Optimization.dll
+D:\Hoka\repositorios\hoka-solution\bin\System.Web.Razor.dll
+D:\Hoka\repositorios\hoka-solution\bin\System.Web.WebPages.Deployment.dll
+D:\Hoka\repositorios\hoka-solution\bin\System.Web.WebPages.dll
+D:\Hoka\repositorios\hoka-solution\bin\System.Web.WebPages.Razor.dll
+D:\Hoka\repositorios\hoka-solution\bin\WebGrease.dll
+D:\Hoka\repositorios\hoka-solution\bin\hoka_cli.pdb
+D:\Hoka\repositorios\hoka-solution\bin\hoka_cli.exe.config
+D:\Hoka\repositorios\hoka-solution\bin\EntityFramework.xml
+D:\Hoka\repositorios\hoka-solution\bin\EntityFramework.SqlServer.xml
+D:\Hoka\repositorios\hoka-solution\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+D:\Hoka\repositorios\hoka-solution\bin\Newtonsoft.Json.xml
+D:\Hoka\repositorios\hoka-solution\bin\PagedList.xml
+D:\Hoka\repositorios\hoka-solution\bin\PagedList.Mvc.xml
+D:\Hoka\repositorios\hoka-solution\bin\System.Web.Helpers.xml
+D:\Hoka\repositorios\hoka-solution\bin\System.Web.Mvc.xml
+D:\Hoka\repositorios\hoka-solution\bin\System.Web.Razor.xml
+D:\Hoka\repositorios\hoka-solution\bin\System.Web.WebPages.xml
+D:\Hoka\repositorios\hoka-solution\bin\System.Web.WebPages.Deployment.xml
+D:\Hoka\repositorios\hoka-solution\bin\System.Web.WebPages.Razor.xml
+D:\Hoka\repositorios\hoka-solution\bin\System.Web.Optimization.xml
+D:\Hoka\repositorios\hoka-solution\bin\Antlr3.Runtime.pdb
+D:\Hoka\repositorios\hoka-solution\bin\es\System.Web.Helpers.resources.dll
+D:\Hoka\repositorios\hoka-solution\bin\es\System.Web.Mvc.resources.dll
+D:\Hoka\repositorios\hoka-solution\bin\es\System.Web.Razor.resources.dll
+D:\Hoka\repositorios\hoka-solution\bin\es\System.Web.WebPages.resources.dll
+D:\Hoka\repositorios\hoka-solution\bin\es\System.Web.WebPages.Deployment.resources.dll
+D:\Hoka\repositorios\hoka-solution\bin\es\System.Web.WebPages.Razor.resources.dll
+D:\Hoka\repositorios\hoka-solution\bin\es\System.Web.Optimization.resources.dll
+D:\Hoka\repositorios\hoka-solution\obj\Debug\hoka.csproj.AssemblyReference.cache
+D:\Hoka\repositorios\hoka-solution\obj\Debug\hoka.csproj.CoreCompileInputs.cache
+D:\Hoka\repositorios\hoka-solution\obj\Debug\hoka.csproj.Up2Date
+D:\Hoka\repositorios\hoka-solution\obj\Debug\hoka.dll
+D:\Hoka\repositorios\hoka-solution\obj\Debug\hoka.pdb
+D:\H\hoka-solution\bin\hoka.dll.config
+D:\H\hoka-solution\bin\hoka.dll
+D:\H\hoka-solution\bin\hoka.pdb
+D:\H\hoka-solution\bin\roslyn\csc.exe
+D:\H\hoka-solution\bin\roslyn\csc.exe.config
+D:\H\hoka-solution\bin\roslyn\csc.rsp
+D:\H\hoka-solution\bin\roslyn\csi.exe
+D:\H\hoka-solution\bin\roslyn\csi.exe.config
+D:\H\hoka-solution\bin\roslyn\csi.rsp
+D:\H\hoka-solution\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+D:\H\hoka-solution\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+D:\H\hoka-solution\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+D:\H\hoka-solution\bin\roslyn\Microsoft.CodeAnalysis.dll
+D:\H\hoka-solution\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+D:\H\hoka-solution\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+D:\H\hoka-solution\bin\roslyn\Microsoft.CSharp.Core.targets
+D:\H\hoka-solution\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+D:\H\hoka-solution\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+D:\H\hoka-solution\bin\roslyn\Microsoft.Managed.Core.CurrentVersions.targets
+D:\H\hoka-solution\bin\roslyn\Microsoft.Managed.Core.targets
+D:\H\hoka-solution\bin\roslyn\Microsoft.VisualBasic.Core.targets
+D:\H\hoka-solution\bin\roslyn\System.Buffers.dll
+D:\H\hoka-solution\bin\roslyn\System.Collections.Immutable.dll
+D:\H\hoka-solution\bin\roslyn\System.Memory.dll
+D:\H\hoka-solution\bin\roslyn\System.Numerics.Vectors.dll
+D:\H\hoka-solution\bin\roslyn\System.Reflection.Metadata.dll
+D:\H\hoka-solution\bin\roslyn\System.Runtime.CompilerServices.Unsafe.dll
+D:\H\hoka-solution\bin\roslyn\System.Text.Encoding.CodePages.dll
+D:\H\hoka-solution\bin\roslyn\System.Threading.Tasks.Extensions.dll
+D:\H\hoka-solution\bin\roslyn\vbc.exe
+D:\H\hoka-solution\bin\roslyn\vbc.exe.config
+D:\H\hoka-solution\bin\roslyn\vbc.rsp
+D:\H\hoka-solution\bin\roslyn\VBCSCompiler.exe
+D:\H\hoka-solution\bin\roslyn\VBCSCompiler.exe.config
+D:\H\hoka-solution\bin\Antlr3.Runtime.dll
+D:\H\hoka-solution\bin\EntityFramework.dll
+D:\H\hoka-solution\bin\EntityFramework.SqlServer.dll
+D:\H\hoka-solution\bin\hoka_cli.exe
+D:\H\hoka-solution\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+D:\H\hoka-solution\bin\Microsoft.Web.Infrastructure.dll
+D:\H\hoka-solution\bin\Newtonsoft.Json.dll
+D:\H\hoka-solution\bin\PagedList.dll
+D:\H\hoka-solution\bin\PagedList.Mvc.dll
+D:\H\hoka-solution\bin\System.Web.Helpers.dll
+D:\H\hoka-solution\bin\System.Web.Mvc.dll
+D:\H\hoka-solution\bin\System.Web.Optimization.dll
+D:\H\hoka-solution\bin\System.Web.Razor.dll
+D:\H\hoka-solution\bin\System.Web.WebPages.Deployment.dll
+D:\H\hoka-solution\bin\System.Web.WebPages.dll
+D:\H\hoka-solution\bin\System.Web.WebPages.Razor.dll
+D:\H\hoka-solution\bin\WebGrease.dll
+D:\H\hoka-solution\bin\hoka_cli.pdb
+D:\H\hoka-solution\bin\hoka_cli.exe.config
+D:\H\hoka-solution\bin\EntityFramework.xml
+D:\H\hoka-solution\bin\EntityFramework.SqlServer.xml
+D:\H\hoka-solution\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+D:\H\hoka-solution\bin\Newtonsoft.Json.xml
+D:\H\hoka-solution\bin\PagedList.xml
+D:\H\hoka-solution\bin\PagedList.Mvc.xml
+D:\H\hoka-solution\bin\System.Web.Helpers.xml
+D:\H\hoka-solution\bin\System.Web.Mvc.xml
+D:\H\hoka-solution\bin\System.Web.Razor.xml
+D:\H\hoka-solution\bin\System.Web.WebPages.xml
+D:\H\hoka-solution\bin\System.Web.WebPages.Deployment.xml
+D:\H\hoka-solution\bin\System.Web.WebPages.Razor.xml
+D:\H\hoka-solution\bin\System.Web.Optimization.xml
+D:\H\hoka-solution\bin\Antlr3.Runtime.pdb
+D:\H\hoka-solution\bin\es\System.Web.Helpers.resources.dll
+D:\H\hoka-solution\bin\es\System.Web.Mvc.resources.dll
+D:\H\hoka-solution\bin\es\System.Web.Razor.resources.dll
+D:\H\hoka-solution\bin\es\System.Web.WebPages.resources.dll
+D:\H\hoka-solution\bin\es\System.Web.WebPages.Deployment.resources.dll
+D:\H\hoka-solution\bin\es\System.Web.WebPages.Razor.resources.dll
+D:\H\hoka-solution\bin\es\System.Web.Optimization.resources.dll
+D:\H\hoka-solution\obj\Debug\hoka.csproj.AssemblyReference.cache
+D:\H\hoka-solution\obj\Debug\hoka.csproj.CoreCompileInputs.cache
+D:\H\hoka-solution\obj\Debug\hoka.csproj.Up2Date
+D:\H\hoka-solution\obj\Debug\hoka.dll
+D:\H\hoka-solution\obj\Debug\hoka.pdb
+D:\H\repositorios\hoka-solution\hoka-solution\bin\hoka.dll.config
+D:\H\repositorios\hoka-solution\hoka-solution\bin\hoka.dll
+D:\H\repositorios\hoka-solution\hoka-solution\bin\hoka.pdb
+D:\H\repositorios\hoka-solution\hoka-solution\bin\roslyn\csc.exe
+D:\H\repositorios\hoka-solution\hoka-solution\bin\roslyn\csc.exe.config
+D:\H\repositorios\hoka-solution\hoka-solution\bin\roslyn\csc.rsp
+D:\H\repositorios\hoka-solution\hoka-solution\bin\roslyn\csi.exe
+D:\H\repositorios\hoka-solution\hoka-solution\bin\roslyn\csi.exe.config
+D:\H\repositorios\hoka-solution\hoka-solution\bin\roslyn\csi.rsp
+D:\H\repositorios\hoka-solution\hoka-solution\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+D:\H\repositorios\hoka-solution\hoka-solution\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+D:\H\repositorios\hoka-solution\hoka-solution\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+D:\H\repositorios\hoka-solution\hoka-solution\bin\roslyn\Microsoft.CodeAnalysis.dll
+D:\H\repositorios\hoka-solution\hoka-solution\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+D:\H\repositorios\hoka-solution\hoka-solution\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+D:\H\repositorios\hoka-solution\hoka-solution\bin\roslyn\Microsoft.CSharp.Core.targets
+D:\H\repositorios\hoka-solution\hoka-solution\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+D:\H\repositorios\hoka-solution\hoka-solution\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+D:\H\repositorios\hoka-solution\hoka-solution\bin\roslyn\Microsoft.Managed.Core.CurrentVersions.targets
+D:\H\repositorios\hoka-solution\hoka-solution\bin\roslyn\Microsoft.Managed.Core.targets
+D:\H\repositorios\hoka-solution\hoka-solution\bin\roslyn\Microsoft.VisualBasic.Core.targets
+D:\H\repositorios\hoka-solution\hoka-solution\bin\roslyn\System.Buffers.dll
+D:\H\repositorios\hoka-solution\hoka-solution\bin\roslyn\System.Collections.Immutable.dll
+D:\H\repositorios\hoka-solution\hoka-solution\bin\roslyn\System.Memory.dll
+D:\H\repositorios\hoka-solution\hoka-solution\bin\roslyn\System.Numerics.Vectors.dll
+D:\H\repositorios\hoka-solution\hoka-solution\bin\roslyn\System.Reflection.Metadata.dll
+D:\H\repositorios\hoka-solution\hoka-solution\bin\roslyn\System.Runtime.CompilerServices.Unsafe.dll
+D:\H\repositorios\hoka-solution\hoka-solution\bin\roslyn\System.Text.Encoding.CodePages.dll
+D:\H\repositorios\hoka-solution\hoka-solution\bin\roslyn\System.Threading.Tasks.Extensions.dll
+D:\H\repositorios\hoka-solution\hoka-solution\bin\roslyn\vbc.exe
+D:\H\repositorios\hoka-solution\hoka-solution\bin\roslyn\vbc.exe.config
+D:\H\repositorios\hoka-solution\hoka-solution\bin\roslyn\vbc.rsp
+D:\H\repositorios\hoka-solution\hoka-solution\bin\roslyn\VBCSCompiler.exe
+D:\H\repositorios\hoka-solution\hoka-solution\bin\roslyn\VBCSCompiler.exe.config
+D:\H\repositorios\hoka-solution\hoka-solution\bin\Antlr3.Runtime.dll
+D:\H\repositorios\hoka-solution\hoka-solution\bin\EntityFramework.dll
+D:\H\repositorios\hoka-solution\hoka-solution\bin\EntityFramework.SqlServer.dll
+D:\H\repositorios\hoka-solution\hoka-solution\bin\hoka_cli.exe
+D:\H\repositorios\hoka-solution\hoka-solution\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+D:\H\repositorios\hoka-solution\hoka-solution\bin\Microsoft.Web.Infrastructure.dll
+D:\H\repositorios\hoka-solution\hoka-solution\bin\Newtonsoft.Json.dll
+D:\H\repositorios\hoka-solution\hoka-solution\bin\PagedList.dll
+D:\H\repositorios\hoka-solution\hoka-solution\bin\PagedList.Mvc.dll
+D:\H\repositorios\hoka-solution\hoka-solution\bin\System.Web.Helpers.dll
+D:\H\repositorios\hoka-solution\hoka-solution\bin\System.Web.Mvc.dll
+D:\H\repositorios\hoka-solution\hoka-solution\bin\System.Web.Optimization.dll
+D:\H\repositorios\hoka-solution\hoka-solution\bin\System.Web.Razor.dll
+D:\H\repositorios\hoka-solution\hoka-solution\bin\System.Web.WebPages.Deployment.dll
+D:\H\repositorios\hoka-solution\hoka-solution\bin\System.Web.WebPages.dll
+D:\H\repositorios\hoka-solution\hoka-solution\bin\System.Web.WebPages.Razor.dll
+D:\H\repositorios\hoka-solution\hoka-solution\bin\WebGrease.dll
+D:\H\repositorios\hoka-solution\hoka-solution\bin\hoka_cli.pdb
+D:\H\repositorios\hoka-solution\hoka-solution\bin\hoka_cli.exe.config
+D:\H\repositorios\hoka-solution\hoka-solution\bin\EntityFramework.xml
+D:\H\repositorios\hoka-solution\hoka-solution\bin\EntityFramework.SqlServer.xml
+D:\H\repositorios\hoka-solution\hoka-solution\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+D:\H\repositorios\hoka-solution\hoka-solution\bin\Newtonsoft.Json.xml
+D:\H\repositorios\hoka-solution\hoka-solution\bin\PagedList.xml
+D:\H\repositorios\hoka-solution\hoka-solution\bin\PagedList.Mvc.xml
+D:\H\repositorios\hoka-solution\hoka-solution\bin\System.Web.Helpers.xml
+D:\H\repositorios\hoka-solution\hoka-solution\bin\System.Web.Mvc.xml
+D:\H\repositorios\hoka-solution\hoka-solution\bin\System.Web.Razor.xml
+D:\H\repositorios\hoka-solution\hoka-solution\bin\System.Web.WebPages.xml
+D:\H\repositorios\hoka-solution\hoka-solution\bin\System.Web.WebPages.Deployment.xml
+D:\H\repositorios\hoka-solution\hoka-solution\bin\System.Web.WebPages.Razor.xml
+D:\H\repositorios\hoka-solution\hoka-solution\bin\System.Web.Optimization.xml
+D:\H\repositorios\hoka-solution\hoka-solution\bin\Antlr3.Runtime.pdb
+D:\H\repositorios\hoka-solution\hoka-solution\bin\es\System.Web.Helpers.resources.dll
+D:\H\repositorios\hoka-solution\hoka-solution\bin\es\System.Web.Mvc.resources.dll
+D:\H\repositorios\hoka-solution\hoka-solution\bin\es\System.Web.Razor.resources.dll
+D:\H\repositorios\hoka-solution\hoka-solution\bin\es\System.Web.WebPages.resources.dll
+D:\H\repositorios\hoka-solution\hoka-solution\bin\es\System.Web.WebPages.Deployment.resources.dll
+D:\H\repositorios\hoka-solution\hoka-solution\bin\es\System.Web.WebPages.Razor.resources.dll
+D:\H\repositorios\hoka-solution\hoka-solution\bin\es\System.Web.Optimization.resources.dll
+D:\H\repositorios\hoka-solution\hoka-solution\obj\Debug\hoka.csproj.AssemblyReference.cache
+D:\H\repositorios\hoka-solution\hoka-solution\obj\Debug\hoka.csproj.CoreCompileInputs.cache
+D:\H\repositorios\hoka-solution\hoka-solution\obj\Debug\hoka.csproj.Up2Date
+D:\H\repositorios\hoka-solution\hoka-solution\obj\Debug\hoka.dll
+D:\H\repositorios\hoka-solution\hoka-solution\obj\Debug\hoka.pdb

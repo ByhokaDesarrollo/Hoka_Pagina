@@ -1,0 +1,23 @@
+﻿#textotitulo {
+    text-decoration: none;
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+}
+
+    .nav-link i {
+        margin-right: 5px;
+    }
+
+.line {
+    position: relative;
+    top: 20px;
+    border-top: 1px solid lightgrey;
+    
+}
+
+.navlay {
+    margin-top: 150px;
+}

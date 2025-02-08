@@ -1,0 +1,164 @@
+﻿
+@{
+    ViewBag.Title = "CONSULTA ROTACIÓN";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <link href="~/Content/css/selectcomprim.css" rel="stylesheet" />
+    <link href="~/Content/css/estilosfiltroscss.css" rel="stylesheet" />
+
+    <!--para llamar el script tengo que cargarlo asi-->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="~/Scripts/ScriptsAdmins/ScriptRotacionAdminTotalJoy.js"></script>
+
+
+
+</head>
+<body>
+    <div class="wrapper">
+        <!--Inicio de sidebar-->
+        <nav class="main-sidebar-custom-lg navbar navbar-expand navbar-white navbar-light">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="pushmenu" href="#" role="button">
+                        <i class="fas fa-bars"></i>
+                    </a>
+                </li>
+                <li class="nav-item d-none d-sm-inline-block">
+                    <a class="nav-link" href="@Url.Action("InicioUser","UserPages")">Inicio</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <!--aqui el icon de aumentar pantalla-->
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+                        <i class="fas fa-expand-arrows-alt"></i>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="@Url.Action("CerrarSesion","Acceso")">Salir</a>
+                </li>
+            </ul>
+        </nav>
+
+
+        <!--Inicio de paginacion-->
+        <div class="content-header">
+            <section class="content-header">
+                <!--Inicio de titulo-->
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1>CONSULTA DE PRODUCTOS ROTADOS Y NO ROTADOS JOYERIA</h1>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+
+
+                <!--Inicio de contenido-->
+                <div class="card">
+                    <!--Inicio de Botones del sidebar de la tabla de contenido-->
+                    <div class="card-header">
+
+
+                        <form id="formRotacion" method="post">
+                            <!--aqui inicia el formulario-->
+                            <div class="row">
+                                <div class="col-lg-2 col-md-4 col-sm-6 col-12">
+                                    <label for="fechaInicioR">Fecha inicio:</label>
+                                    <input type="text" id="fechaInicio" name="fechaInicio" class="form-control" placeholder="dd/mm/aaaa" autocomplete="off">
+                                </div>
+                                <div class="col-lg-2 col-md-4 col-sm-6 col-12">
+                                    <label for="fechaFinR">Fecha fin:</label>
+                                    <input type="text" id="fechaFin" name="fechaFin" class="form-control" placeholder="dd/mm/aaaa" autocomplete="off">
+                                </div>
+
+                                <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+                                    <label for="almacen">Almacén</label>
+                                    <select class="form-control select2 almacen-select" style="width: 100%" id="almacen" name="almacen">
+                                        <option selected="selected">Selecciona un almacén</option>
+                                        @foreach (var almacen in ViewBag.Almacenes)
+                                        {
+                                            <option value="@almacen.Item2">@($"{almacen.Item1} - {almacen.Item2}")</option>
+                                        }
+                                    </select>
+                                </div>
+
+
+                                <div class="col-lg-3 col-md-4 col-sm-6 col-12 mt-2 mt-lg-0">
+                                    <label>Opción:</label><br>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="opcion" id="radioProductosRotados" value="rotados" checked>
+                                        <label class="form-check-label" for="radioProductosRotados">Productos rotados</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="opcion" id="radioProductosNoRotados" value="noRotados">
+                                        <label class="form-check-label" for="radioProductosNoRotados">Productos no rotados</label>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-lg-2 col-md-4 col-sm-6 col-12 mt-2 mt-lg-0">
+                                    <label for="btn-filtrar">Filtrar:</label>
+                                    <div>
+                                        <button type="submit" id="btn-filtrar" class="btn btn-info">
+                                            <i class="fas fa-search"></i> Buscar
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </form>
+                        <!--aqui finaliza el formulario-->
+
+                    </div>
+
+
+                    <!--Cuerpo del contenido(en este caso la tabla)-->
+                    <div class="card-body">
+                        <!--tabla 2 que es rotacion null-->
+                        <div class="table table-responsive">
+                            <table class="table table-striped" id="tablaProdNoRotados">
+                                <thead>
+                                    <tr>
+                                        <th>CodigoBarra</th> <!--esta en remisioD-->
+                                        <th>Nombre</th>
+                                        <th>Almacen</th> <!--remisioD-->
+                                        <th>categoria</th> <!--remisioD-->
+                                        <th>Uni. Vendidas Periodo</th> <!--remisioD-->
+                                        <th>Existencia</th><!--esta en remisioD-->
+                                        <th>Fecha</th><!--esta en remisioD-->
+
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!--Aqui ira el contenido de la peticion
+                                    por filtrado de busqueda
+                                    -->
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th id="sumaCantidads">Total Cantidad:</th>
+                                        <th id="sumaExistencia">Total Existencia:</th>
+                                        <th></th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!--Aqui termina el cuerpo-->
+                </div>
+            </section>
+        </div>
+    </div>
+</body>
+</html>

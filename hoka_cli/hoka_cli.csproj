@@ -1,0 +1,302 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\hoka-solution\packages\EntityFramework.6.5.1\build\EntityFramework.props" Condition="Exists('..\hoka-solution\packages\EntityFramework.6.5.1\build\EntityFramework.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{EDCEF3FD-2F7E-428A-95A3-D7E798B303B7}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>hoka_cli</RootNamespace>
+    <AssemblyName>hoka_cli</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\hoka-solution\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\hoka-solution\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\hoka-solution\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Context\Conexiones\SvAmbientePruebaConsultar.cs" />
+    <Compile Include="Context\Conexiones\SvConexionHokaCompuadmoConsultar.cs" />
+    <Compile Include="Context\Conexiones\SvConexionHokaIngresosConsultar.cs" />
+    <Compile Include="Context\Conexiones\SvConexionHokaJoyeriaConsultar.cs" />
+    <Compile Include="Context\EntityFramework\DBCHokaIngresos.cs" />
+    <Compile Include="Context\EntityFramework\DBCHokaJoyeria.cs" />
+    <Compile Include="Context\EntityFramework\DBCHokaCompuadmo.cs" />
+    <Compile Include="Context\EntityFramework\Entities\EnPaginacion.cs" />
+    <Compile Include="Context\EntityFramework\Interfaces\IRepository.cs" />
+    <Compile Include="Context\EntityFramework\Interfaces\IWorkRepository.cs" />
+    <Compile Include="Context\EntityFramework\Entities\EnRepository.cs" />
+    <Compile Include="Context\EntityFramework\Entities\EnWorkRepository.cs" />
+    <Compile Include="Context\EntityFramework\Servicios\SvEstablecerConexionDBCHokaJoyeria.cs" />
+    <Compile Include="Context\EntityFramework\Servicios\SvEstablecerConexionDBCHokaIngresos.cs" />
+    <Compile Include="Context\EntityFramework\Servicios\SvEstablecerConexionDBCHokaCompuadmo.cs" />
+    <Compile Include="Context\EntityFramework\Servicios\SvDbContextEstablecerConexion.cs" />
+    <Compile Include="HokaApp\Almacen\Caratula\AlmacenCaratulaReporte\SvAlmacenCaratulaReporteConsultar.cs" />
+    <Compile Include="HokaApp\Banco\Caratula\SvBancoCaratulaConsultarPorUsuario.cs" />
+    <Compile Include="HokaApp\Almacen\Caratula\AlmacenCaratula\SvAlmacenCaratulaConsultar.cs" />
+    <Compile Include="HokaApp\Almacen\Caratula\AlmacenCaratula\SvAlmacenCaratulaDesbloquear.cs" />
+    <Compile Include="HokaApp\Almacen\Caratula\AlmacenCaratula\SvAlmacenCaratulaGrabar.cs" />
+    <Compile Include="HokaApp\Usuario\Sesion\SvUsuarioIniciarSesion.cs" />
+    <Compile Include="Models\Compuadmo\Usuario\Permiso\AlmacenCaratula\EnUsuarioPermisoAlmacenCaratula.cs" />
+    <Compile Include="Models\Compuadmo\Usuario\Permiso\AlmacenCaratula\EsUsuarioPermisoAlmacenCaratula.cs" />
+    <Compile Include="Models\Compuadmo\Usuario\Permiso\AlmacenCaratula\RpUsuarioPermisoAlmacenCaratula.cs" />
+    <Compile Include="Models\Compuadmo\Usuario\Permiso\AlmacenCaratula\SvUsuarioPermisoAlmacenCaratulaConsultar.cs" />
+    <Compile Include="Models\Compuadmo\Usuario\Permiso\AlmacenCaratula\SvUsuarioPermisoAlmacenCaratulaIniciarRepositorio.cs" />
+    <Compile Include="Models\Compuadmo\Usuario\Permiso\EnUsuarioPermiso.cs" />
+    <Compile Include="Models\Compuadmo\Usuario\SvUsuarioIniciarSesion.cs" />
+    <Compile Include="Models\Compuadmo\Usuario\SvUsuarioException.cs" />
+    <Compile Include="Models\Compuadmo\Usuario\SvUsuario.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratula\SvAlmacenCaratulaExceptionGrabar.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratula\SvAlmacenCaratulaDesbloquear.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratula\SvAlmacenCaratulaGrabar.cs" />
+    <Compile Include="Models\Ingresos\Banco\Caratula\SvBancoCaratula.cs" />
+    <Compile Include="Models\Ingresos\Banco\Caratula\SvBancoCaratulaConsultar.cs" />
+    <Compile Include="Models\Joyeria\AlmacenCategoriaVenta\SvJoyeriaAlmacenCategoriaVentaConsultar.cs" />
+    <Compile Include="Models\Compuadmo\AlmacenCategoriaVenta\SvAlmacenCategoriaVentaIniciarRepositorioJoyeria.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratulaEfectivo\Moneda\Denominacion\SvAlmacenCaratulaEfectivoDenominacionException.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratulaEfectivo\Moneda\SvAlmacenCaratulaEfectivoMonedaException.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratulaVenta\Categoria\SvAlmacenCaratulaVentaCategoriaException.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratulaVenta\Categoria\SvAlmacenCaratulaVentaCategoriaExceptionActualizar.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratula\EnAlmacenCaratulaReporte.cs" />
+    <Compile Include="HokaApp\Almacen\Caratula\AlmacenCaratulaEfectivo\SvAlmacenCaratulaEfectivoActualizar.cs" />
+    <Compile Include="HokaApp\Almacen\Caratula\AlmacenCaratulaEfectivo\SvAlmacenCaratulaEfectivoConsultar.cs" />
+    <Compile Include="HokaApp\Almacen\Caratula\AlmacenCaratulaEfectivo\SvMonedaDenominacionConsultar.cs" />
+    <Compile Include="HokaApp\Almacen\Caratula\AlmacenCaratulaEfectivo\SvAlmacenCaratulaEfectivoCrear.cs" />
+    <Compile Include="HokaApp\Almacen\Caratula\AlmacenCaratulaEfectivo\SvAlmacenCaratulaEfectivoGrabar.cs" />
+    <Compile Include="HokaApp\Almacen\Caratula\AlmacenCaratulaVenta\SvAlmacenCaratulaVentaGrabar.cs" />
+    <Compile Include="HokaApp\Almacen\Caratula\AlmacenCaratulaVenta\SvAlmacenCaratulaVentaConsultarCategoriaVentaDelDia.cs" />
+    <Compile Include="HokaApp\Almacen\Caratula\AlmacenCaratulaVenta\SvAlmacenCaratulaVentaConsultar.cs" />
+    <Compile Include="HokaApp\Almacen\Caratula\AlmacenCaratulaVenta\SvAlmacenCaratulaVentaActualizar.cs" />
+    <Compile Include="HokaApp\Almacen\Caratula\AlmacenCaratulaVenta\SvAlmacenCaratulaVentaCrear.cs" />
+    <Compile Include="HokaApp\Almacen\Caratula\AlmacenCaratulaVoucher\SvAlmacenCaratulaVoucherActualizar.cs" />
+    <Compile Include="HokaApp\Almacen\Caratula\AlmacenCaratulaVoucher\SvAlmacenCaratulaVoucherConsultar.cs" />
+    <Compile Include="HokaApp\Almacen\Caratula\AlmacenCaratulaVoucher\SvVoucherConsultar.cs" />
+    <Compile Include="HokaApp\Almacen\Caratula\AlmacenCaratulaVoucher\SvAlmacenCaratulaVoucherCrear.cs" />
+    <Compile Include="HokaApp\Almacen\Caratula\AlmacenCaratulaVoucher\SvAlmacenCaratulaVoucherGrabar.cs" />
+    <Compile Include="HokaApp\Almacen\Caratula\AlmacenCaratula\SvAlmacenCaratulaConsultarCaratulasDelDia.cs" />
+    <Compile Include="Models\Compuadmo\Almacen\EsAlmacen.cs" />
+    <Compile Include="Models\Compuadmo\Catalogo\Almacen\SvCatalogoAlmacenIniciarRepositorio.cs" />
+    <Compile Include="Models\Compuadmo\Catalogo\Almacen\EsCatalogoAlmacen.cs" />
+    <Compile Include="Models\Compuadmo\AlmacenCategoriaVenta\EnAlmacenCategoriaVenta.cs" />
+    <Compile Include="Models\Compuadmo\AlmacenCategoriaVenta\EsAlmacenCategoriaVenta.cs" />
+    <Compile Include="Models\Compuadmo\AlmacenCategoriaVenta\RpAlmacenCategoriaVenta.cs" />
+    <Compile Include="Models\Compuadmo\AlmacenCategoriaVenta\SvAlmacenCategoriaVentaConsultar.cs" />
+    <Compile Include="Models\Compuadmo\AlmacenCategoriaVenta\SvAlmacenCategoriaVentaIniciarRepositorio.cs" />
+    <Compile Include="Models\Compuadmo\Categoria\EnCategoria.cs" />
+    <Compile Include="Models\Compuadmo\Categoria\EsCategoria.cs" />
+    <Compile Include="Models\Compuadmo\Categoria\RpCategoria.cs" />
+    <Compile Include="Models\Compuadmo\Categoria\SvCategoriaConsultar.cs" />
+    <Compile Include="Models\Compuadmo\Categoria\SvCategoriaIniciarRepositorio.cs" />
+    <Compile Include="Models\Compuadmo\Moneda\SvMonedaException.cs" />
+    <Compile Include="Models\Compuadmo\Moneda\SvMoneda.cs" />
+    <Compile Include="Models\Compuadmo\Moneda\Tipo\EnMonedaTipo.cs" />
+    <Compile Include="Models\Compuadmo\Moneda\Tipo\EsMonedaTipo.cs" />
+    <Compile Include="Models\Compuadmo\Moneda\Tipo\RpMonedaTipo.cs" />
+    <Compile Include="Models\Compuadmo\Moneda\Tipo\SvMonedaTipoConsultar.cs" />
+    <Compile Include="Models\Compuadmo\Moneda\Tipo\SvMonedaTipoIniciarRepositorio.cs" />
+    <Compile Include="Models\Compuadmo\Moneda\Denominacion\EnMonedaDenominacion.cs" />
+    <Compile Include="Models\Compuadmo\Moneda\Denominacion\EsMonedaDenominacion.cs" />
+    <Compile Include="Models\Compuadmo\Moneda\Denominacion\RpMonedaDenominacion.cs" />
+    <Compile Include="Models\Compuadmo\Moneda\Denominacion\SvMonedaDenominacionConsultar.cs" />
+    <Compile Include="Models\Compuadmo\Moneda\Denominacion\SvMonedaDenominacionIniciarRepositorio.cs" />
+    <Compile Include="Models\Compuadmo\Moneda\EnMoneda.cs" />
+    <Compile Include="Models\Compuadmo\Moneda\EsMoneda.cs" />
+    <Compile Include="Models\Compuadmo\Moneda\RpMoneda.cs" />
+    <Compile Include="Models\Compuadmo\Moneda\SvMonedaIniciarRepositorio.cs" />
+    <Compile Include="Models\Compuadmo\Moneda\SvMonedaConsultar.cs" />
+    <Compile Include="Models\Compuadmo\UsuarioPerfil\EnUsuarioPerfil.cs" />
+    <Compile Include="Models\Compuadmo\UsuarioPerfil\RpUsuarioPerfil.cs" />
+    <Compile Include="Models\Compuadmo\Almacen\SvAlmacenConsultar.cs" />
+    <Compile Include="Models\Compuadmo\Voucher\SvVoucherException.cs" />
+    <Compile Include="Models\Compuadmo\Voucher\SvVoucher.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratulaEfectivo\EnAlmacenCaratulaEfectivo.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratulaEfectivo\EsAlmacenCaratulaEfectivo.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratulaEfectivo\Moneda\Denominacion\EnAlmacenCaratulaEfectivoDenominacion.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratulaEfectivo\Moneda\Denominacion\EsAlmacenCaratulaEfectivoDenominacion.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratulaEfectivo\Moneda\Denominacion\RpAlmacenCaratulaEfectivoDenominacion.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratulaEfectivo\Moneda\Denominacion\SvAlmacenCaratulaEfectivoDenominacionConsultar.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratulaEfectivo\Moneda\Denominacion\SvAlmacenCaratulaEfectivoDenominacionExceptionActualizar.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratulaEfectivo\Moneda\Denominacion\SvAlmacenCaratulaEfectivoDenominacionExceptionCrear.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratulaEfectivo\Moneda\Denominacion\SvAlmacenCaratulaEfectivoDenominacionIniciarRepositorio.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratulaEfectivo\Moneda\EnAlmacenCaratulaEfectivoMoneda.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratulaEfectivo\Moneda\EsAlmacenCaratulaEfectivoMoneda.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratulaEfectivo\Moneda\RpAlmacenCaratulaEfectivoMoneda.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratulaEfectivo\Moneda\SvAlmacenCaratulaEfectivoMonedaConsultar.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratulaEfectivo\Moneda\SvAlmacenCaratulaEfectivoMonedaExceptionActualizar.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratulaEfectivo\Moneda\SvAlmacenCaratulaEfectivoMonedaExceptionCrear.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratulaEfectivo\Moneda\SvAlmacenCaratulaEfectivoMonedaIniciarRepositorio.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratulaEfectivo\RpAlmacenCaratulaEfectivo.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratulaEfectivo\SvAlmacenCaratulaEfectivo.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratulaEfectivo\SvAlmacenCaratulaEfectivoActualizar.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratulaEfectivo\SvAlmacenCaratulaEfectivoExceptionActualizar.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratulaEfectivo\SvAlmacenCaratulaEfectivoConsultar.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratulaEfectivo\SvAlmacenCaratulaEfectivoCrear.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratulaEfectivo\SvAlmacenCaratulaEfectivoExceptionCrear.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratulaEfectivo\SvAlmacenCaratulaEfectivoException.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratulaEfectivo\SvAlmacenCaratulaEfectivoGrabar.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratulaEfectivo\SvAlmacenCaratulaEfectivoExceptionGrabar.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratulaEfectivo\SvAlmacenCaratulaEfectivoIniciarRepositorio.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratulaVenta\SvAlmacenCaratulaVentaGrabar.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratulaVenta\SvAlmacenCaratulaVentaExceptionGrabar.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratulaVenta\SvAlmacenCaratulaVentaExceptionActualizar.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratulaVenta\SvAlmacenCaratulaVentaActualizar.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratulaVenta\Categoria\SvAlmacenCaratulaVentaCategoriaExceptionCrear.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratulaVenta\SvAlmacenCaratulaVentaCrear.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratulaVenta\SvAlmacenCaratulaVentaExceptionCrear.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratulaVenta\Categoria\EsAlmacenCaratulaVentaCategoria.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratulaVenta\Categoria\RpAlmacenCaratulaVentaCategoria.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratulaVenta\SvAlmacenCaratulaVenta.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratulaVenta\SvAlmacenCaratulaVentaException.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratulaVenta\SvAlmacenCaratulaVentaConsultar.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratulaVenta\SvAlmacenCaratulaVentaIniciarRepositorio.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratulaVenta\EnAlmacenCaratulaVenta.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratulaVenta\Categoria\EnAlmacenCaratulaVentaCategoria.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratulaVenta\EsAlmacenCaratulaVenta.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratulaVenta\RpAlmacenCaratulaVenta.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratulaVenta\Categoria\SvAlmacenCaratulaVentaCategoriaIniciarRepositorio.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratulaVenta\Categoria\SvAlmacenCaratulaVentaCategoriaConsultar.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratulaVoucher\EnAlmacenCaratulaVoucher.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratulaVoucher\EsAlmacenCaratulaVoucher.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratulaVoucher\Voucher\EnAlmacenCaratulaVoucherVoucher.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratulaVoucher\Voucher\EsAlmacenCaratulaVoucherVoucher.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratulaVoucher\Voucher\Recibo\EnAlmacenCaratulaVoucherRecibo.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratulaVoucher\Voucher\Recibo\EsAlmacenCaratulaVoucherRecibo.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratulaVoucher\Voucher\Recibo\RpAlmacenCaratulaVoucherRecibo.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratulaVoucher\Voucher\Recibo\SvAlmacenCaratulaVoucherReciboExceptionActualizar.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratulaVoucher\Voucher\Recibo\SvAlmacenCaratulaVoucherReciboConsultar.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratulaVoucher\Voucher\Recibo\SvAlmacenCaratulaVoucherReciboExceptionCrear.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratulaVoucher\Voucher\Recibo\SvAlmacenCaratulaVoucherReciboIniciarRepositorio.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratulaVoucher\Voucher\RpAlmacenCaratulaVoucherVoucher.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratulaVoucher\Voucher\SvAlmacenCaratulaVoucherVoucherExceptionActualizar.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratulaVoucher\Voucher\SvAlmacenCaratulaVoucherVoucherConsultar.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratulaVoucher\Voucher\SvAlmacenCaratulaVoucherVoucherExceptionCrear.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratulaVoucher\Voucher\SvAlmacenCaratulaVoucherVoucherIniciarRepositorio.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratulaVoucher\RpAlmacenCaratulaVoucher.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratulaVoucher\SvAlmacenCaratulaVoucher.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratulaVoucher\SvAlmacenCaratulaVoucherActualizar.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratulaVoucher\SvAlmacenCaratulaVoucherExceptionActualizar.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratulaVoucher\SvAlmacenCaratulaVoucherConsultar.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratulaVoucher\SvAlmacenCaratulaVoucherCrear.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratulaVoucher\SvAlmacenCaratulaVoucherExceptionCrear.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratulaVoucher\SvAlmacenCaratulaVoucherException.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratulaVoucher\SvAlmacenCaratulaVoucherGrabar.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratulaVoucher\SvAlmacenCaratulaVoucherGrabarException.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratulaVoucher\SvAlmacenCaratulaVoucherIniciarRepositorio.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratula\SvAlmacenCaratulaExceptionActualizar.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratula\SvAlmacenCaratulaExceptionCrear.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratula\SvAlmacenCaratulaIniciarRepositorio.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratulaEstatus\SvAlmacenCaratulaEstatusIniciarRepositorio.cs" />
+    <Compile Include="Models\Compuadmo\Usuario\SvUsuarioConsultar.cs" />
+    <Compile Include="Models\Compuadmo\Almacen\SvAlmacenIniciarRepositorio.cs" />
+    <Compile Include="Models\Compuadmo\Usuario\SvUsuarioIniciarRepositorio.cs" />
+    <Compile Include="Models\Compuadmo\UsuarioRol\EnUsuarioRol.cs" />
+    <Compile Include="Models\Compuadmo\UsuarioPerfil\EsUsuarioPerfil.cs" />
+    <Compile Include="Models\Compuadmo\UsuarioRol\EsUsuarioRol.cs" />
+    <Compile Include="Models\Compuadmo\UsuarioRol\RpUsuarioRol.cs" />
+    <Compile Include="Models\Compuadmo\UsuarioPerfil\SvUsuarioPerfilConsultar.cs" />
+    <Compile Include="Models\Compuadmo\UsuarioRol\SvUsuarioRolConsultar.cs" />
+    <Compile Include="Models\Compuadmo\UsuarioPerfil\SvUsuarioPerfilIniciarRepositorio.cs" />
+    <Compile Include="Models\Compuadmo\UsuarioRol\SvUsuarioRolIniciarRepositorio.cs" />
+    <Compile Include="Models\Compuadmo\Usuario\EsUsuario.cs" />
+    <Compile Include="Models\Compuadmo\Usuario\RpUsuario.cs" />
+    <Compile Include="Models\Compuadmo\Usuario\EnUsuario.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratulaEstatus\EsAlmacenCaratulaEstatus.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratulaEstatus\SvAlmacenCaratulaEstatusConsultar.cs" />
+    <Compile Include="Models\Compuadmo\Catalogo\Almacen\SvCatalogoAlmacenConsultarPorUsuario.cs" />
+    <Compile Include="Models\Compuadmo\Catalogo\Almacen\SvCatalogoAlmacenConsultar.cs" />
+    <Compile Include="Models\Compuadmo\Catalogo\Almacen\RpCatalogoAlmacen.cs" />
+    <Compile Include="Models\Compuadmo\Almacen\RpAlmacen.cs" />
+    <Compile Include="Models\Compuadmo\Catalogo\Almacen\EnCatalogoAlmacen.cs" />
+    <Compile Include="Models\Compuadmo\Almacen\EnAlmacen.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratulaEstatus\EnAlmacenCaratulaEstatus.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratula\EnAlmacenCaratula.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratula\EsAlmacenCaratula.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratulaEstatus\RpAlmacenCaratulaEstatus.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratula\RpAlmacenCaratula.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratula\SvAlmacenCaratula.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratula\SvAlmacenCaratulaConsultar.cs" />
+    <Compile Include="Models\Ingresos\AlmacenCaratula\SvAlmacenCaratulaException.cs" />
+    <Compile Include="Models\Compuadmo\Voucher\EnVoucher.cs" />
+    <Compile Include="Models\Compuadmo\Voucher\EsVoucher.cs" />
+    <Compile Include="Models\Compuadmo\Voucher\RpVoucher.cs" />
+    <Compile Include="Models\Compuadmo\Voucher\SvVoucherConsultar.cs" />
+    <Compile Include="Models\Compuadmo\Voucher\SvVoucherIniciarRepositorio.cs" />
+    <Compile Include="Models\Utileria\BaseDatos\SvConsultarFechaActual.cs" />
+    <Compile Include="Models\Utileria\Encriptar\EncriptarSha256.cs" />
+    <Compile Include="Models\Utileria\Validaciones\SvValidarAccesoPorFecha.cs" />
+    <Compile Include="Program_AlmacenCategoriaVenta.cs" />
+    <Compile Include="Program_AlmacenCaratulaReporte.cs" />
+    <Compile Include="Program_AlmacenCaratulaReporteEstatus.cs" />
+    <Compile Include="Program_CatalogoAlmacen.cs" />
+    <Compile Include="Program_Almacen.cs" />
+    <Compile Include="Program_Usuario.cs" />
+    <Compile Include="Program_UsuarioPerfil.cs" />
+    <Compile Include="Program_UsuarioRol.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Struct\EsConsulta.cs" />
+    <Compile Include="Struct\EsError.cs" />
+    <Compile Include="Struct\EsEstructura.cs" />
+    <Compile Include="Struct\EsPropiedad.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Enums\" />
+    <Folder Include="Models\Compuadmo\Banco\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>Este proyecto hace referencia a los paquetes NuGet que faltan en este equipo. Use la restauración de paquetes NuGet para descargarlos. Para obtener más información, consulte http://go.microsoft.com/fwlink/?LinkID=322105. El archivo que falta es {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\hoka-solution\packages\EntityFramework.6.5.1\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\hoka-solution\packages\EntityFramework.6.5.1\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\hoka-solution\packages\EntityFramework.6.5.1\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\hoka-solution\packages\EntityFramework.6.5.1\build\EntityFramework.targets'))" />
+  </Target>
+  <Import Project="..\hoka-solution\packages\EntityFramework.6.5.1\build\EntityFramework.targets" Condition="Exists('..\hoka-solution\packages\EntityFramework.6.5.1\build\EntityFramework.targets')" />
+</Project>

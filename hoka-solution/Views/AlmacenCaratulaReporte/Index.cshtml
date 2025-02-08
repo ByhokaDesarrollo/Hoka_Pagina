@@ -1,0 +1,254 @@
+﻿@model hoka.HokaCli.Models.Ingresos.AlmacenCaratula.EnAlmacenCaratula
+@using hoka.HokaCli.Models.Compuadmo.Usuario.Permiso.AlmacenCaratula;
+@using System;
+@using System.Globalization;
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    string tituloFondoColor = "#9c8050";
+    string tituloTexto = "REPORTE CARÁTULA";
+    string tituloTextoColor = "#fff";
+    string buttonFooterAncho = "width:220px;";
+    EnUsuarioPermisoAlmacenCaratula PermisoCaratula = ViewBag.PermisoCaratula;
+    string EncabezadoAlmacen = $"{Model.Almacen.Nombre} - ({Model.Almacen.Prefijo}) - {Model.Almacen.Ciudad}";
+    string EncabezadoFecha = $"FECHA DE VENTA {Model.FechaRegistro?.ToString("yyyy/MM/dd")}";
+    decimal VentaTotalCaratula = Model.CaratulaReporte.Sum(x => x.ImporteMXN);
+    string textoVentaTotalCaratula = VentaTotalCaratula.ToString("C", CultureInfo.CurrentCulture);
+    decimal VentaTotalSistema = Model.CaratulaVenta?.Categorias?.Count > 0
+        ? Model.CaratulaVenta.Categorias.Sum(x => x.VentaSistema)
+        : 0;
+    decimal VentaTotalNeta = Model.CaratulaVenta?.Categorias?.Count > 0
+        ? Model.CaratulaVenta.Categorias.Sum(x => x.VentaNeta)
+        : 0;
+    decimal VentaTotalDiferencia = VentaTotalNeta - VentaTotalSistema;
+    string colorDiferencia = VentaTotalDiferencia >= 0 ? "#399d72;" : "#cb4141;";
+    string textoVentaTotalSistema = VentaTotalSistema.ToString("C", CultureInfo.CurrentCulture);
+    string textoVentaTotalNeta = VentaTotalNeta.ToString("C", CultureInfo.CurrentCulture);
+    string textoVentaTotalDiferencia = VentaTotalDiferencia.ToString("C", CultureInfo.CurrentCulture);
+}
+
+<style>
+</style>
+
+<div class="container-fluid">
+    @*Título*@
+    <div class="row mb-2">
+        <div class="col text-center"
+             style="background-color: @(tituloFondoColor); color: @(tituloTextoColor)">
+            <strong>
+                @tituloTexto
+            </strong>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="card ml-2 mr-2 p-2">
+        @*Acciones*@
+        <div class="row mb-1">
+            <div class="col">
+
+                @*FILA PARA BOTONES*@
+
+                @*<a role="button" class="btn btn-success btn-sm">
+                        <i class="bi bi-clipboard-plus-fill"></i>
+                        Nuevo Registro
+                    </a>*@
+            </div>
+        </div>
+        <div class="row mb-1">
+            <div class="col text-center">
+                <strong>@EncabezadoAlmacen</strong>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col text-center">
+                <strong>@EncabezadoFecha</strong>
+            </div>
+        </div>
+        <div class="row mb-1">
+            <div class="col">
+                <table class="table table-sm table-responsive-sm">
+                    <thead>
+                        <tr>
+                            <th colspan="4"
+                                class="text-center"
+                                style="background-color: #f3f0e6;">
+                                GENERAL
+                            </th>
+                        </tr>
+                        <tr>
+                            <th class="text-center" style="background-color: #e8e8e8;" width="250">DIVISA COBRADA</th>
+                            <th class="text-center" style="background-color: #e8e8e8;" width="150">CANTIDAD COBRADA</th>
+                            <th class="text-center" style="background-color: #e8e8e8;" width="120">T.C.</th>
+                            <th class="text-center" style="background-color: #e8e8e8;" width="150">TOTAL MXN</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var concepto in Model.CaratulaReporte)
+                        {
+                            decimal Importe = Math.Round(concepto.Importe, 2);
+                            decimal TipoCambio = Math.Round(concepto.TipoCambio, 2);
+                            decimal ImporteMXN = Math.Round(concepto.ImporteMXN, 2);
+                            string textoImporte = Importe.ToString("C", CultureInfo.CurrentCulture);
+                            string textoTipoCambio = TipoCambio.ToString("C", CultureInfo.CurrentCulture);
+                            string textoImporteMXN = ImporteMXN.ToString("C", CultureInfo.CurrentCulture);
+                            <tr>
+                                <td>@concepto.Concepto</td>
+                                <td class="text-right">@textoImporte</td>
+                                <td class="text-right">@textoTipoCambio</td>
+                                <td class="text-right">@textoImporteMXN</td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th scope="row"
+                                class="text-center bg-gris"
+                                style="background-color: #f3f0e6;">
+                            </th>
+                            <th scope="row"
+                                class="text-center bg-gris"
+                                style="background-color: #f3f0e6;">
+                            </th>
+                            <th scope="row"
+                                class="text-center bg-gris"
+                                style="background-color: #f3f0e6;">
+                                TOTAL VENTA PISO
+                            </th>
+                            <td class="text-right bg-gris"
+                                style="background-color: #f3f0e6;">
+                                <strong>@textoVentaTotalCaratula</strong>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row"
+                                class="text-center bg-gris"
+                                style="background-color: #e8e8e8;">
+                            </th>
+                            <th class="text-center bg-gris"
+                                style="background-color: #e8e8e8;">
+                                TOTAL MXN
+                            </th>
+                            <td colspan="2" style="background-color: #e8e8e8;"></td>
+                        </tr>
+                        <tr>
+                            <th scope="row"
+                                class="text-left bg-gris">
+                                TOTAL VENTA DEL DÍA
+                            </th>
+                            <td class="text-right bg-gris">
+                                <strong>@textoVentaTotalSistema</strong>
+                            </td>
+                            <td colspan="2"></td>
+                        </tr>
+                        <tr>
+                            <th scope="row"
+                                class="text-left bg-gris">
+                                TOTAL ENTREGADO
+                            </th>
+                            <td class="text-right bg-gris">
+                                <strong>@textoVentaTotalNeta</strong>
+                            </td>
+                            <td colspan="2"></td>
+                        </tr>
+                        <tr>
+                            <th scope="row"
+                                class="text-left bg-gris">
+                                FALTANTE/SOBRANTE
+                            </th>
+                            <td class="text-right bg-gris"
+                                style="background-color: @colorDiferencia">
+                                <strong>@textoVentaTotalDiferencia</strong>
+                            </td>
+                            <td colspan="2"></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col text-center">
+                <a class="btn btn-sm btn-secondary"
+                   href="@Url.Action("Index", "AlmacenCaratula")"
+                   role="button"
+                   style="@buttonFooterAncho">
+                    <i class="bi bi-house-door-fill"></i>
+                    Gestor Ventas
+                </a>
+                @if (Model.AlmacenCaratulaEstatusId < 3)
+                {
+                    <button type="button"
+                            class="btn btn-sm btn-success"
+                            style="@buttonFooterAncho"
+                            onclick="AlmacenCaratulaGrabar()">
+                        <i class="bi bi-floppy2-fill"></i>
+                        Enviar a Tesorería
+                    </button>
+                }
+                @if (Model.AlmacenCaratulaEstatusId == 3)
+                {
+                    <button type="button"
+                            class="btn btn-sm btn-warning"
+                            style="@buttonFooterAncho"
+                            onclick="AlmacenCaratulaDesbloquear()">
+                        <i class="bi bi-unlock-fill"></i>
+                        Desbloquear
+                    </button>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script type="text/javascript">
+        function AlmacenCaratulaGrabar() {
+            let UrlAlmacenCaratula = '@(ViewBag.UrlAlmacenCaratulaGrabar)';
+            let AlmacenCaratula = ObtenerAlmacenCaratula();
+            let bodyData = JSON.stringify(AlmacenCaratula);
+            fetch(UrlAlmacenCaratula, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: bodyData
+            })
+            .then((res) => res.text())
+            .then((data) => {
+                if (data != 'error') {
+                    window.location.replace(data);
+                } else {
+                    console.log('error');
+                }
+            });
+        }
+
+        function AlmacenCaratulaDesbloquear() {
+            let UrlAlmacenCaratula = '@(ViewBag.UrlAlmacenCaratulaDesbloquear)';
+            let AlmacenCaratula = ObtenerAlmacenCaratula();
+            let bodyData = JSON.stringify(AlmacenCaratula);
+            fetch(UrlAlmacenCaratula, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: bodyData
+            })
+            .then((res) => res.text())
+            .then((data) => {
+                if (data != 'error') {
+                    window.location.replace(data);
+                } else {
+                    console.log('error');
+                }
+            });
+        }
+
+        function ObtenerAlmacenCaratula() {
+            let AlmacenCaratula = {
+                AlmacenCaratulaId: parseInt(@Model.AlmacenCaratulaId)
+            };
+            return AlmacenCaratula;
+        }
+    </script>
+}

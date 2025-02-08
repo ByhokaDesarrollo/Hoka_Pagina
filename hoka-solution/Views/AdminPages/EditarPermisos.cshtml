@@ -1,0 +1,258 @@
+﻿@model hoka.Models.AllModels
+
+@{
+    ViewBag.Title = "EditarPermisos";
+    Layout = "~/Views/Shared/_LayoutAdminTotal.cshtml";
+}
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link href="~/Content/css/EditarUsuarioAdminTotal.css" rel="stylesheet" />
+
+</head>
+<body>
+
+    <div class="wrapper">
+
+        <!-- Navbar -->
+
+        <nav class="main-sidebar-custom-lg navbar navbar-expand navbar-white navbar-light">
+            <!-- Left navbar links -->
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+                </li>
+                <li class="nav-item d-none d-sm-inline-block">
+                    <a href="#" class="nav-link">Inicio</a>
+                </li>
+
+            </ul>
+
+            <!-- Right navbar links -->
+            <ul class="navbar-nav ml-auto">
+                <!--AQUI VA PARA AUMENTAR LA PANTALLA-->
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+                        <i class="fas fa-expand-arrows-alt"></i>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="@Url.Action("CerrarSesion", "Acceso")" class="nav-link">Cerrar Sesión</a>
+                </li>
+            </ul>
+        </nav>
+        <!-- /.navbar -->
+        @*CONTENIDO*@
+        <div class="content-header">
+            @*CONTENIDO*@
+            <section class="content-header">
+                @*TITULO DEL AREA*@
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-md-9 col-sm-8">
+                            <!-- Ajusta las columnas para pantallas medianas y pequeñas -->
+                            <h1>ACTUALIZAR PERMISOS</h1>
+                        </div>
+                        <div class="col-md-3 col-sm-4 btn-align-right">
+                            <!-- Aquí cambiamos el ancho de la columna y aplicamos la clase que creamos -->
+                            <a class="btn btn-warning" href="@Url.Action("LUsuariosAdminTotal", "AdminPages")">
+                                <i class="fas fa-arrow-left"></i> Volver
+                            </a>
+                        </div>
+                    </div>
+                </div><!-- /.container-fluid -->
+
+
+
+                <hr />
+
+
+                <!-- Row to wrap both cards -->
+                <div class="row">
+                    <!-- Card 1 -->
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-header d-flex justify-content-between">
+                                <h5 class="card-title">Actualizar permisos del usuario</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="table table-responsive">
+                                    <div class="panel-body">
+                                        <form id="form-editar1" method="post" action="@Url.Action("", "", new { idUsuario = Model.UsuarioMNoList.Id_Usuario })">
+                                            <div class="row">
+                                                <div class="col-sm-4">
+                                                    <input type="hidden" id="Id_Usuario" name="Id_Usuario" value="@Model.UsuarioMNoList.Id_Usuario" />
+
+                                                    <label for="NombreU">Nombre:</label>
+                                                    <div class="input-group mb-3">
+                                                        <input type="text" class="form-control" id="NombreU" name="NombreU" value="@Model.UsuarioMNoList.NombreU" placeholder="Nombre: Ej. Juan" disabled>
+                                                        <div class="input-group-append">
+                                                            <div class="input-group-text">
+                                                                <span class="fas fa-user"></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <label for="ApellidoU">Apellido:</label>
+                                                    <div class="input-group mb-3">
+                                                        <input type="text" class="form-control" id="ApellidoU" name="ApellidoU" value="@Model.UsuarioMNoList.ApellidoU" placeholder="Apellido: Ej. Lopez" disabled>
+                                                        <div class="input-group-append">
+                                                            <div class="input-group-text">
+                                                                <span class="fas fa-user"></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <label for="Correo">Correo:</label>
+                                                    <div class="input-group mb-3">
+                                                        <input type="email" class="form-control" id="Correo" name="Correo" value="@Model.UsuarioMNoList.Correo" placeholder="Correo" disabled>
+                                                        <div class="input-group-append">
+                                                            <div class="input-group-text">
+                                                                <span class="fas fa-envelope"></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                        </form> <!-- Closing the form tag here -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End of Card 1 -->
+                </div>
+                <!-- End of Row -->
+
+                <!--row 2-->
+                <div class="row">
+                    <!-- Card 2 -->
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="card-title">Actualizar permisos del usuario</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="table table-responsive">
+                                    <div class="panel-body">
+                                        <form id="form-editar2" method="post" action="@Url.Action("EditarPermisos", "AdminPages", new { idUsuario = Model.UsuarioMNoList.Id_Usuario })">
+                                            <div class="row">
+                                                <div class="col-sm-4">
+
+                                                    <input type="hidden" id="Id_Usuario" name="Id_Usuario" value="@Model.UsuarioMNoList.Id_Usuario" />
+
+                                                    <label for="Rol">Rol:</label>
+                                                    <div class="input-group mb-3">
+                                                        <select class="form-control select2 rol-select-editar" style="width: 100%" id="Id_Rol" name="Id_Rol" data-url="@Url.Action("AdminPages", "ObtenerPerfiles")">
+                                                            <option selected="selected">Selecciona un Rol</option>
+                                                            @foreach (var rol in Model.RolesM)
+                                                            {
+                                                                <option value="@rol.Id_Rol" @(Model.UsuarioMNoList.Id_Rol == rol.Id_Rol ? "selected" : "")>@rol.Nombre_Rol</option>
+                                                            }
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            
+                                                <div class="col-sm-4">
+                                                    <div class="input-group mb-3">
+                                                        <label for="Perfiles">Perfiles:</label>
+                                                        <select class="form-control select2 perfil-select-editar" style="width: 100%" id="Id_Perfil" name="Id_Perfil" data-url="@Url.Action("AdminPages", "ObtenerAlmacenes")">
+                                                            <option selected="selected">Selecciona un Perfil</option>
+                                                            <option value="@(Model.UsuarioMNoList.Id_Perfil.HasValue ? Model.UsuarioMNoList.Id_Perfil.ToString() : "")"
+                                                                    selected>
+                                                                @{
+                                                                    var perfil = Model.PerfilM.FirstOrDefault(p => p.Id_Perfil == Model.UsuarioMNoList.Id_Perfil);
+                                                                    if (perfil != null)
+                                                                    {
+                                                                        @perfil.Nombre_Perfil
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        @: Sin Perfil
+                                                                    }
+                                                                }
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                    <button type="button" class="btn btn-sm btn-secondary load-perfil mt-2">
+                                                        <i class="fas fa-sync-alt"></i> Generar más perfiles
+                                                    </button>
+                                                </div>
+                                                    <div class="col-sm-4">
+                                                        <div class="input-group mb-3">
+                                                            <label for="Estado">Estado:</label>
+                                                            <select class="form-control select2 estado-select-editar" style="width: 100%" id="Id_Estado" name="Id_Estado">
+                                                                <option selected="selected">Selecciona una Tienda</option>
+                                                                @foreach (var estado in Model.EstadoUM)
+                                                                {
+                                                                    <option value="@estado.Id_Estado" @(Model.UsuarioMNoList.Id_Estado == estado.Id_Estado ? "selected" : "")>@estado.Nombre_Estado</option>
+                                                                }
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="input-group mb-3">
+                                                            <label for="Almacenes">Almacenes:</label>
+                                                            <select class="form-control select2 almacen-select-editar" style="width: 100%" id="Almacenes" name="Almacenes[]" multiple>
+                                                                <option selected="selected">Selecciona un Almacen</option>
+                                                                @foreach (var almacen in Model.AlmacenesM)
+                                                                {
+                                                                    <option value="@almacen.Id_Almacen">@almacen.Almacen - @almacen.Nombre</option>
+                                                                }
+                                                            </select>
+                                                            <input type="checkbox" class="form-check checkboxAlmacen-select" name="allalmacen" value="allalmacen"> Selecciona todos los almacenes
+                                                        </div>
+                                                        <button type="button" class="btn btn-sm btn-secondary load-almacen mt-2">
+                                                            <i class="fas fa-sync-alt"></i> Generar más almacenes
+                                                        </button>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="input-group mb-3">
+                                                            <label for="Permisos">Permisos:</label>
+                                                            <select class="form-control select2 permiso-select-editar" style="width: 100%" id="Permisos" name="Permisos[]" multiple>
+                                                                <option selected="selected">Selecciona un Permiso</option>
+                                                                @foreach (var permiso in Model.PermisosM)
+                                                                {
+                                                                    <option value="@permiso.Id_Permiso">@permiso.Nombre_Permiso</option>
+                                                                }
+                                                            </select>
+                                                            <input type="checkbox" class="form-check checkboxPermiso-select" name="allpermiso" value="allpermiso"> Selecciona todos los permisos
+                                                        </div>
+
+                                                        <button type="button" class="btn btn-sm btn-secondary load-permiso mt-2">
+                                                            <i class="fas fa-sync-alt"></i> Generar más permisos
+                                                        </button>
+
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <button id="btn-editar2" type="submit" class="btn btn-success btn-block btn-update-centered"><i class="fas fa-cloud-upload-alt"></i>Actualizar</button>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+</form> <!-- Closing the form tag here -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End of Card 2 -->
+                </div>
+                <!-- End of Row -->
+                <!-- /.card -->
+            </section>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <script src="~/Scripts/ScriptsAdmins/ScriptEditarPermisosAdminTotal.js"></script>
+</body>
+</html>

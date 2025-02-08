@@ -1,0 +1,624 @@
+﻿
+@{
+    ViewBag.Title = "REPORTE VENTA POR PRODUCTO JOYERIA";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <link href="~/Content/css/selectcomprim.css" rel="stylesheet" />
+    <link href="~/Content/css/estilosfiltroscss.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="wrapper">
+        <!--Inicio de sidebar-->
+        <nav class="main-sidebar-custom-lg navbar navbar-expand navbar-white navbar-light">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="pushmenu" href="#" role="button">
+                        <i class="fas fa-bars"></i>
+                    </a>
+                </li>
+                <li class="nav-item d-none d-sm-inline-block">
+                    <a class="nav-link" href="@Url.Action("InicioAdmin","AdminPages")">Inicio</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <!--aqui el icon de aumentar pantalla-->
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+                        <i class="fas fa-expand-arrows-alt"></i>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="@Url.Action("CerrarSesion","Acceso")">Salir</a>
+                </li>
+            </ul>
+        </nav>
+
+
+        <!--Inicio de paginacion-->
+        <div class="content-header">
+            <section class="content-header">
+                <!--Inicio de titulo-->
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1>REPORTE DE VENTAS POR PRODUCTO JOYERIA</h1>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+
+
+                <!--Inicio de contenido-->
+                <div class="card">
+                    <!--Inicio de Botones del sidebar de la tabla de contenido-->
+                    <div class="card-header">
+                        @using (Html.BeginForm("AdminPages", "filtrarTablaRJoy", FormMethod.Post, new { id = "filtrarBusqueda" }))
+                        {
+
+                            <div class="row">
+                                <div class="col-lg-2 col-md-4 col-sm-6 col-12">
+                                    <label for="fechaInicioR">Fecha inicio:</label>
+                                    <input type="text" id="fechaInicio" name="fechaInicio" class="form-control" placeholder="dd/mm/aaaa" autocomplete="off">
+                                </div>
+                                <div class="col-lg-2 col-md-4 col-sm-6 col-12">
+                                    <label for="fechaFinR">Fecha fin:</label>
+                                    <input type="text" id="fechaFin" name="fechaFin" class="form-control" placeholder="dd/mm/aaaa" autocomplete="off">
+                                </div>
+
+
+                                <div class="col-lg-2 col-md-4 col-sm-6 col-12">
+                                    <label for="almacen">Almacén</label>
+                                    <select class="form-control select2 almacen-select" style="width: 100%" id="almacen" name="almacen" data-url="@Url.Action("AdminPages", "ObtenerCategoriasJoy")">
+                                        <option selected="selected">Selecciona un almacén</option>
+                                        @foreach (var almacen in ViewBag.Almacenes)
+                                        {
+                                            <option value="@almacen.Item1">@($"{almacen.Item1} - {almacen.Item2}")</option>
+                                        }
+                                    </select>
+                                </div>
+
+                                <div class="col-lg-2 col-md-4 col-sm-6 col-12">
+                                    <label for="categoria">Categoria</label>
+                                    <select class="form-control select2 categoria-select" style="width: 100%" id="categoria" name="categoria[]" disabled multiple>
+                                        <option selected="selected">Selecciona una categoría</option>
+                                        <option value="all">Seleccionar todo</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-lg-2 col-md-4 col-sm-6 col-12 mt-2 mt-lg-0">
+                                    <label for="btn-filtrar">Filtrar:</label>
+                                    <div>
+                                        <button type="submit" id="btn-filtrar" class="btn btn-info">
+                                            <i class="fas fa-search"></i> Buscar
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        }
+
+
+                    </div>
+
+
+                    <!--Cuerpo del contenido(en este caso la tabla)-->
+                    <div class="card-body">
+                        <div class="table table-responsive">
+                            <table class="table table-striped" id="tablaRemisiodJoy">
+                                <thead>
+                                    <tr>
+                                        <th>CodigoBarra</th> <!--0-->
+                                        <th>Producto</th><!--1-->
+                                        <th>Almacen</th><!--2-->
+                                        <th>Categoria</th><!--3-->
+                                        <th>Uni. Vendidas Periodo</th><!--4-->
+                                        <th>Uni. Vendidas por Gramos</th><!--5-->
+                                        <th>Venta Real</th><!--6-->
+                                        <th>Venta S/IVA</th><!--7-->
+                                        <th>IVA 16%</th><!--8-->
+                                        <th>Venta C/IVA</th><!--9-->
+                                        <th>Existencias</th><!--10-->
+                                        <th>DEPOR</th><!--11-->
+                                        <th>Ult.Fecha</th><!--12 en total son 13-->
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!--Aqui ira el contenido de la peticion
+                                    por filtrado de busqueda
+                                    -->
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th id="sumaCantidad">Cantidades:</th>
+                                        <th id="sumaCantidadPeso">CantidadGramos:</th>
+                                        <th id="sumaVreal">VentaReal:</th>
+                                        <th id="sumaVSiva">VentaSinIVA:</th>
+                                        <th id="sumaViva">VentaIVA:</th>
+                                        <th id="sumaVCiva">VentaConIVA:</th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+
+
+                        @section scripts {
+                            <script>
+                                $(document).ready(function () {
+
+                                    //Funciones para hacer interaccion con cada select
+                                    var selectedAlmacen = null;
+                                    var selectedCategorias = [];
+                                    var selectedGrupos = [];
+
+                                    $('.almacen-select').change(function () {
+                                        selectedAlmacen = $(this).val();
+                                        var categoriaSelect = $('.categoria-select');
+                                        var grupoSelect = $('.grupo-select');
+
+                                        if (!selectedAlmacen || selectedAlmacen === "Selecciona un almacén") {
+                                            categoriaSelect.prop('disabled', true);
+                                            grupoSelect.prop('disabled', true);
+                                            selectedCategorias = [];
+                                            // Agrega el valor por defecto a la selección cuando el select está deshabilitado
+                                            categoriaSelect.val('Selecciona una categoría').change();
+                                            grupoSelect.val('Selecciona un grupo').change();
+                                        } else {
+                                            categoriaSelect.prop('disabled', false);
+                                            ObtenerCategoriasJoy();
+                                        }
+                                    });
+
+                                    // Al seleccionar una opción en categoría
+                                    $('.categoria-select').on('select2:select', function (e) {
+                                        var options = $(this).find('option').map(function () { return this.value; }).get();
+                                        var index = options.indexOf('Selecciona una categoría');
+                                        if (index > -1) {
+                                            options.splice(index, 1);
+                                        }
+
+                                        var selectAllSelected = $(this).val().length === options.length;
+                                        if (e.params.data.id === 'all' && !selectAllSelected) {
+                                            $(this).val(options).trigger('change');
+                                        }
+                                        selectedCategorias = $(this).val();
+
+                                        var grupoSelect = $('.grupo-select');
+                                        if (selectedCategorias && selectedCategorias.length > 0 && selectedCategorias[0] !== 'Selecciona una categoría') {
+                                            grupoSelect.prop('disabled', false);
+                                        } else {
+                                            grupoSelect.prop('disabled', true);
+                                            grupoSelect.val('Selecciona un grupo').trigger('change');
+                                        }
+                                    });
+
+                                    // Al deseleccionar una opción en categoría
+                                    $('.categoria-select').on('select2:unselect', function (e) {
+                                        if (e.params.data.id === 'all') {
+                                            $(this).val([]).trigger('change');
+                                        }
+                                        selectedCategorias = $(this).val();
+
+                                        var grupoSelect = $('.grupo-select');
+                                        if (selectedCategorias && selectedCategorias.length > 0 && selectedCategorias[0] !== 'Selecciona una categoría') {
+                                            grupoSelect.prop('disabled', false);
+                                            obtenerGrupos();
+                                        } else {
+                                            grupoSelect.prop('disabled', true);
+                                            grupoSelect.val('Selecciona un grupo').trigger('change');
+                                        }
+                                    });
+
+
+
+                                    function ObtenerCategoriasJoy() {
+                                        if (selectedAlmacen !== null) {
+                                            var categoriaSelect = $('.categoria-select');
+                                            categoriaSelect.prop('disabled', true).val('').change();
+
+                                            $.ajax({
+                                                url: '/AdminPages/ObtenerCategoriasJoy',
+                                                type: 'GET',
+                                                data: { ObAlmacen: selectedAlmacen },
+                                                success: function (data) {
+                                                    categoriaSelect.find('option').not(':first').remove();
+
+                                                    if (Array.isArray(data)) {
+                                                        // Agrega la opción de "Seleccionar todo" al principio
+                                                        categoriaSelect.append($('<option>', {
+                                                            value: 'all',
+                                                            text: 'Seleccionar todo'
+                                                        }));
+                                                        $.each(data, function (index, item) {
+                                                            categoriaSelect.append($('<option>', {
+                                                                value: item.categoria,
+                                                                text: item.categoria
+                                                            }));
+                                                        });
+                                                    } else {
+                                                        Swal.fire({
+                                                            icon: 'error',
+                                                            title: 'Error',
+                                                            text: 'Los datos no son una matriz válida.'
+                                                        });
+                                                    }
+
+                                                    categoriaSelect.prop('disabled', false);
+                                                },
+                                                error: function () {
+                                                    // Manejar el error de la solicitud AJAX si es necesario
+                                                }
+                                            });
+                                        }
+                                    }
+
+
+                                    //Aqui empieza la tabla
+
+                                    var $filtrarBusqueda = $('#filtrarBusqueda');
+                                    var $tablaRemisiodJoy = $('#tablaRemisiodJoy');
+
+
+                                    // modificaciones de los selects fecha
+                                    //, #fechaInicioRo, #fechaFinRo
+                                    $("#fechaInicio, #fechaFin").datepicker({
+                                        format: 'dd/mm/yyyy',
+                                        language: 'es',
+                                        autoclose: true,
+                                        todayHighlight: true
+                                    });
+
+                                    $("#fechaInicio, #fechaFin").on("keyup", function () {
+                                        var valor = $(this).val().replace(/\D/g, "").replace(/^(\d\d)(\d)/g, "$1/$2").replace(/\/(\d\d)(\d)/, "/$1/$2");
+                                        $(this).val(valor.substring(0, 10));  // Limitar a 10 caracteres
+                                    });
+
+                                    $("#fechaInicio, #fechaFin").keypress(function (e) {
+                                        // Permitir solo números y limitar a 10 caracteres (incluyendo '/')
+                                        var charCode = (e.which) ? e.which : e.keyCode;
+                                        if ($(this).val().length >= 10 && (charCode >= 48 && charCode <= 57)) {
+                                            return false;
+                                        } else if (charCode >= 48 && charCode <= 57) {
+                                            return true;
+                                        }
+                                        return false;
+                                    });
+
+                                    // Evitar que se pegue texto no deseado
+                                    $("#fechaInicio, #fechaFin").on('paste', function (e) {
+                                        e.preventDefault();
+                                    });
+
+                                    // Inicializar Select2 Elements
+                                    $('.select2').select2();
+
+                                    // Inicializar Select2 Elements
+                                    $('.select2bs4').select2({
+                                        theme: 'bootstrap4'
+                                    });
+
+                                    $tablaRemisiodJoy.DataTable({
+                                        language: {
+                                            "sProcessing": "Procesando...",
+                                            "sLengthMenu": "Mostrar _MENU_ registros",
+                                            "sZeroRecords": "No se encontraron resultados",
+                                            "sEmptyTable": "Ningún dato disponible en esta tabla",
+                                            "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                                            "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                                            "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                                            "sInfoPostFix": "",
+                                            "sSearch": "Buscar:",
+                                            "sUrl": "",
+                                            "sInfoThousands": ",",
+                                            "sLoadingRecords": "Cargando...",
+                                            "oPaginate": {
+                                                "sFirst": "Primero",
+                                                "sLast": "Último",
+                                                "sNext": "Siguiente",
+                                                "sPrevious": "Anterior"
+                                            },
+                                            "oAria": {
+                                                "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                                                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                                            }
+                                        },
+
+                                        "dom": 'Blfrtip',
+                                        "lengthMenu": [[10, 50, 100, 1000, 2000, -1], [10, 50, 100, 1000, 2000, "Todos"]],
+                                        "pageLength": -1,
+
+                                        buttons: [
+
+                                            {
+                                                extend: 'excel',
+                                                className: 'btn btn-excel rounded-0',
+                                                text: '<i class="fas fa-file-excel"></i> Excel',
+                                                filename: function () {
+                                                    // Obtiene la fecha y hora actual.
+                                                    var now = new Date();
+
+                                                    // Formatea la fecha actual en dd-mm-yyyy.
+                                                    var day = ("0" + now.getDate()).slice(-2);
+                                                    var month = ("0" + (now.getMonth() + 1)).slice(-2);
+                                                    var year = now.getFullYear();
+                                                    var dateString = day + '-' + month + '-' + year;
+
+                                                    // Convierte la hora a formato de 12 horas con AM o PM.
+                                                    var hours = now.getHours();
+                                                    var minutes = now.getMinutes();
+                                                    var ampm = hours >= 12 ? 'PM' : 'AM';
+                                                    hours = hours % 12;
+                                                    hours = hours ? hours : 12; // La hora '0' debería ser '12'.
+                                                    minutes = minutes < 10 ? '0' + minutes : minutes;
+                                                    var timeString = hours + '-' + minutes + ' ' + ampm;
+
+                                                    // Obtiene la información del almacén seleccionado.
+                                                    var almacenSeleccionado = $('#almacen option:selected').text();
+                                                    var nombreAlmacen = almacenSeleccionado.includes('-') ? almacenSeleccionado : 'SinNombre';
+
+                                                    // Obtiene las fechas de inicio y fin seleccionadas y las formatea.
+                                                    var fechaInicio = $('#fechaInicio').val().replace(/\//g, '-');
+                                                    var fechaFin = $('#fechaFin').val().replace(/\//g, '-');
+
+                                                    // Formato del nombre del archivo: 'HOKA_REPORTE VENTA POR DEPARTAMENTO_NombreDelAlmacen_FechaInicio_FechaFin_FechaActual_HoraActual AM/PM.xlsx'
+                                                    return 'HOKA JOYERIA_REPORTE VENTA POR PRODUCTO_SUCURSAL_' + nombreAlmacen + '_DEL_' + fechaInicio + '_AL_' + fechaFin + '_IMPRESO EL_' + dateString + '_CON HORA_' + timeString;
+                                                },
+                                                footer: {
+                                                    columns: [3]
+                                                }
+                                            },
+
+
+                                            {
+                                                extend: 'pdf',
+                                                className: 'btn btn-pdf rounded-0',
+                                                text: '<i class="fas fa-file-pdf"></i> PDF',
+                                                title: null,
+                                                pageSize: 'A2',  // Establece el tamaño de página a A3
+                                                orientation: 'landscape',
+                                                filename: function () {
+                                                    // Obtiene la fecha actual en formato string.
+                                                    var now = new Date();
+                                                    var dateString = now.toISOString().slice(0, 10);
+
+                                                    // Obtiene la información del almacén seleccionado.
+                                                    var almacenSeleccionado = $('#almacen option:selected').text();
+                                                    var nombreAlmacen = almacenSeleccionado.includes('-') ? almacenSeleccionado : 'SinNombre';
+
+                                                    // Formato del nombre del archivo: 'HOKA - REPORTE VENTA POR PRODUCTO_NombreDelAlmacen_Fecha.pdf'
+                                                    return 'HOKA JOYERIA_REPORTE VENTA POR PRODUCTO_SUCURSAL_' + nombreAlmacen + '_' + dateString;
+                                                },
+                                                customize: function (doc) {
+                                                    doc.defaultStyle.fontSize = 14; //tamaño de las letras dentro de la tablas al exportar
+
+                                                    // Obtiene la fecha y hora actuales.
+                                                    var currentDateTime = new Date();
+                                                    var currentDateTimeString = currentDateTime.toLocaleString();
+
+                                                    // Obtiene el rango de fechas ingresado.
+                                                    var fechaInicio = document.getElementById('fechaInicio').value;
+                                                    var fechaFin = document.getElementById('fechaFin').value;
+                                                    var fechaRango = 'DEL ' + fechaInicio + ' AL ' + fechaFin;
+
+                                                    // Obtiene la información del almacén seleccionado.
+                                                    var almacenSeleccionado = $('#almacen option:selected').text();
+                                                    var sucursal = 'SUCURSAL ' + almacenSeleccionado + ' - ' + fechaRango;
+
+                                                    // Fija el título del reporte a "HOKA - VENTA POR PRODUCTO".
+                                                    var tituloReporte = 'HOKA - REPORTE VENTA POR PRODUCTO JOYERIA';
+                                                    var reporteDelDia = 'REPORTE DEL DÍA ' + currentDateTimeString;
+
+                                                    // Agrega el título en la parte superior del documento con texto en negrita.
+                                                    doc.content.splice(0, 0, {
+                                                        text: tituloReporte,
+                                                        alignment: 'center',
+                                                        margin: [0, 0, 20, 20],
+                                                        fontSize: 24,
+                                                        bold: true  // Texto en negrita
+                                                    });
+
+                                                    // Agrega la fecha del reporte y la información del almacén en la misma línea, alineados a la izquierda y a la derecha, respectivamente.
+                                                    doc.content.splice(1, 0, {
+                                                        columns: [
+                                                            {
+                                                                text: reporteDelDia,
+                                                                alignment: 'left',
+                                                                fontSize: 18
+                                                            },
+                                                            {
+                                                                text: sucursal,
+                                                                alignment: 'right',
+                                                                fontSize: 18
+                                                            }
+                                                        ],
+                                                        columnGap: 10  // Ajusta el espacio entre las columnas.
+                                                    });
+                                                },
+                                                footer: {
+                                                    columns: [3]
+                                                },
+                                            },
+                                            //boton de imprimir
+
+                                            @*{
+                                                extend: 'print',
+                                                className: 'btn btn-dark rounded-0',
+                                                text: '<i class="fas fa-print"></i> Imprimir',
+                                                footer: {
+                                                    columns: [3]
+                                                },
+
+                                            },*@
+                                        ],
+
+                                        columns: [
+                                            { data: 'Group_codigobarras' },
+                                            { data: 'Group_productoNombre' },
+                                            { data: 'Group_almacen' },
+                                            { data: 'Group_categoria' },
+                                            { data: 'Group_cantidads' },
+                                            { data: 'Group_peso' },
+                                            {
+                                                data: 'Group_VentaReal',
+                                                render: function (data, type, row) {
+                                                    return parseFloat(data).toLocaleString('es-MX', { style: 'currency', currency: 'MXN' });
+                                                }
+                                            },
+                                            {
+                                                data: 'Group_VentaSinIVA',
+                                                render: function (data, type, row) {
+                                                    return parseFloat(data).toLocaleString('es-MX', { style: 'currency', currency: 'MXN' });
+                                                }
+                                            },
+                                            {
+                                                data: 'Group_VentaIVA',
+                                                render: function (data, type, row) {
+                                                    return parseFloat(data).toLocaleString('es-MX', { style: 'currency', currency: 'MXN' });
+                                                }
+                                            },
+                                            {
+                                                data: 'Group_VentaConIVA',
+                                                render: function (data, type, row) {
+                                                    return parseFloat(data).toLocaleString('es-MX', { style: 'currency', currency: 'MXN' });
+                                                }
+                                            },
+
+                                            { data: 'Group_Existencia' },
+
+                                            {
+                                                data: 'Group_total_depor',
+                                                render: function (data, type, row) {
+                                                    return parseFloat(data).toLocaleString('es-MX', { style: 'currency', currency: 'MXN' });
+                                                }
+                                            },
+                                            {
+                                                data: 'Gruop_fecha',
+                                                render: function (data, type, row) {
+                                                    return moment(data).utc().format('DD/MM/YYYY');
+                                                }
+                                            },
+
+                                        ],
+
+                                        deferRender: true, // Se habilita el renderizado diferido
+
+                                        drawCallback: function (settings) {
+
+                                        },
+
+                                        footerCallback: function (row, data, start, end, display) {
+                                            var api = this.api();
+
+                                            function roundToTwoDecimals(number) {
+                                                return +(Math.round(number + "e+2") + "e-2");
+                                            }
+
+                                            var totalCantidad = api.column(4, { page: 'current' }).data().reduce(function (a, b) { return a + (parseFloat(b) || 0); }, 0);
+                                            var totalCantidadPeso = api.column(5, { page: 'current' }).data().reduce(function (a, b) { return a + (parseFloat(b) || 0); }, 0);
+                                            var totalVentaReal = api.column(6, { page: 'current' }).data().reduce(function (a, b) { return a + (parseFloat(b) || 0); }, 0);
+                                            var totalVentaSinIVA = api.column(7, { page: 'current' }).data().reduce(function (a, b) { return a + (parseFloat(b) || 0); }, 0);
+                                            var totalVentaIVA = api.column(8, { page: 'current' }).data().reduce(function (a, b) { return a + (parseFloat(b) || 0); }, 0);
+                                            var totalVentaConIVA = api.column(9, { page: 'current' }).data().reduce(function (a, b) { return a + (parseFloat(b) || 0); }, 0);
+
+
+                                            totalCantidadPeso = roundToTwoDecimals(totalCantidadPeso);
+                                            totalVentaReal = roundToTwoDecimals(totalVentaReal);
+                                            totalVentaSinIVA = roundToTwoDecimals(totalVentaSinIVA);
+                                            totalVentaIVA = roundToTwoDecimals(totalVentaIVA);
+                                            totalVentaConIVA = roundToTwoDecimals(totalVentaConIVA);
+
+                                            $('#sumaCantidad').html('Total Cantidad: ' + totalCantidad);
+                                            $('#sumaCantidadPeso').html('Total Cantidad por Gramos: ' + totalCantidadPeso);
+                                            $('#sumaVreal').html('Total Venta Real: $' + totalVentaReal.toLocaleString('es-MX'));
+                                            $('#sumaVSiva').html('Total Venta S/IVA: $' + totalVentaSinIVA.toLocaleString('es-MX'));
+                                            $('#sumaViva').html('Total Venta IVA: $' + totalVentaIVA.toLocaleString('es-MX'));
+                                            $('#sumaVCiva').html('Total Venta C/IVA: $' + totalVentaConIVA.toLocaleString('es-MX'));
+
+                                        },
+
+                                    });
+
+                                    $filtrarBusqueda.on('submit', function (event) {
+                                        event.preventDefault();
+
+                                        var fechaInicio = $('#fechaInicio').val();
+                                        var fechaFin = $('#fechaFin').val();
+                                        var almacen = $('#almacen').val();
+                                        var categoria = $('#categoria').val();
+
+
+                                        // Validar campos
+                                        if (!fechaInicio || !fechaFin ||  !almacen || !categoria.length) {
+                                            Swal.fire({
+                                                icon: 'error',
+                                                title: 'Ups...',
+                                                text: 'Por favor, complete todos los campos antes de realizar la búsqueda.',
+                                            });
+                                            return;
+                                        }
+
+                                        var formData = {
+                                            fechaInicio: fechaInicio,
+                                            fechaFin: fechaFin,
+                                            almacen: almacen,
+                                            categoria: categoria,
+                                        };
+
+                                        var PaginaActual = $tablaRemisiodJoy.DataTable().page();
+                                        var PaginaCantidad = $('#PaginaCantidad').val();
+                                        formData.page = PaginaActual;
+                                        formData.PaginaCantidad = PaginaCantidad;
+
+                                        $.ajax({
+                                            url: '/AdminPages/filtrarTablaRJoy',
+                                            type: 'POST',
+                                            data: formData,
+                                            success: function (data) {
+                                                // Comprobar si los datos están vacíos
+                                                if (!data || data.length === 0) {
+                                                    Swal.fire({
+                                                        icon: 'error',
+                                                        title: 'No se han registrado datos para este filtro',
+                                                        text: 'Seleccione los campos donde si haya datos y vuelva a intentar',
+                                                    });
+                                                } else {
+                                                    // Actualizar los datos de la tabla con la respuesta del servidor
+                                                    $tablaRemisiodJoy.DataTable().clear().rows.add(data).draw();
+
+                                                }
+                                            },
+                                            error: function (jqXHR, textStatus, errorThrown) {
+                                                alert('Error al filtrar/verificar filtrobusqueda');
+                                            }
+                                        });
+                                    });
+
+                                    $tablaRemisiodJoy.on('length.dt', function (e, settings, len) {
+
+                                    });
+
+                                });
+
+                            </script>
+                        }
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+    <script src="~/Scripts/ScriptsAdmins/ScriptVentasAdminTotal.js"></script>
+
+</body>
+</html>
+
+

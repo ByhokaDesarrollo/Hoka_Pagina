@@ -1,0 +1,9 @@
+﻿.custom-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#btn-filtrar {
+    margin-left: auto;
+}

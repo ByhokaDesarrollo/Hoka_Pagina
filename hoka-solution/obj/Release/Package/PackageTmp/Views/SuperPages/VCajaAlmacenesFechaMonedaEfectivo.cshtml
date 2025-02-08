@@ -1,0 +1,307 @@
+﻿@{
+    ViewBag.Title = "REPORTE";
+    Layout = "~/Views/Shared/_LayoutAdminTotal.cshtml";
+}
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <link href="~/Content/css/selectcomprim.css" rel="stylesheet" />
+    <link href="~/Content/css/estilosfiltroscss.css" rel="stylesheet" />
+    <style>
+        .readonly {
+            background: #dee2e6;
+            border: 1px solid #dee2e6;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <!--Inicio de sidebar-->
+        <nav class="main-sidebar-custom-lg navbar navbar-expand navbar-white navbar-light">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="pushmenu" href="#" role="button">
+                        <i class="fas fa-bars"></i>
+                    </a>
+                </li>
+                <li class="nav-item d-none d-sm-inline-block">
+                    <a class="nav-link" href="@Url.Action("InicioAdminTotal","AdminPages")">Inicio</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <!--aqui el icon de aumentar pantalla-->
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+                        <i class="fas fa-expand-arrows-alt"></i>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="@Url.Action("CerrarSesion","Acceso")">Salir</a>
+                </li>
+            </ul>
+        </nav>
+
+
+        <!--Inicio de paginacion-->
+        <div class="content-header">
+            <section class="content-header">
+                <!--Inicio de titulo-->
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1>VALORES ENTREGADOS  </h1>
+                            <p>
+                                Fecha Registro: @ViewBag.Fecha<br>
+                                Fecha Actual: @ViewBag.FechaHoy
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+
+
+                @*<div class="card">
+
+           <div class="card-header">
+               <div class="row">
+                   <div class="col-12">
+                       <b>Sin Registro</b>
+                   </div>
+               </div>
+           </div>
+        </div>*@
+
+                 
+                <div class="card">
+                    <!--Inicio de Botones del sidebar de la tabla de contenido-->
+                    <div class="card-header">
+
+
+                    </div>
+
+                    <!--Cuerpo del contenido(en este caso la tabla)-->
+                    @*<div class="card-body">
+                        <table class="table">
+                            <thead>
+                                <tr> 
+                                    <th>Moneda</th>
+                                    <th>Importe en moneda de origen</th>
+                                    <th>Importe en pesos</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in ViewBag.CuadreEfectivo)
+                                {
+                                    <tr> 
+                                        <td>@item.MonedaNombre</td>
+                                        <td>@item.ImporteMonedaOrigen</td>
+                                        <td>@item.ImportePesos</td>
+
+
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>*@
+                </div>
+                 
+
+
+                @foreach (var moneda in ViewBag.Monedas)
+                {
+                    int listarResultados = 0;
+                    float TipoCambioValue = 0;
+
+                    if (moneda.Id == ViewBag.IdMoneda)
+                    {
+
+                        foreach (var registroValorEntregado in ViewBag.RegistroValoresEntregados)
+                        {
+
+
+
+                            if (moneda.Id == registroValorEntregado.IdMoneda && @ViewBag.Fecha == registroValorEntregado.Fecha)
+                            {
+                                listarResultados = 1;
+                                TipoCambioValue = registroValorEntregado.TipoCambio;
+                                break;
+                            }
+                        }
+                        <div class="card">
+                            <!--Inicio de Botones del sidebar de la tabla de contenido-->
+                            <div class="card-header">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <b>Moneda: @moneda.Nombre</b>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--Cuerpo del contenido(en este caso la tabla)-->
+
+                            <div class="card-body">
+
+
+                                @using (Html.BeginForm("procesarValoresEntregados2", "SuperPages", FormMethod.Post))
+                                {
+                                    var c = 0; int TipoCambioVale = 0;
+                                    var tipoCambio = "tipoCambio" + moneda.Id;
+
+                                    //string testParameter = Request.QueryString["IdAlmacen"];
+
+                                    <input type="hidden" name="FechaParam" value="@ViewBag.Fecha" />
+                                    <input type="hidden" name="IdAlmacenParam" value="@ViewBag.Almacen" />
+                                    <input type="hidden" name="IdMonedaParam" value="@ViewBag.IdMoneda"/>
+
+                                    if (listarResultados == 0)
+                                    {
+
+
+                                        <label>Tipo de cambio:</label>
+                                        /* id 6 = vales */
+                                        if (moneda.Id == 6)
+                                        {
+                                            TipoCambioVale = 1;
+                                            <input type="number" name="TipoCambio" value="@TipoCambioVale" class="@tipoCambio readonly" readonly />
+                                        }
+                                        else
+                                        {
+                                            <input type="number" name="TipoCambio" value="1" class="@tipoCambio" />
+                                        }
+
+                                    }
+                                    else
+                                    {
+                                        <label>Tipo de cambio:  @TipoCambioValue</label>
+                                        <input type="number" name="TipoCambio" value="@TipoCambioValue" class="@tipoCambio readonly" readonly />
+                                    }
+
+                                    <input type="hidden" name="IdMoneda" value="@moneda.Id" />
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Denominacion</th>
+                                                <th>Cantidad</th>
+                                                <th>Importe</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            @foreach (var monedaDenominacion in ViewBag.MonedaDenominacion)
+                                            {
+                                                if (monedaDenominacion.IdMoneda == moneda.Id)
+                                                {
+                                                    c++;
+                                                    var importeclass = "importe" + monedaDenominacion.Id;
+
+                                                    if (listarResultados == 1)
+                                                    {
+
+                                                        foreach (var valoresEntregados in ViewBag.ValoresEntregados)
+                                                        {
+                                                            if (valoresEntregados.IdMoneda == moneda.Id && monedaDenominacion.Id == valoresEntregados.IdMonedaDenominacion)
+                                                            {
+                                                                <tr>
+                                                                    <td>
+                                                                        <input type="hidden" name="IdValoresEntregados[@c]" value="@valoresEntregados.Id" />
+                                                                        <input type="hidden" name="denominacion[@c]" value="@monedaDenominacion.Id" />
+                                                                        @monedaDenominacion.Denominacion
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="number" name="cantidad[@c]" value="@valoresEntregados.Cantidad" class="calcularImporte readonly" data-id-moneda="@moneda.Id" data-id-denominacion="@monedaDenominacion.Id" data-moneda-denominacion="@monedaDenominacion.Denominacion" />
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="text" name="importe[@c]" value="@valoresEntregados.Importe" class="@importeclass readonly" />
+                                                                    </td>
+                                                                </tr>
+                                                            }
+                                                        }
+
+                                                    }
+                                                    else
+                                                    {
+
+                                                        <tr>
+                                                            <td>
+                                                                <input type="hidden" name="IdValoresEntregados" value="0" />
+                                                                <input type="hidden" name="denominacion[@c]" value="@monedaDenominacion.Id" />
+                                                                @monedaDenominacion.Denominacion
+                                                            </td>
+                                                            <td>
+                                                                <input type="number" name="cantidad[@c]" class="calcularImporte" data-id-moneda="@moneda.Id" data-id-denominacion="@monedaDenominacion.Id" data-moneda-denominacion="@monedaDenominacion.Denominacion" />
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" name="importe[@c]" class="@importeclass readonly" readonly />
+                                                            </td>
+                                                        </tr>
+
+                                                    }
+
+                                                }
+                                            }
+
+                                        </tbody>
+                                    </table>
+                                    if (listarResultados == 0)
+                                    {
+                                        @*<button type="submit" class="btn btn-primary float-right">Guardar</button>*@
+                                    }
+                                    <button type="submit" class="btn btn-primary float-right">Guardar</button>
+                                }
+                            </div>
+                        </div>
+
+                        break;
+                    }
+
+                }
+
+            </section>
+        </div>
+    </div>
+</body>
+</html>
+@section scripts {
+    <script>
+        var _changeInterval = null;
+
+        $(".calcularImporte").keyup(function (e) {
+
+            var cantidad = $(this).val()
+            var idMoneda = $(this).attr("data-id-moneda")
+            var tipoCambio = $(".tipoCambio" + idMoneda).val()
+            var IdDenominacion = $(this).attr("data-id-denominacion")
+            var denominacion = $(this).attr("data-moneda-denominacion")
+
+            console.log(cantidad)
+            console.log(tipoCambio)
+            console.log(denominacion)
+
+            clearInterval(_changeInterval)
+
+            _changeInterval = setInterval(function () {
+                var importe
+
+                if (cantidad == "" || cantidad == 0 || isNaN(cantidad) || tipoCambio == 0 || isNaN(tipoCambio) || tipoCambio == "") {
+                    cantidad = 0;
+                    importe = 0;
+                }
+                else {
+                    importe = parseFloat(cantidad) * parseFloat(tipoCambio) * parseFloat(denominacion)
+                }
+
+                console.log(importe)
+                $(".importe" + IdDenominacion).val(importe.toFixed(2))
+                clearInterval(_changeInterval)
+
+            }, 500);
+
+        });
+
+    </script>
+
+}
+

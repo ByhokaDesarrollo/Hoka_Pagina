@@ -1,0 +1,166 @@
+﻿@model  hoka.Models.AllModels
+
+@{
+    Layout = null;
+}
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>HOKA - Registro</title>
+    <link rel="icon" type="image/png" href="~/Content/img/icons/BLANCO.png" />
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link href="~/Content/fontawesome-free/css/all.css" rel="stylesheet" />
+    <!-- icheck bootstrap -->
+    <link href="~/Content/icheck-bootstrap/icheck-bootstrap.min.css" rel="stylesheet" />
+    <!-- Theme style -->
+    <link href="~/Content/adminlte.min.css" rel="stylesheet" />
+</head>
+<body class="hold-transition register-page">
+    <div class="container col-lg-6">
+        <div class="register-logo">
+            <a href="#"><b>Triton</b>Software</a>
+        </div>
+        <p class="login-box-msg">Registro de usuario</p>
+
+        <div class="card-body register-card-body">
+
+            <form id="form-registro" action="@Url.Action("Registro", "Acceso")" method="post">
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <p class="login-box-msg">Datos Personales</p>
+                        <!-- DATOS PERSONALES DE LOS USUARIOS AL REGISTRARSE -->
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" name="NombreU" placeholder="Nombre: Ej. Juan">
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <span class="fas fa-user"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" name="ApellidoU" placeholder="Apellido: Ej. Lopez">
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <span class="fas fa-user"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="date" class="form-control" name="FechaNacimientoU" value="" placeholder="">
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <i class="far fa-calendar"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="number" class="form-control" name="Telefono" placeholder="000-000-0000">
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <i class="fas fa-phone"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- HACER UNA DIVISION EN EL HTML O CSS PARA UNA MEJOR VISUALIZACION -->
+                    <!-- DATOS GENERALES DE LOS USUARIOS -->
+
+                    <div class="col-md-6">
+                        <p class="login-box-msg">Datos de usuario</p>
+                        <div class="input-group mb-3">
+                            <input type="email" class="form-control" placeholder="Correo" name="Correo">
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <span class="fas fa-envelope"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="password" class="form-control" placeholder="Contraseña" name="Clave">
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <span class="fas fa-lock"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="password" class="form-control" placeholder="Confirmar Contraseña" name="ConfirmarClave">
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <span class="fas fa-lock"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input-group mb-3">
+                            <select class="form-control select2 rol-select" style="width: 100%" id="Id_Rol" name="Id_Rol" data-url="@Url.Action("ObtenerPerfiles")">
+                                <option selected="selected">Selecciona un Rol</option>
+                                @foreach (var rol in Model.RolesM)
+                                {
+                                    <option value="@rol.Id_Rol">@rol.Nombre_Rol</option>
+                                }
+                            </select>
+                        </div>
+
+                        <div class="input-group mb-3">
+                            <select class="form-control select2 perfil-select" style="width: 100%" id="Id_Perfil" name="Id_Perfil" disabled data-url="@Url.Action("ObtenerCiudades")">
+                                <option selected="selected">Selecciona un Perfil</option>
+                            </select>
+                        </div>
+
+                        <div class="input-group mb-3">
+                            <select class="form-control select2 ciudad-select" style="width: 100%" id="Id_Ciudad" name="Id_Ciudad" disabled data-url="@Url.Action("ObtenerTiendas")">
+                                <option selected="selected">Selecciona una Ciudad</option>
+                            </select>
+                        </div>
+
+                        <div class="input-group mb-3">
+                            <select class="form-control select2 tienda-select" style="width: 100%" id="Id_Tienda" name="Id_Tienda" disabled>
+                                <option selected="selected">Selecciona una Tienda</option>
+                            </select>
+                        </div>
+
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-6">
+                        <font color="black">
+                            Ya tienes una cuenta?
+                        </font> <a href="@Url.Action("Login", "Acceso") " class="ml-2">Iniciar Sesion</a>
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-md-6">
+                        <button id="btn-registro" type="submit" class="btn btn-primary btn-block">Registrar</button>
+                    </div>
+                    <!-- /.col -->
+                </div>
+            </form>
+        </div>
+
+        <!-- /.form-box -->
+    </div><!-- /.card -->
+    <!-- /.register-box -->
+    <!-- jQuery -->
+    <script src="~/Scripts/jquery/jquery.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="~/Scripts/bootstrap/js/bootstrap.bundle.js"></script>
+    <!-- AdminLTE App -->
+    <script src="~/Scripts/adminlte.min.js"></script>
+
+    <script src="~/Scripts/validarRegistro.js"></script>
+    <script src="~/Scripts/sweetalert2.all.min.js"></script>
+
+</body>
+</html>
+

@@ -1,0 +1,916 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="packages\EntityFramework.6.5.1\build\EntityFramework.props" Condition="Exists('packages\EntityFramework.6.5.1\build\EntityFramework.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{A371D930-B19D-4718-A669-D0182F819FBB}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>hoka</RootNamespace>
+    <AssemblyName>hoka</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <Use64BitIISExpress>true</Use64BitIISExpress>
+    <IISExpressSSLPort>44330</IISExpressSSLPort>
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>packages\EntityFramework.6.5.1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>packages\EntityFramework.6.5.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.4.1.0\lib\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Web.Infrastructure.2.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.AspNet.WebPages.3.3.0\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.AspNet.Mvc.5.3.0\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.AspNet.Razor.3.3.0\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.AspNet.WebPages.3.3.0\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.AspNet.WebPages.3.3.0\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.AspNet.WebPages.3.3.0\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\Finanza\Administracion\BancoEfectivo\BancoCaratulaReporteController.cs" />
+    <Compile Include="Controllers\Finanza\Administracion\BancoEfectivo\BancoCaratulaEfectivoController.cs" />
+    <Compile Include="Controllers\Finanza\Administracion\BancoEfectivo\BancoCaratulaController.cs" />
+    <Compile Include="Controllers\MainController.cs" />
+    <Compile Include="Controllers\MonedaController.cs" />
+    <Compile Include="Controllers\JoyeriaController.cs" />
+    <Compile Include="Controllers\Almacen\Caratula\AlmacenCaratulaReporteController.cs" />
+    <Compile Include="Controllers\Almacen\Caratula\AlmacenCaratulaController.cs" />
+    <Compile Include="Controllers\Almacen\Caratula\AlmacenCaratulaEfectivoController.cs" />
+    <Compile Include="Controllers\Almacen\Caratula\AlmacenCaratulaVentaController.cs" />
+    <Compile Include="Controllers\Almacen\Caratula\AlmacenCaratulaVoucherController.cs" />
+    <Compile Include="Controllers\Productos\SucursalVenta\ProductoSucursalVentaController.cs" />
+    <Compile Include="Controllers\VoucherController.cs" />
+    <Compile Include="Controllers\AccesoController.cs" />
+    <Compile Include="Controllers\AdminPagesController.cs" />
+    <Compile Include="Controllers\CajaVentasController.cs" />
+    <Compile Include="Controllers\SuperPagesController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\NobendidosBase.cs" />
+    <Compile Include="Controllers\UserPagesController.cs" />
+    <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="HokaCli\Models\Compuadmo\AlmacenCategoriaVenta\EnAlmacenCategoriaVenta.cs" />
+    <Compile Include="HokaCli\Models\Compuadmo\Moneda\Denominacion\EnMonedaDenominacion.cs" />
+    <Compile Include="HokaCli\Models\Compuadmo\Moneda\EnMoneda.cs" />
+    <Compile Include="HokaCli\Models\Compuadmo\Moneda\Tipo\EnMonedaTipo.cs" />
+    <Compile Include="HokaCli\Models\Compuadmo\Usuario\EsUsuario.cs" />
+    <Compile Include="HokaCli\Models\Compuadmo\Usuario\Permiso\AlmacenCaratula\EnUsuarioPermisoAlmacenCaratula.cs" />
+    <Compile Include="HokaCli\Models\Compuadmo\Usuario\Permiso\EnUsuarioPermiso.cs" />
+    <Compile Include="HokaCli\Models\Ingresos\AlmacenCaratulaReporteEfectivo\EnAlmacenCaratulaEfectivo.cs" />
+    <Compile Include="HokaCli\Models\Ingresos\AlmacenCaratulaReporteEfectivo\Moneda\Denominacion\EnAlmacenCaratulaEfectivoDenominacion.cs" />
+    <Compile Include="HokaCli\Models\Ingresos\AlmacenCaratulaReporteEfectivo\Moneda\EnAlmacenCaratulaEfectivoMoneda.cs" />
+    <Compile Include="HokaCli\Models\Ingresos\AlmacenCaratulaReporteVenta\EnAlmacenCaratulaVenta.cs" />
+    <Compile Include="HokaCli\Models\Ingresos\AlmacenCaratulaReporteVenta\VentaCategoria\EnAlmacenCaratulaVentaCategoria.cs" />
+    <Compile Include="HokaCli\Models\Compuadmo\Voucher\EnVoucher.cs" />
+    <Compile Include="HokaCli\Models\Ingresos\AlmacenCaratulaReporteVoucher\EnAlmacenCaratulaVoucher.cs" />
+    <Compile Include="HokaCli\Models\Ingresos\AlmacenCaratulaReporteVoucher\Voucher\EnAlmacenCaratulaVoucherVoucher.cs" />
+    <Compile Include="HokaCli\Models\Ingresos\AlmacenCaratulaReporteVoucher\Voucher\Recibo\EnAlmacenCaratulaVoucherRecibo.cs" />
+    <Compile Include="HokaCli\Models\Ingresos\AlmacenCaratula\EnAlmacenCaratulaReporte.cs" />
+    <Compile Include="HokaCli\Struct\EnPaginacion.cs" />
+    <Compile Include="HokaCli\Struct\EsConsulta.cs" />
+    <Compile Include="HokaCli\Struct\EsError.cs" />
+    <Compile Include="HokaCli\Struct\EsEstructura.cs" />
+    <Compile Include="HokaCli\Struct\EsPropiedad.cs" />
+    <Compile Include="Hoka\Models\Almacen\Caratula\AlmacenCaratulaReporte\Servicios\SvAppAlmacenCaratulaReporteConsultar.cs" />
+    <Compile Include="Hoka\Models\Almacen\Caratula\AlmacenCaratulaEfectivo\Servicios\SvAppAlmacenCaratulaEfectivoActualizar.cs" />
+    <Compile Include="Hoka\Models\Almacen\Caratula\AlmacenCaratulaEfectivo\Servicios\SvAppAlmacenCaratulaEfectivoConsultar.cs" />
+    <Compile Include="Hoka\Models\Almacen\Caratula\AlmacenCaratulaEfectivo\Servicios\SvAppMonedaDenominacionConsultar.cs" />
+    <Compile Include="Hoka\Models\Almacen\Caratula\AlmacenCaratulaEfectivo\Servicios\SvAppAlmacenCaratulaEfectivoGrabar.cs" />
+    <Compile Include="Hoka\Models\Almacen\Caratula\AlmacenCaratulaVenta\Servicio\SvAppAlmacenCaratulaVentaGrabar.cs" />
+    <Compile Include="Hoka\Models\Almacen\Caratula\AlmacenCaratulaVenta\Servicio\SvAppAlmacenCaratulaVentaConsultar.cs" />
+    <Compile Include="Hoka\Models\Almacen\Caratula\AlmacenCaratulaVenta\Servicio\SvAppAlmacenCaratulaVentaConsultarCategoriaVentaDelDia.cs" />
+    <Compile Include="HokaCli\Models\Compuadmo\Almacen\EnAlmacen.cs" />
+    <Compile Include="HokaCli\Models\Compuadmo\Catalogo\Almacen\EnCatalogoAlmacen.cs" />
+    <Compile Include="HokaCli\Models\Compuadmo\Categoria\EnCategoria.cs" />
+    <Compile Include="HokaCli\Models\Compuadmo\UsuarioPerfil\EnUsuarioPerfil.cs" />
+    <Compile Include="HokaCli\Models\Compuadmo\UsuarioRol\EnUsuarioRol.cs" />
+    <Compile Include="HokaCli\Models\Compuadmo\Usuario\EnUsuario.cs" />
+    <Compile Include="HokaCli\Models\Ingresos\AlmacenCaratulaReporteEstatus\EnAlmacenCaratulaEstatus.cs" />
+    <Compile Include="HokaCli\Models\Ingresos\AlmacenCaratula\EnAlmacenCaratula.cs" />
+    <Compile Include="Hoka\Models\Almacen\Caratula\AlmacenCaratulaVenta\Servicio\SvAppAlmacenCaratulaVentaActualizar.cs" />
+    <Compile Include="Hoka\Models\Almacen\Caratula\AlmacenCaratulaVenta\Servicio\SvAppAlmacenCaratulaVentaCrear.cs" />
+    <Compile Include="Hoka\Models\Almacen\Caratula\AlmacenCaratulaVoucher\Servicio\SvAppAlmacenCaratulaVoucherActualizar.cs" />
+    <Compile Include="Hoka\Models\Almacen\Caratula\AlmacenCaratulaVoucher\Servicio\SvAppAlmacenCaratulaVoucherConsultar.cs" />
+    <Compile Include="Hoka\Models\Almacen\Caratula\AlmacenCaratulaVoucher\Servicio\SvAppVoucherConsultar.cs" />
+    <Compile Include="Hoka\Models\Almacen\Caratula\AlmacenCaratulaVoucher\Servicio\SvAppAlmacenCaratulaVoucherCrear.cs" />
+    <Compile Include="Hoka\Models\Almacen\Caratula\AlmacenCaratulaVoucher\Servicio\SvAppAlmacenCaratulaVoucherGrabar.cs" />
+    <Compile Include="Hoka\Models\Almacen\Caratula\AlmacenCaratula\Servicios\SvAlmacenCaratulaFiltrarPorUsuario.cs" />
+    <Compile Include="Hoka\Models\Almacen\Caratula\AlmacenCaratula\Servicios\SvAppAlmacenCaratulaDesbloquear.cs" />
+    <Compile Include="Hoka\Models\Almacen\Caratula\AlmacenCaratula\Servicios\SvAppAlmacenCaratulaGrabar.cs" />
+    <Compile Include="Hoka\Models\Banco\Caratula\Rutas\RtBancoCaratulaRutas.cs" />
+    <Compile Include="Hoka\Models\Almacen\Caratula\Rutas\RtAlmacenCaratulaRutas.cs" />
+    <Compile Include="Hoka\Models\Almacen\Caratula\AlmacenCaratula\Servicios\SvAppAlmacenCaratulaConsultar.cs" />
+    <Compile Include="Hoka\Models\Almacen\Caratula\AlmacenCaratula\Servicios\SvAppAlmacenCaratulaConsultarCaratulasDelDia.cs" />
+    <Compile Include="Hoka\Models\Almacen\Caratula\AlmacenCaratulaEfectivo\Servicios\SvAppAlmacenCaratulaEfectivoCrear.cs" />
+    <Compile Include="Hoka\Models\Banco\Caratula\Servicios\SvAppBancoCaratulaConsultarPorUsuario.cs" />
+    <Compile Include="Hoka\Models\Usuario\Sesion\Servicios\SvAppUsuarioIniciarSesion.cs" />
+    <Compile Include="Models\AllHokaModels.cs" />
+    <Compile Include="Models\AllModels.cs" />
+    <Compile Include="Models\almacenesModel.cs" />
+    <Compile Include="Models\AlmacenTPModel.cs" />
+    <Compile Include="Models\CuadreMonedaSummary.cs" />
+    <Compile Include="Models\EstadoModel.cs" />
+    <Compile Include="Models\GruopRemisioDModel.cs" />
+    <Compile Include="Models\MonedaDenominacion.cs" />
+    <Compile Include="Models\Dejadas.cs" />
+    <Compile Include="Models\RegistroVouchers.cs" />
+    <Compile Include="Models\RegistroDiaVoucher.cs" />
+    <Compile Include="Models\CuadreVoucherSummary.cs" />
+    <Compile Include="Models\VMCuadreMoneda.cs" />
+    <Compile Include="Models\VMCuadreVoucher.cs" />
+    <Compile Include="Models\VCuadreVoucher.cs" />
+    <Compile Include="Models\Vouchers.cs" />
+    <Compile Include="Models\Monedas.cs" />
+    <Compile Include="Models\PerfilModel.cs" />
+    <Compile Include="Models\PermisosModel.cs" />
+    <Compile Include="Models\RemisioDyMModel.cs" />
+    <Compile Include="Models\RemisioMModel.cs" />
+    <Compile Include="Models\RemisioMVendedorModel.cs" />
+    <Compile Include="Models\RemisioMPagoModel.cs" />
+    <Compile Include="Models\UsuariosPermisosModel.cs" />
+    <Compile Include="Models\RemisioDJoyModel.cs" />
+    <Compile Include="Models\RemisioDModel.cs" />
+    <Compile Include="Models\RolModel.cs" />
+    <Compile Include="Models\UsuarioModel.cs" />
+    <Compile Include="Models\UsuariosAlmacenesModel.cs" />
+    <Compile Include="Models\ProductoSinRemisionModel.cs" />
+    <Compile Include="Models\SalesByAgenciesAndGuides.cs" />
+    <Compile Include="Models\RegistroValoresEntregados.cs" />
+    <Compile Include="Models\VentasCategoria.cs" />
+    <Compile Include="Models\ViewValoresEntregados.cs" />
+    <Compile Include="Models\ValoresEntregados.cs" />
+    <Compile Include="Models\ViewStores.cs" />
+    <Compile Include="Models\VistaVendedorModel.cs" />
+    <Compile Include="Permisos\ValidarSesionAttribute.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\a-content\bootstrap\css\bootstrap-grid.css" />
+    <Content Include="Content\a-content\bootstrap\css\bootstrap-grid.min.css" />
+    <Content Include="Content\a-content\bootstrap\css\bootstrap-grid.rtl.css" />
+    <Content Include="Content\a-content\bootstrap\css\bootstrap-grid.rtl.min.css" />
+    <Content Include="Content\a-content\bootstrap\css\bootstrap-reboot.css" />
+    <Content Include="Content\a-content\bootstrap\css\bootstrap-reboot.min.css" />
+    <Content Include="Content\a-content\bootstrap\css\bootstrap-reboot.rtl.css" />
+    <Content Include="Content\a-content\bootstrap\css\bootstrap-reboot.rtl.min.css" />
+    <Content Include="Content\a-content\bootstrap\css\bootstrap-utilities.css" />
+    <Content Include="Content\a-content\bootstrap\css\bootstrap-utilities.min.css" />
+    <Content Include="Content\a-content\bootstrap\css\bootstrap-utilities.rtl.css" />
+    <Content Include="Content\a-content\bootstrap\css\bootstrap-utilities.rtl.min.css" />
+    <Content Include="Content\a-content\bootstrap\css\bootstrap.css" />
+    <Content Include="Content\a-content\bootstrap\css\bootstrap.min.css" />
+    <Content Include="Content\a-content\bootstrap\css\bootstrap.rtl.css" />
+    <Content Include="Content\a-content\bootstrap\css\bootstrap.rtl.min.css" />
+    <Content Include="Content\a-content\select2-bootstrap-5-theme-1.3.0\select2-bootstrap-5-theme.css" />
+    <Content Include="Content\a-content\select2-bootstrap-5-theme-1.3.0\select2-bootstrap-5-theme.min.css" />
+    <Content Include="Content\a-content\select2-bootstrap-5-theme-1.3.0\select2-bootstrap-5-theme.rtl.css" />
+    <Content Include="Content\a-content\select2-bootstrap-5-theme-1.3.0\select2-bootstrap-5-theme.rtl.min.css" />
+    <Content Include="Content\adminlte.min.css" />
+    <Content Include="Content\bootstrap-grid.css" />
+    <Content Include="Content\bootstrap-grid.min.css" />
+    <Content Include="Content\bootstrap-grid.rtl.css" />
+    <Content Include="Content\bootstrap-grid.rtl.min.css" />
+    <Content Include="Content\bootstrap-reboot.css" />
+    <Content Include="Content\bootstrap-reboot.min.css" />
+    <Content Include="Content\bootstrap-reboot.rtl.css" />
+    <Content Include="Content\bootstrap-reboot.rtl.min.css" />
+    <Content Include="Content\bootstrap-switch\css\bootstrap2\bootstrap-switch.css" />
+    <Content Include="Content\bootstrap-switch\css\bootstrap2\bootstrap-switch.min.css" />
+    <Content Include="Content\bootstrap-switch\css\bootstrap3\bootstrap-switch.css" />
+    <Content Include="Content\bootstrap-switch\css\bootstrap3\bootstrap-switch.min.css" />
+    <Content Include="Content\bootstrap-switch\js\bootstrap-switch.js" />
+    <Content Include="Content\bootstrap-switch\js\bootstrap-switch.min.js" />
+    <Content Include="Content\bootstrap-table\bootstrap-table.min.css" />
+    <Content Include="Content\bootstrap-utilities.css" />
+    <Content Include="Content\bootstrap-utilities.min.css" />
+    <Content Include="Content\bootstrap-utilities.rtl.css" />
+    <Content Include="Content\bootstrap-utilities.rtl.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\bootstrap.rtl.css" />
+    <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="Content\cssres\bootstrap-theme.css" />
+    <Content Include="Content\cssres\bootstrap-theme.min.css" />
+    <Content Include="Content\cssres\bootstrap.css" />
+    <Content Include="Content\cssres\bootstrap.min.css" />
+    <Content Include="Content\cssres\Site.css" />
+    <Content Include="Content\css\EditarMiContraseñaAdminTotal.css" />
+    <Content Include="Content\css\EditarUsuarioAdminTotal.css" />
+    <Content Include="Content\css\EditarhabilitarAdmin.css" />
+    <Content Include="Content\css\EditarAdmin.css" />
+    <Content Include="Content\css\estilosdetallesticket.css" />
+    <Content Include="Content\css\estilosfiltroscssTP.css" />
+    <Content Include="Content\css\estilosfiltroscss.css" />
+    <Content Include="Content\css\Inicio.css" />
+    <Content Include="Content\css\inicio_imagen360.css" />
+    <Content Include="Content\css\Layout.css" />
+    <Content Include="Content\css\Login.css" />
+    <Content Include="Content\css\LoginCSS\mainL.css" />
+    <Content Include="Content\css\LPerfilesAdminCSS.css" />
+    <Content Include="Content\css\LusuariosAdminCSS.css" />
+    <Content Include="Content\css\mainA.css" />
+    <Content Include="Content\css\mainC.css" />
+    <Content Include="Content\css\main.css" />
+    <Content Include="Content\css\RegistroCSS\mainR.css" />
+    <Content Include="Content\css\reporteRemisio.css" />
+    <Content Include="Content\css\selectcomprim.css" />
+    <Content Include="Content\css\StylesParaTablasPerfiles.css" />
+    <Content Include="Content\css\StylesParaTablas.css" />
+    <Content Include="Content\css\tablaexport.css" />
+    <Content Include="Content\css\tablas.css" />
+    <Content Include="Content\css\LoginCSS\utilL.css" />
+    <Content Include="Content\css\RegistroCSS\utilR.css" />
+    <Content Include="Content\css\utilC.css" />
+    <Content Include="Content\css\utilA.css" />
+    <Content Include="Content\css\util.css" />
+    <Content Include="Content\dist\css\adminlte.css" />
+    <Content Include="Content\dist\css\adminlte.min.css" />
+    <Content Include="Content\dist\css\alt\adminlte.components.css" />
+    <Content Include="Content\dist\css\alt\adminlte.components.min.css" />
+    <Content Include="Content\dist\css\alt\adminlte.core.css" />
+    <Content Include="Content\dist\css\alt\adminlte.core.min.css" />
+    <Content Include="Content\dist\css\alt\adminlte.extra-components.css" />
+    <Content Include="Content\dist\css\alt\adminlte.extra-components.min.css" />
+    <Content Include="Content\dist\css\alt\adminlte.light.css" />
+    <Content Include="Content\dist\css\alt\adminlte.light.min.css" />
+    <Content Include="Content\dist\css\alt\adminlte.pages.css" />
+    <Content Include="Content\dist\css\alt\adminlte.pages.min.css" />
+    <Content Include="Content\dist\css\alt\adminlte.plugins.css" />
+    <Content Include="Content\dist\css\alt\adminlte.plugins.min.css" />
+    <Content Include="Content\dist\js\adminlte.js" />
+    <Content Include="Content\dist\js\adminlte.min.js" />
+    <Content Include="Content\dist\js\demo.js" />
+    <Content Include="Content\dist\js\pages\dashboard.js" />
+    <Content Include="Content\dist\js\pages\dashboard2.js" />
+    <Content Include="Content\dist\js\pages\dashboard3.js" />
+    <Content Include="Content\fontawesome-free\css\all.css" />
+    <Content Include="Content\fontawesome-free\css\all.min.css" />
+    <Content Include="Content\fontawesome-free\css\brands.css" />
+    <Content Include="Content\fontawesome-free\css\brands.min.css" />
+    <Content Include="Content\fontawesome-free\css\fontawesome.css" />
+    <Content Include="Content\fontawesome-free\css\fontawesome.min.css" />
+    <Content Include="Content\fontawesome-free\css\regular.css" />
+    <Content Include="Content\fontawesome-free\css\regular.min.css" />
+    <Content Include="Content\fontawesome-free\css\solid.css" />
+    <Content Include="Content\fontawesome-free\css\solid.min.css" />
+    <Content Include="Content\fontawesome-free\css\svg-with-js.css" />
+    <Content Include="Content\fontawesome-free\css\svg-with-js.min.css" />
+    <Content Include="Content\fontawesome-free\css\v4-shims.css" />
+    <Content Include="Content\fontawesome-free\css\v4-shims.min.css" />
+    <Content Include="Content\fontawesome-free\webfonts\fa-brands-400.svg" />
+    <Content Include="Content\fontawesome-free\webfonts\fa-regular-400.svg" />
+    <Content Include="Content\fontawesome-free\webfonts\fa-solid-900.svg" />
+    <Content Include="Content\fonts\font-awesome-4.7.0\css\font-awesome.css" />
+    <Content Include="Content\fonts\font-awesome-4.7.0\css\font-awesome.min.css" />
+    <Content Include="Content\fonts\font-awesome-4.7.0\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\fonts\font-awesome-4.7.0\HELP-US-OUT.txt" />
+    <Content Include="Content\fonts\montserrat\OFL.txt" />
+    <Content Include="Content\icheck-bootstrap\icheck-bootstrap.css" />
+    <Content Include="Content\icheck-bootstrap\icheck-bootstrap.min.css" />
+    <Content Include="Content\img\icons\BLANCO.png" />
+    <Content Include="Content\img\icons\BLANCO2.png" />
+    <Content Include="Content\img\icons\build.gif" />
+    <Content Include="Content\img\icons\error.gif" />
+    <Content Include="Content\img\icons\favicon.ico" />
+    <Content Include="Content\img\icons\build2.png" />
+    <Content Include="Content\img\logo\GRIS.png" />
+    <Content Include="Content\img\logo\grupo-hoka-logo.png" />
+    <Content Include="Content\img\logo\Logo360.png" />
+    <Content Include="Content\img\logo\LOGOBLANCO.png" />
+    <Content Include="Content\img\logo\SOLOBLANCO.png" />
+    <Content Include="Content\img\users\IconoUser.jpg" />
+    <Content Include="Content\img\users\IconoUsuario.png" />
+    <Content Include="Content\img\users\user2-160x160.jpg" />
+    <Content Include="Content\js\main.js" />
+    <Content Include="Content\PagedList.css" />
+    <Content Include="Content\PagedListPager.css" />
+    <Content Include="Content\plugins\overlayScrollbars\css\OverlayScrollbars.css" />
+    <Content Include="Content\plugins\overlayScrollbars\css\OverlayScrollbars.min.css" />
+    <Content Include="Content\plugins\overlayScrollbars\js\jquery.overlayScrollbars.js" />
+    <Content Include="Content\plugins\overlayScrollbars\js\jquery.overlayScrollbars.min.js" />
+    <Content Include="Content\plugins\overlayScrollbars\js\OverlayScrollbars.js" />
+    <Content Include="Content\plugins\overlayScrollbars\js\OverlayScrollbars.min.js" />
+    <Content Include="Content\select2-bootstrap4-theme\select2-bootstrap4.css" />
+    <Content Include="Content\select2-bootstrap4-theme\select2-bootstrap4.min.css" />
+    <Content Include="Content\select2\css\select2.css" />
+    <Content Include="Content\select2\css\select2.min.css" />
+    <Content Include="Content\select2\js\i18n\af.js" />
+    <Content Include="Content\select2\js\i18n\ar.js" />
+    <Content Include="Content\select2\js\i18n\az.js" />
+    <Content Include="Content\select2\js\i18n\bg.js" />
+    <Content Include="Content\select2\js\i18n\bn.js" />
+    <Content Include="Content\select2\js\i18n\bs.js" />
+    <Content Include="Content\select2\js\i18n\build.txt" />
+    <Content Include="Content\select2\js\i18n\ca.js" />
+    <Content Include="Content\select2\js\i18n\cs.js" />
+    <Content Include="Content\select2\js\i18n\da.js" />
+    <Content Include="Content\select2\js\i18n\de.js" />
+    <Content Include="Content\select2\js\i18n\dsb.js" />
+    <Content Include="Content\select2\js\i18n\el.js" />
+    <Content Include="Content\select2\js\i18n\en.js" />
+    <Content Include="Content\select2\js\i18n\es.js" />
+    <Content Include="Content\select2\js\i18n\et.js" />
+    <Content Include="Content\select2\js\i18n\eu.js" />
+    <Content Include="Content\select2\js\i18n\fa.js" />
+    <Content Include="Content\select2\js\i18n\fi.js" />
+    <Content Include="Content\select2\js\i18n\fr.js" />
+    <Content Include="Content\select2\js\i18n\gl.js" />
+    <Content Include="Content\select2\js\i18n\he.js" />
+    <Content Include="Content\select2\js\i18n\hi.js" />
+    <Content Include="Content\select2\js\i18n\hr.js" />
+    <Content Include="Content\select2\js\i18n\hsb.js" />
+    <Content Include="Content\select2\js\i18n\hu.js" />
+    <Content Include="Content\select2\js\i18n\hy.js" />
+    <Content Include="Content\select2\js\i18n\id.js" />
+    <Content Include="Content\select2\js\i18n\is.js" />
+    <Content Include="Content\select2\js\i18n\it.js" />
+    <Content Include="Content\select2\js\i18n\ja.js" />
+    <Content Include="Content\select2\js\i18n\ka.js" />
+    <Content Include="Content\select2\js\i18n\km.js" />
+    <Content Include="Content\select2\js\i18n\ko.js" />
+    <Content Include="Content\select2\js\i18n\lt.js" />
+    <Content Include="Content\select2\js\i18n\lv.js" />
+    <Content Include="Content\select2\js\i18n\mk.js" />
+    <Content Include="Content\select2\js\i18n\ms.js" />
+    <Content Include="Content\select2\js\i18n\nb.js" />
+    <Content Include="Content\select2\js\i18n\ne.js" />
+    <Content Include="Content\select2\js\i18n\nl.js" />
+    <Content Include="Content\select2\js\i18n\pl.js" />
+    <Content Include="Content\select2\js\i18n\ps.js" />
+    <Content Include="Content\select2\js\i18n\pt-BR.js" />
+    <Content Include="Content\select2\js\i18n\pt.js" />
+    <Content Include="Content\select2\js\i18n\ro.js" />
+    <Content Include="Content\select2\js\i18n\ru.js" />
+    <Content Include="Content\select2\js\i18n\sk.js" />
+    <Content Include="Content\select2\js\i18n\sl.js" />
+    <Content Include="Content\select2\js\i18n\sq.js" />
+    <Content Include="Content\select2\js\i18n\sr-Cyrl.js" />
+    <Content Include="Content\select2\js\i18n\sr.js" />
+    <Content Include="Content\select2\js\i18n\sv.js" />
+    <Content Include="Content\select2\js\i18n\th.js" />
+    <Content Include="Content\select2\js\i18n\tk.js" />
+    <Content Include="Content\select2\js\i18n\tr.js" />
+    <Content Include="Content\select2\js\i18n\uk.js" />
+    <Content Include="Content\select2\js\i18n\vi.js" />
+    <Content Include="Content\select2\js\i18n\zh-CN.js" />
+    <Content Include="Content\select2\js\i18n\zh-TW.js" />
+    <Content Include="Content\select2\js\select2.full.js" />
+    <Content Include="Content\select2\js\select2.full.min.js" />
+    <Content Include="Content\select2\js\select2.js" />
+    <Content Include="Content\select2\js\select2.min.js" />
+    <Content Include="Content\tempusdominus-bootstrap-4\css\tempusdominus-bootstrap-4.css" />
+    <Content Include="Content\tempusdominus-bootstrap-4\css\tempusdominus-bootstrap-4.min.css" />
+    <Content Include="Content\tempusdominus-bootstrap-4\js\tempusdominus-bootstrap-4.js" />
+    <Content Include="Content\tempusdominus-bootstrap-4\js\tempusdominus-bootstrap-4.min.js" />
+    <Content Include="Content\vendor\animate\animate.css" />
+    <Content Include="Content\vendor\bootstrap\css\bootstrap-grid.css" />
+    <Content Include="Content\vendor\bootstrap\css\bootstrap-grid.min.css" />
+    <Content Include="Content\vendor\bootstrap\css\bootstrap-reboot.css" />
+    <Content Include="Content\vendor\bootstrap\css\bootstrap-reboot.min.css" />
+    <Content Include="Content\vendor\bootstrap\css\bootstrap.css" />
+    <Content Include="Content\vendor\bootstrap\css\bootstrap.min.css" />
+    <Content Include="Content\vendor\bootstrap\js\bootstrap.js" />
+    <Content Include="Content\vendor\bootstrap\js\bootstrap.min.js" />
+    <Content Include="Content\vendor\bootstrap\js\popper.js" />
+    <Content Include="Content\vendor\bootstrap\js\popper.min.js" />
+    <Content Include="Content\vendor\bootstrap\js\tooltip.js" />
+    <Content Include="Content\vendor\jquery\jquery-3.2.1.min.js" />
+    <Content Include="Content\vendor\select2\select2.css" />
+    <Content Include="Content\vendor\select2\select2.js" />
+    <Content Include="Content\vendor\select2\select2.min.css" />
+    <Content Include="Content\vendor\select2\select2.min.js" />
+    <Content Include="Content\vendor\tilt\tilt.jquery.min.js" />
+    <Content Include="favicon.ico" />
+    <Content Include="Global.asax" />
+    <Content Include="Scripts\a-script\bootstrap\js\bootstrap.bundle.js" />
+    <Content Include="Scripts\a-script\bootstrap\js\bootstrap.bundle.min.js" />
+    <Content Include="Scripts\a-script\bootstrap\js\bootstrap.esm.js" />
+    <Content Include="Scripts\a-script\bootstrap\js\bootstrap.esm.min.js" />
+    <Content Include="Scripts\a-script\bootstrap\js\bootstrap.js" />
+    <Content Include="Scripts\a-script\bootstrap\js\bootstrap.min.js" />
+    <Content Include="Scripts\adminlte.min.js" />
+    <Content Include="Scripts\AlertaEliminarAdmins.js" />
+    <Content Include="Scripts\app\fx-decimal.js" />
+    <Content Include="Scripts\bootstrap-table\bootstrap-table-locale-all.min.js" />
+    <Content Include="Scripts\bootstrap-table\bootstrap-table.min.js" />
+    <Content Include="Scripts\bootstrap.bundle.js" />
+    <Content Include="Scripts\bootstrap.bundle.min.js" />
+    <Content Include="Scripts\bootstrap.esm.js" />
+    <Content Include="Scripts\bootstrap.esm.min.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\bootstrap\js\bootstrap.bundle.js" />
+    <Content Include="Scripts\bootstrap\js\bootstrap.bundle.min.js" />
+    <Content Include="Scripts\bootstrap\js\bootstrap.js" />
+    <Content Include="Scripts\bootstrap\js\bootstrap.min.js" />
+    <Content Include="Scripts\DTJS.js" />
+    <Content Include="Content\a-content\select2-bootstrap-5-theme-1.3.0\LICENSE" />
+    <None Include="Scripts\jquery-3.7.1.intellisense.js" />
+    <Content Include="Scripts\jquery-3.7.1.js" />
+    <Content Include="Scripts\jquery-3.7.1.min.js" />
+    <Content Include="Scripts\jquery-3.7.1.slim.js" />
+    <Content Include="Scripts\jquery-3.7.1.slim.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\jquery\jquery.js" />
+    <Content Include="Scripts\jquery\jquery.min.js" />
+    <Content Include="Scripts\jquery\jquery.slim.js" />
+    <Content Include="Scripts\jquery\jquery.slim.min.js" />
+    <Content Include="Scripts\jsres\bootstrap.js" />
+    <Content Include="Scripts\jsres\bootstrap.min.js" />
+    <Content Include="Content\cssres\bootstrap-theme.css.map" />
+    <Content Include="Content\cssres\bootstrap-theme.min.css.map" />
+    <Content Include="Content\cssres\bootstrap.css.map" />
+    <Content Include="Content\cssres\bootstrap.min.css.map" />
+    <Content Include="Content\dist\css\adminlte.css.map" />
+    <Content Include="Content\dist\css\adminlte.min.css.map" />
+    <Content Include="Content\dist\css\alt\adminlte.components.css.map" />
+    <Content Include="Content\dist\css\alt\adminlte.components.min.css.map" />
+    <Content Include="Content\dist\css\alt\adminlte.core.css.map" />
+    <Content Include="Content\dist\css\alt\adminlte.core.min.css.map" />
+    <Content Include="Content\dist\css\alt\adminlte.extra-components.css.map" />
+    <Content Include="Content\dist\css\alt\adminlte.extra-components.min.css.map" />
+    <Content Include="Content\dist\css\alt\adminlte.light.css.map" />
+    <Content Include="Content\dist\css\alt\adminlte.light.min.css.map" />
+    <Content Include="Content\dist\css\alt\adminlte.pages.css.map" />
+    <Content Include="Content\dist\css\alt\adminlte.pages.min.css.map" />
+    <Content Include="Content\dist\css\alt\adminlte.plugins.css.map" />
+    <Content Include="Content\dist\css\alt\adminlte.plugins.min.css.map" />
+    <Content Include="Content\dist\js\.eslintrc.json" />
+    <Content Include="Content\dist\js\adminlte.js.map" />
+    <Content Include="Content\dist\js\adminlte.min.js.map" />
+    <Content Include="Content\img\users\AdminLTE 3  DataTables.pdf" />
+    <Content Include="Content\img\users\AdminLTE 3  DataTables.xlsx" />
+    <Content Include="Content\vendor\bootstrap\css\bootstrap-grid.css.map" />
+    <Content Include="Content\vendor\bootstrap\css\bootstrap-grid.min.css.map" />
+    <Content Include="Content\vendor\bootstrap\css\bootstrap-reboot.css.map" />
+    <Content Include="Content\vendor\bootstrap\css\bootstrap-reboot.min.css.map" />
+    <Content Include="Content\vendor\bootstrap\css\bootstrap.css.map" />
+    <Content Include="Content\vendor\bootstrap\css\bootstrap.min.css.map" />
+    <Content Include="Scripts\bootstrap\js\bootstrap.bundle.js.map" />
+    <Content Include="Scripts\bootstrap\js\bootstrap.bundle.min.js.map" />
+    <Content Include="Scripts\bootstrap\js\bootstrap.js.map" />
+    <Content Include="Scripts\bootstrap\js\bootstrap.min.js.map" />
+    <Content Include="Scripts\jquery\jquery.min.map" />
+    <Content Include="Scripts\jquery\jquery.slim.min.map" />
+    <Content Include="Content\fontawesome-free\webfonts\fa-brands-400.eot" />
+    <Content Include="Content\fontawesome-free\webfonts\fa-brands-400.ttf" />
+    <Content Include="Content\fontawesome-free\webfonts\fa-brands-400.woff" />
+    <Content Include="Content\fontawesome-free\webfonts\fa-brands-400.woff2" />
+    <Content Include="Content\fontawesome-free\webfonts\fa-regular-400.eot" />
+    <Content Include="Content\fontawesome-free\webfonts\fa-regular-400.ttf" />
+    <Content Include="Content\fontawesome-free\webfonts\fa-regular-400.woff" />
+    <Content Include="Content\fontawesome-free\webfonts\fa-regular-400.woff2" />
+    <Content Include="Content\fontawesome-free\webfonts\fa-solid-900.eot" />
+    <Content Include="Content\fontawesome-free\webfonts\fa-solid-900.ttf" />
+    <Content Include="Content\fontawesome-free\webfonts\fa-solid-900.woff" />
+    <Content Include="Content\fontawesome-free\webfonts\fa-solid-900.woff2" />
+    <Content Include="Content\icheck-bootstrap\LICENSE" />
+    <Content Include="Content\fonts\font-awesome-4.7.0\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\fonts\font-awesome-4.7.0\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\fonts\font-awesome-4.7.0\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\fonts\font-awesome-4.7.0\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\fonts\font-awesome-4.7.0\fonts\FontAwesome.otf" />
+    <Content Include="Content\fonts\font-awesome-4.7.0\less\animated.less" />
+    <Content Include="Content\fonts\font-awesome-4.7.0\less\bordered-pulled.less" />
+    <Content Include="Content\fonts\font-awesome-4.7.0\less\core.less" />
+    <Content Include="Content\fonts\font-awesome-4.7.0\less\fixed-width.less" />
+    <Content Include="Content\fonts\font-awesome-4.7.0\less\font-awesome.less" />
+    <Content Include="Content\fonts\font-awesome-4.7.0\less\icons.less" />
+    <Content Include="Content\fonts\font-awesome-4.7.0\less\larger.less" />
+    <Content Include="Content\fonts\font-awesome-4.7.0\less\list.less" />
+    <Content Include="Content\fonts\font-awesome-4.7.0\less\mixins.less" />
+    <Content Include="Content\fonts\font-awesome-4.7.0\less\path.less" />
+    <Content Include="Content\fonts\font-awesome-4.7.0\less\rotated-flipped.less" />
+    <Content Include="Content\fonts\font-awesome-4.7.0\less\screen-reader.less" />
+    <Content Include="Content\fonts\font-awesome-4.7.0\less\stacked.less" />
+    <Content Include="Content\fonts\font-awesome-4.7.0\less\variables.less" />
+    <Content Include="Content\fonts\font-awesome-4.7.0\scss\font-awesome.scss" />
+    <Content Include="Content\fonts\font-awesome-4.7.0\scss\_animated.scss" />
+    <Content Include="Content\fonts\font-awesome-4.7.0\scss\_bordered-pulled.scss" />
+    <Content Include="Content\fonts\font-awesome-4.7.0\scss\_core.scss" />
+    <Content Include="Content\fonts\font-awesome-4.7.0\scss\_fixed-width.scss" />
+    <Content Include="Content\fonts\font-awesome-4.7.0\scss\_icons.scss" />
+    <Content Include="Content\fonts\font-awesome-4.7.0\scss\_larger.scss" />
+    <Content Include="Content\fonts\font-awesome-4.7.0\scss\_list.scss" />
+    <Content Include="Content\fonts\font-awesome-4.7.0\scss\_mixins.scss" />
+    <Content Include="Content\fonts\font-awesome-4.7.0\scss\_path.scss" />
+    <Content Include="Content\fonts\font-awesome-4.7.0\scss\_rotated-flipped.scss" />
+    <Content Include="Content\fonts\font-awesome-4.7.0\scss\_screen-reader.scss" />
+    <Content Include="Content\fonts\font-awesome-4.7.0\scss\_stacked.scss" />
+    <Content Include="Content\fonts\font-awesome-4.7.0\scss\_variables.scss" />
+    <Content Include="Content\fonts\montserrat\Montserrat-Black.ttf" />
+    <Content Include="Content\fonts\montserrat\Montserrat-BlackItalic.ttf" />
+    <Content Include="Content\fonts\montserrat\Montserrat-Bold.ttf" />
+    <Content Include="Content\fonts\montserrat\Montserrat-BoldItalic.ttf" />
+    <Content Include="Content\fonts\montserrat\Montserrat-ExtraBold.ttf" />
+    <Content Include="Content\fonts\montserrat\Montserrat-ExtraBoldItalic.ttf" />
+    <Content Include="Content\fonts\montserrat\Montserrat-ExtraLight.ttf" />
+    <Content Include="Content\fonts\montserrat\Montserrat-ExtraLightItalic.ttf" />
+    <Content Include="Content\fonts\montserrat\Montserrat-Italic.ttf" />
+    <Content Include="Content\fonts\montserrat\Montserrat-Light.ttf" />
+    <Content Include="Content\fonts\montserrat\Montserrat-LightItalic.ttf" />
+    <Content Include="Content\fonts\montserrat\Montserrat-Medium.ttf" />
+    <Content Include="Content\fonts\montserrat\Montserrat-MediumItalic.ttf" />
+    <Content Include="Content\fonts\montserrat\Montserrat-Regular.ttf" />
+    <Content Include="Content\fonts\montserrat\Montserrat-SemiBold.ttf" />
+    <Content Include="Content\fonts\montserrat\Montserrat-SemiBoldItalic.ttf" />
+    <Content Include="Content\fonts\montserrat\Montserrat-Thin.ttf" />
+    <Content Include="Content\fonts\montserrat\Montserrat-ThinItalic.ttf" />
+    <Content Include="Content\fonts\poppins\Poppins-Black.ttf" />
+    <Content Include="Content\fonts\poppins\Poppins-BlackItalic.ttf" />
+    <Content Include="Content\fonts\poppins\Poppins-Bold.ttf" />
+    <Content Include="Content\fonts\poppins\Poppins-BoldItalic.ttf" />
+    <Content Include="Content\fonts\poppins\Poppins-ExtraBold.ttf" />
+    <Content Include="Content\fonts\poppins\Poppins-ExtraBoldItalic.ttf" />
+    <Content Include="Content\fonts\poppins\Poppins-ExtraLight.ttf" />
+    <Content Include="Content\fonts\poppins\Poppins-ExtraLightItalic.ttf" />
+    <Content Include="Content\fonts\poppins\Poppins-Italic.ttf" />
+    <Content Include="Content\fonts\poppins\Poppins-Light.ttf" />
+    <Content Include="Content\fonts\poppins\Poppins-LightItalic.ttf" />
+    <Content Include="Content\fonts\poppins\Poppins-Medium.ttf" />
+    <Content Include="Content\fonts\poppins\Poppins-MediumItalic.ttf" />
+    <Content Include="Content\fonts\poppins\Poppins-Regular.ttf" />
+    <Content Include="Content\fonts\poppins\Poppins-SemiBold.ttf" />
+    <Content Include="Content\fonts\poppins\Poppins-SemiBoldItalic.ttf" />
+    <Content Include="Content\fonts\poppins\Poppins-Thin.ttf" />
+    <Content Include="Content\fonts\poppins\Poppins-ThinItalic.ttf" />
+    <Content Include="Content\a-content\bootstrap\css\bootstrap-grid.css.map" />
+    <Content Include="Content\a-content\bootstrap\css\bootstrap-grid.min.css.map" />
+    <Content Include="Content\a-content\bootstrap\css\bootstrap-grid.rtl.css.map" />
+    <Content Include="Content\a-content\bootstrap\css\bootstrap-grid.rtl.min.css.map" />
+    <Content Include="Content\a-content\bootstrap\css\bootstrap-reboot.css.map" />
+    <Content Include="Content\a-content\bootstrap\css\bootstrap-reboot.min.css.map" />
+    <Content Include="Content\a-content\bootstrap\css\bootstrap-reboot.rtl.css.map" />
+    <Content Include="Content\a-content\bootstrap\css\bootstrap-reboot.rtl.min.css.map" />
+    <Content Include="Content\a-content\bootstrap\css\bootstrap-utilities.css.map" />
+    <Content Include="Content\a-content\bootstrap\css\bootstrap-utilities.min.css.map" />
+    <Content Include="Content\a-content\bootstrap\css\bootstrap-utilities.rtl.css.map" />
+    <Content Include="Content\a-content\bootstrap\css\bootstrap-utilities.rtl.min.css.map" />
+    <Content Include="Content\a-content\bootstrap\css\bootstrap.css.map" />
+    <Content Include="Content\a-content\bootstrap\css\bootstrap.min.css.map" />
+    <Content Include="Content\a-content\bootstrap\css\bootstrap.rtl.css.map" />
+    <Content Include="Content\a-content\bootstrap\css\bootstrap.rtl.min.css.map" />
+    <Content Include="Scripts\a-script\bootstrap\js\bootstrap.bundle.js.map" />
+    <Content Include="Scripts\a-script\bootstrap\js\bootstrap.bundle.min.js.map" />
+    <Content Include="Scripts\a-script\bootstrap\js\bootstrap.esm.js.map" />
+    <Content Include="Scripts\a-script\bootstrap\js\bootstrap.esm.min.js.map" />
+    <Content Include="Scripts\a-script\bootstrap\js\bootstrap.js.map" />
+    <Content Include="Scripts\a-script\bootstrap\js\bootstrap.min.js.map" />
+    <Content Include="Scripts\bootstrap.min.js.map" />
+    <Content Include="Scripts\bootstrap.js.map" />
+    <Content Include="Scripts\bootstrap.esm.min.js.map" />
+    <Content Include="Scripts\bootstrap.esm.js.map" />
+    <Content Include="Scripts\bootstrap.bundle.min.js.map" />
+    <Content Include="Scripts\bootstrap.bundle.js.map" />
+    <Content Include="Content\bootstrap.rtl.min.css.map" />
+    <Content Include="Content\bootstrap.rtl.css.map" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-utilities.rtl.min.css.map" />
+    <Content Include="Content\bootstrap-utilities.rtl.css.map" />
+    <Content Include="Content\bootstrap-utilities.min.css.map" />
+    <Content Include="Content\bootstrap-utilities.css.map" />
+    <Content Include="Content\bootstrap-reboot.rtl.min.css.map" />
+    <Content Include="Content\bootstrap-reboot.rtl.css.map" />
+    <Content Include="Content\bootstrap-reboot.min.css.map" />
+    <Content Include="Content\bootstrap-reboot.css.map" />
+    <Content Include="Content\bootstrap-grid.rtl.min.css.map" />
+    <Content Include="Content\bootstrap-grid.rtl.css.map" />
+    <Content Include="Content\bootstrap-grid.min.css.map" />
+    <Content Include="Content\bootstrap-grid.css.map" />
+    <Content Include="Scripts\jquery-3.7.1.slim.min.map" />
+    <Content Include="Scripts\jquery-3.7.1.min.map" />
+    <None Include="Scripts\jsres\jquery-3.4.1.intellisense.js" />
+    <Content Include="Scripts\jsres\jquery-3.4.1.js" />
+    <Content Include="Scripts\jsres\jquery-3.4.1.min.js" />
+    <Content Include="Scripts\jsres\jquery-3.4.1.slim.js" />
+    <Content Include="Scripts\jsres\jquery-3.4.1.slim.min.js" />
+    <None Include="Scripts\jsres\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jsres\jquery.validate.js" />
+    <Content Include="Scripts\jsres\jquery.validate.min.js" />
+    <Content Include="Scripts\jsres\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jsres\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\jsres\modernizr-2.8.3.js" />
+    <Content Include="Scripts\layout.js" />
+    <Content Include="Scripts\ScriptsAdmins\AlertaEliminarPerfilesAdmins.js" />
+    <Content Include="Scripts\ScriptsAdmins\ScriptRotacionAdminTotalJoy.js" />
+    <Content Include="Scripts\ScriptsAdmins\ScriptRotacionAdminTotal.js" />
+    <Content Include="Scripts\ScriptsAdmins\ScriptConsultaTicketsJoyAdmin.js" />
+    <Content Include="Scripts\ScriptsAdmins\ScriptConsultaTicketsJoyUser.js" />
+    <Content Include="Scripts\ScriptsAdmins\ScriptConsultaTicketsJoyAdminTotal.js" />
+    <Content Include="Scripts\ScriptsAdmins\ScriptTipoPagoAdminTotal.js" />
+    <Content Include="Scripts\ScriptsAdmins\ScriptConsultaTicketsUser.js" />
+    <Content Include="Scripts\ScriptsAdmins\ScriptConsultaTicketsAdmin.js" />
+    <Content Include="Scripts\ScriptsAdmins\ScriptDetalleTicketsUser.js" />
+    <Content Include="Scripts\ScriptsAdmins\ScriptDetalleTicketsAdmin.js" />
+    <Content Include="Scripts\ScriptsAdmins\ScriptEditarMiUsuarioUser.js" />
+    <Content Include="Scripts\ScriptsAdmins\ScriptEditarMiUsuarioAdmin.js" />
+    <Content Include="Scripts\ScriptsAdmins\ScriptEditarPerfilAdminTotal.js" />
+    <Content Include="Scripts\ScriptsAdmins\ScriptEditarPermisosAdminTotal.js" />
+    <Content Include="Scripts\ScriptsAdmins\ScriptPerfilesAdmintTotal.js" />
+    <Content Include="Scripts\ScriptsAdmins\ScriptAdminTotal.js" />
+    <Content Include="Scripts\ScriptsAdmins\ScriptEditarMiContraseñaAdminTotal.js" />
+    <Content Include="Scripts\ScriptsAdmins\ScriptEditarContraseñaAdminTotal.js" />
+    <Content Include="Scripts\ScriptsAdmins\ScriptEditarMiUsuarioAdminTotal.js" />
+    <Content Include="Scripts\ScriptsAdmins\ScriptEditarUsuarioAdminTotal.js" />
+    <Content Include="Scripts\ScriptsAdmins\ScriptDetalleTicketsAdminTotal.js" />
+    <Content Include="Scripts\ScriptsAdmins\ScriptConsultaTicketsAdminTotal.js" />
+    <Content Include="Scripts\sweetalert2.all.min.js" />
+    <Content Include="Scripts\validarLogin.js" />
+    <Content Include="Scripts\validarRegistro.js" />
+    <Content Include="Web.config" />
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Acceso\Login.cshtml" />
+    <Content Include="Views\Acceso\Registro.cshtml" />
+    <Content Include="Views\Shared\_LayoutAdminTotal.cshtml" />
+    <Content Include="Views\Home\ErrorView.cshtml" />
+    <Content Include="Views\AdminPages\InicioAdminTotal.cshtml" />
+    <Content Include="Views\UserPages\InicioUser.cshtml" />
+    <Content Include="Views\AdminPages\LUsuariosAdminTotal.cshtml" />
+    <Content Include="Views\AdminPages\GProductosAdminTotal.cshtml" />
+    <Content Include="Views\AdminPages\VProductosAdminTotal.cshtml" />
+    <Content Include="Views\AdminPages\EditarUsuario.cshtml" />
+    <Content Include="Views\AdminPages\EditarContraseña.cshtml" />
+    <Content Include="Views\Shared\_LayoutAdmin.cshtml" />
+    <Content Include="Views\Shared\_LayoutUser.cshtml" />
+    <Content Include="Views\AdminPages\InicioAdmin.cshtml" />
+    <Content Include="Views\AdminPages\VProductosAdminAnterior.cshtml" />
+    <Content Include="Views\UserPages\VProductosUserAnterior.cshtml" />
+    <Content Include="Views\AdminPages\VAlmacenAdminTotal.cshtml" />
+    <Content Include="Views\AdminPages\VVendedorAdminTotal.cshtml" />
+    <Content Include="Views\AdminPages\VAlmacenAdmin.cshtml" />
+    <Content Include="Views\UserPages\VAlmacenUser.cshtml" />
+    <Content Include="Views\UserPages\GProductosUser.cshtml" />
+    <Content Include="Views\AdminPages\GProductosAdmin.cshtml" />
+    <Content Include="Views\AdminPages\Index.cshtml" />
+    <Content Include="Views\Acceso\Index.cshtml" />
+    <Content Include="Views\UserPages\Index.cshtml" />
+    <Content Include="Views\Home\Build.cshtml" />
+    <Content Include="Views\AdminPages\MiPerfilAdminTotal.cshtml" />
+    <Content Include="Views\AdminPages\PerfilesForUsersAdminTotal.cshtml" />
+    <Content Include="Views\AdminPages\VProductosJoyAdminTotal.cshtml" />
+    <Content Include="Views\AdminPages\MiContraseñaAdminTotal.cshtml" />
+    <Content Include="Views\AdminPages\EditarPerfil.cshtml" />
+    <Content Include="Views\AdminPages\MiPerfilAdmin.cshtml" />
+    <Content Include="Views\AdminPages\VVendedorAdmin.cshtml" />
+    <Content Include="Views\AdminPages\VProductosJoyAdmin.cshtml" />
+    <Content Include="Views\UserPages\MiPerfilUser.cshtml" />
+    <Content Include="Views\UserPages\VVendedorUser.cshtml" />
+    <Content Include="Views\UserPages\VProductosJoyUser.cshtml" />
+    <Content Include="Views\AdminPages\EditarPermisos.cshtml" />
+    <Content Include="Views\AdminPages\VTipoPagoAdminTotal.cshtml" />
+    <Content Include="Views\AdminPages\VTipoPagoAdmin.cshtml" />
+    <Content Include="Views\UserPages\VTipoPagoUser.cshtml" />
+    <Content Include="Views\AdminPages\CTicketsAdminTotal.cshtml" />
+    <Content Include="Views\AdminPages\DetalleTicketAdminTotal.cshtml" />
+    <Content Include="Views\AdminPages\CTicketsAdmin.cshtml" />
+    <Content Include="Views\AdminPages\DetalleTicketAdmin.cshtml" />
+    <Content Include="Views\UserPages\CTicketsUser.cshtml" />
+    <Content Include="Views\UserPages\DetalleTicketUser.cshtml" />
+    <Content Include="Views\AdminPages\CTicketsJoyAdminTotal.cshtml" />
+    <Content Include="Views\AdminPages\DetalleTicketJoyAdminTotal.cshtml" />
+    <Content Include="Views\AdminPages\CTicketsJoyAdmin.cshtml" />
+    <Content Include="Views\AdminPages\DetalleTicketJoyAdmin.cshtml" />
+    <Content Include="Views\UserPages\CTicketsJoyUser.cshtml" />
+    <Content Include="Views\UserPages\DetalleTicketJoyUser.cshtml" />
+    <Content Include="Views\AdminPages\CInventariosAdminTotal.cshtml" />
+    <Content Include="Views\AdminPages\CRotacionPAdminTotal.cshtml" />
+    <Content Include="Views\AdminPages\CInventariosJoyAdminTotal.cshtml" />
+    <Content Include="Views\AdminPages\CRotacionPJoyAdminTotal.cshtml" />
+    <Content Include="Views\AdminPages\CRotacionPAdmin.cshtml" />
+    <Content Include="Views\UserPages\CRotacionPUser.cshtml" />
+    <Content Include="Views\AdminPages\CRotacionPJoyAdmin.cshtml" />
+    <Content Include="Views\UserPages\CRotacionPJoyUser.cshtml" />
+    <Content Include="Views\AdminPages\VProductosNoVendidosAdminTotal.cshtml" />
+    <Content Include="Views\AdminPages\VReporteTaquillaAdminTotal.cshtml" />
+    <Content Include="Views\AdminPages\VReporteSalesByAgenciesAdminTotal.cshtml" />
+    <Content Include="Views\UserPages\VReporteRegistroVentasCreate.cshtml" />
+    <Content Include="Views\AdminPages\VValoresEntregadosOld.cshtml" />
+    <Content Include="Views\AdminPages\VValoresEntregadosAdmin2.cshtml" />
+    <Content Include="Views\AdminPages\VProductosAdmin.cshtml" />
+    <Content Include="Views\UserPages\VProductosUser.cshtml" />
+    <Content Include="Views\AdminPages\VCuadreEfectivoDM.cshtml" />
+    <Content Include="Views\AdminPages\VCajaAlmacenesADM.cshtml" />
+    <Content Include="Views\AdminPages\VCajaAlmacenesFechaDM.cshtml" />
+    <Content Include="Views\AdminPages\VCajaAlmacenesFechaMonedaDM.cshtml" />
+    <Content Include="Views\AdminPages\VCajaAlmacenesFechaMonedaEfectivoDM.cshtml" />
+    <Content Include="Views\AdminPages\VReporteTaquillaAdmin.cshtml" />
+    <Content Include="Views\AdminPages\VReporteSalesByAgenciesAdmin.cshtml" />
+    <Content Include="Views\UserPages\VCajaReporteEfectivoMonedas.cshtml" />
+    <Content Include="Views\UserPages\VValoresEntregadosUpdate.cshtml" />
+    <Content Include="Views\UserPages\VValoresEntregadosCreate.cshtml" />
+    <Content Include="Views\SuperPages\VValoresEntregados.cshtml" />
+    <Content Include="Views\SuperPages\VCajaAlmacenes.cshtml" />
+    <Content Include="Views\SuperPages\VCajaAlmacenesFecha.cshtml" />
+    <Content Include="Views\SuperPages\VCajaAlmacenesFechaMoneda.cshtml" />
+    <Content Include="Views\SuperPages\VCajaAlmacenesFechaMonedaEfectivo.cshtml" />
+    <Content Include="Views\SuperPages\VCuadreEfectivo.cshtml" />
+    <Content Include="Views\UserPages\VVouchers.cshtml" />
+    <Content Include="Views\SuperPages\VReporteRegistroVentas.cshtml" />
+    <Content Include="Views\UserPages\VVouchersCaptura.cshtml" />
+    <Content Include="Views\SuperPages\VCuadreVoucher.cshtml" />
+    <Content Include="Views\AdminPages\VGestionarEfectivo.cshtml" />
+    <Content Include="Views\AdminPages\VCajaAlmacenesFecha.cshtml" />
+    <Content Include="Views\AdminPages\VCajaAlmacenesFechaMoneda.cshtml" />
+    <Content Include="Views\AdminPages\VCajaAlmacenesFechaMonedaEfectivo.cshtml" />
+    <Content Include="Views\AdminPages\VCuadreEfectivo.cshtml" />
+    <Content Include="Views\AdminPages\VCuadreVoucher.cshtml" />
+    <Content Include="Views\AdminPages\VReporteRegistroVentas.cshtml" />
+    <Content Include="Views\AdminPages\VValoresEntregados.cshtml" />
+    <Content Include="Views\UserPages\UserError.cshtml" />
+    <Content Include="Views\AdminPages\VGestionarVouchers.cshtml" />
+    <Content Include="Views\AdminPages\VCajaAlmacenesFechaVoucher.cshtml" />
+    <Content Include="Views\AdminPages\VCajaAlmacenesFechaMonedaEfectivoVoucher.cshtml" />
+    <Content Include="Views\AdminPages\VCajaAlmacenesFechaMonedaVoucher.cshtml" />
+    <Content Include="Views\UserPages\VReporteRegistroVentasUpdate.cshtml" />
+    <Content Include="Views\UserPages\VCajaAlmacenesFechaMonedaEfectivo.cshtml" />
+    <Content Include="Views\UserPages\VCajaAlmacenesFechaMonedaEfectivoVoucher.cshtml" />
+    <Content Include="Views\AlmacenCaratula\Index.cshtml" />
+    <Content Include="Views\AlmacenCaratulaVenta\Index.cshtml" />
+    <Content Include="Views\AlmacenCaratulaVenta\Actualizar.cshtml" />
+    <Content Include="Views\AlmacenCaratulaVenta\Consultar.cshtml" />
+    <Content Include="Views\AlmacenCaratulaEfectivo\Index.cshtml" />
+    <Content Include="Views\AlmacenCaratulaEfectivo\Actualizar.cshtml" />
+    <Content Include="Views\AlmacenCaratulaEfectivo\Consultar.cshtml" />
+    <Content Include="Views\AlmacenCaratulaVoucher\Index.cshtml" />
+    <Content Include="Views\AlmacenCaratulaVoucher\Actualizar.cshtml" />
+    <Content Include="Views\AlmacenCaratulaVoucher\Consultar.cshtml" />
+    <Content Include="Views\AlmacenCaratulaReporte\Index.cshtml" />
+    <Content Include="Views\UserPages\VProductosUser - Copia.cshtml" />
+    <Content Include="Views\BancoCaratula\Index.cshtml" />
+    <Content Include="Views\BancoCaratulaEfectivo\Actualizar.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Controllers\Operacion\" />
+    <Folder Include="HokaCli\Models\Joyeria\" />
+    <Folder Include="Scripts\ScriptsUsuarios\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <Content Include="Scripts\jsres\jquery-3.4.1.min.map" />
+    <Content Include="Scripts\jsres\jquery-3.4.1.slim.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\hoka_cli\hoka_cli.csproj">
+      <Project>{edcef3fd-2f7e-428a-95a3-d7e798b303b7}</Project>
+      <Name>hoka_cli</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>8483</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>https://localhost:44330/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Import Project="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.4.1.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets" Condition="Exists('packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.4.1.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>Este proyecto hace referencia a los paquetes NuGet que faltan en este equipo. Use la restauración de paquetes NuGet para descargarlos. Para obtener más información, consulte http://go.microsoft.com/fwlink/?LinkID=322105. El archivo que falta es {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.4.1.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.4.1.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets'))" />
+    <Error Condition="!Exists('packages\EntityFramework.6.5.1\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\EntityFramework.6.5.1\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('packages\EntityFramework.6.5.1\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\EntityFramework.6.5.1\build\EntityFramework.targets'))" />
+  </Target>
+  <Import Project="packages\EntityFramework.6.5.1\build\EntityFramework.targets" Condition="Exists('packages\EntityFramework.6.5.1\build\EntityFramework.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>
