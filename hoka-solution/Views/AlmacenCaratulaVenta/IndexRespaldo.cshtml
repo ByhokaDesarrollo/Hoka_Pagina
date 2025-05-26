@@ -1,0 +1,300 @@
+﻿@using hoka.HokaCli.Models.Ingresos.AlmacenCaratula;
+@using hoka.HokaCli.Models.Compuadmo.AlmacenCategoriaVenta;
+@using hoka.HokaCli.Models.Compuadmo.Catalogo.Almacen;
+@using hoka.HokaCli.Models.Compuadmo.Usuario;
+@using hoka.HokaCli.Models.Compuadmo.Usuario.Permiso.AlmacenCaratula;
+@using System.Globalization;
+@{
+    ViewBag.Title = "Index";
+    EnUsuario Usuario = ViewBag.Usuario;
+    string layoutUsuario =
+        Usuario.UsuarioRol.Prefijo == "ADMT"
+            ? "_LayoutAdminTotal.cshtml" :
+            Usuario.UsuarioRol.Prefijo == "ADM"
+                ? "_LayoutAdmin.cshtml"
+                : "_LayoutUser.cshtml";
+    Layout = $"~/Views/Shared/{layoutUsuario}";
+    string tituloFondoColor = "#9c8050";
+    string tituloTexto = "CARÁTULA VENTA (CREAR)";
+    string tituloTextoColor = "#fff";
+    string idTablaVenta = "idTablaVenta";
+    string tablaEncabezadoFondoColor = "#f3f3f3";
+    string ventaDiferenciaFondoColorPositivo = "#399d72";
+    string ventaDiferenciaFondoColorNegativo = "#cb4141";
+    string buttonFooterAncho = "width:220px;";
+    string controladorCaratulaEfectivo = ViewBag.TextoCaratulaEfectivo;
+    EnAlmacenCaratula Caratula = ViewBag.Caratula;
+    EnUsuarioPermisoAlmacenCaratula PermisoCaratula = ViewBag.PermisoCaratula;
+    ICollection<EnAlmacenCategoriaVenta> CategoriasVenta = ViewBag.CategoriasVenta;
+    EnCatalogoAlmacen Almacen = CategoriasVenta.Select(x => x.Almacen).Distinct().FirstOrDefault();
+    decimal ventaSistemaTotal = CategoriasVenta.Sum(x => x.ImporteTotal);
+    string textoVentaSistemaTotal = ventaSistemaTotal.ToString("C", CultureInfo.CurrentCulture);
+    string idVentaNetaTotal = "idVentaNetaTotal";
+    string idVentaSistemaTotal = "idVentaSistemaTotal";
+    string idVentaDiferencia = "idVentaDiferencia";
+    string classVentaNeta = "classVentaNeta";
+}
+
+<style>
+</style>
+
+<div class="container-fluid">
+    @*Título*@
+    <div class="row mb-2">
+        <div class="col text-center"
+             style="background-color: @(tituloFondoColor); color: @(tituloTextoColor)">
+            <strong>
+                @tituloTexto
+            </strong>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="card ml-2 mr-2 p-2">
+        @*Acciones*@
+        <div class="row mb-2">
+            <div class="col">
+                @*FILA PARA BOTONES*@
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col text-center">
+                <table class="table table-responsive table-sm table-bordered mt-2"
+                       id="@idTablaVenta">
+                    <thead>
+                        <tr>
+                            <th style="background-color: @(tablaEncabezadoFondoColor);">Categoria</th>
+                            <th style="background-color: @(tablaEncabezadoFondoColor);">Venta</th>
+                            <th style="background-color: @(tablaEncabezadoFondoColor);">Venta Neta</th>
+                            <th style="background-color: @(tablaEncabezadoFondoColor);">Comisiones Clave</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var categoriaVenta in ViewBag.CategoriasVenta)
+                        {
+                            string textoCategoriaVenta = categoriaVenta.ImporteTotal.ToString("C", CultureInfo.CurrentCulture);
+                            decimal categoriaVentaImporteTotal = Math.Round(categoriaVenta.ImporteTotal, 2);
+                            <tr>
+                                <td width="300"
+                                    data-id="@categoriaVenta.Categoria.CategoriaId">
+                                    @categoriaVenta.Categoria.Nombre
+                                </td>
+                                <td class="text-right"
+                                    width="200">
+                                    @textoCategoriaVenta
+                                </td>
+                                <td width="200">
+                                    <input type="number"
+                                           class="@classVentaNeta text-right"
+                                           name="ventaNeta"
+                                           onchange="actualizarTotales(this)"
+                                           value="@categoriaVentaImporteTotal" />
+                                </td>
+                                <td width="200">
+                                    <input type="number"
+                                           class="text-right"
+                                           id="comisionesClave"
+                                           name="comisionesClave"
+                                           onchange="actualizarTotales(this)"
+                                           value="0" />
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th scope="row"
+                                style="background-color: @(tablaEncabezadoFondoColor);">
+                                Venta Neta Total
+                            </th>
+                            <td class="text-right"
+                                id="@idVentaNetaTotal"
+                                style="background-color: @(tablaEncabezadoFondoColor);"
+                                colspan="3">
+                                0
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row"
+                                style="background-color: @(tablaEncabezadoFondoColor);">
+                                Venta Sistema Total
+                            </th>
+                            <td class="text-right"
+                                style="background-color: @(tablaEncabezadoFondoColor);"
+                                id="@idVentaSistemaTotal"
+                                colspan="3">
+                                @textoVentaSistemaTotal
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row"
+                                style="background-color: @(tablaEncabezadoFondoColor)">
+                                Diferencia
+                            </th>
+                            <td class="text-right"
+                                id="@idVentaDiferencia"
+                                style="background-color: @(ventaDiferenciaFondoColorNegativo);"
+                                colspan="3">
+                                0
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+        @*Botones Caratula*@
+        <div class="row mb-2">
+            <div class="col text-center">
+                <a class="btn btn-sm btn-secondary"
+                   href="@ViewBag.UrlIndexAlmacenCaratula"
+                   role="button"
+                   style="@buttonFooterAncho">
+                    <i class="bi bi-house-door-fill"></i>
+                    Gestor Ventas
+                </a>
+                @switch (Caratula.EstatusCaratulaEfectivo)
+                {
+                    case 1:
+                        <button type="button"
+                                class="btn btn-sm btn-success"
+                                style="@buttonFooterAncho"
+                                onclick="AlmacenCaratulaVentaCrear()">
+                            <i class="bi bi-floppy2-fill"></i>
+                            Guardar
+                        </button>
+                        break;
+                    case 2:
+                        if (PermisoCaratula.B_CaratulaEfectivoActualizar)
+                        {
+                            <a href="@Url.Action("Actualizar", @controladorCaratulaEfectivo, Caratula)"
+                               class="btn btn-sm btn-primary"
+                               role="button"
+                               aria-disabled="false"
+                               style="@buttonFooterAncho">
+                                <i class="bi bi-pen-fill"></i>
+                                Actualizar Caratula Efectivo
+                            </a>
+                        }
+                        break;
+                    case 3:
+                        if (PermisoCaratula.B_CaratulaEfectivoConsultar)
+                        {
+                            <a href="@Url.Action("Consultar", @controladorCaratulaEfectivo, Caratula)"
+                               class="btn btn-sm btn-info"
+                               role="button"
+                               aria-disabled="false"
+                               style="@buttonFooterAncho">
+                                <i class="bi bi-search"></i>
+                                Consultar Caratula Efectivo
+                            </a>
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script type="text/javascript"
+            src="~/Scripts/app/fx-input-typeNumber.js">
+    </script>
+    <script type="text/javascript">
+        let inputVentaSistemaTotal = document.getElementById("@idVentaSistemaTotal");
+        let inputVentaNetaTotal = document.getElementById("@idVentaNetaTotal");
+        let inputVentaDiferencia = document.getElementById("@idVentaDiferencia");
+
+        function actualizarTotales(input) {
+            if (input.value.length === 0)
+                input.value = 0;
+            inputsVentaNetaCaptura = document.getElementsByClassName("@classVentaNeta");
+            let VentaNetaTotal = parseFloat(0);
+            for (let inputVentaNeta of inputsVentaNetaCaptura) {
+                VentaNetaTotal += parseFloat(inputVentaNeta.value);
+            }
+            inputVentaNetaTotal.innerText = inputValorAgregarFormatoMoneda(VentaNetaTotal);
+            let ventaNetaTotal = inputValorQuitarFormatoMoneda(inputVentaNetaTotal.innerText);
+            let ventaSistemaTotal = inputValorQuitarFormatoMoneda(inputVentaSistemaTotal.innerText);
+            let ventaDiferencia = ventaNetaTotal - ventaSistemaTotal;
+            inputVentaDiferencia.innerText = inputValorAgregarFormatoMoneda(ventaDiferencia);
+            inputVentaDiferencia.style.backgroundColor = ventaDiferencia >= 0
+                ? '@(ventaDiferenciaFondoColorPositivo)'
+                : '@(ventaDiferenciaFondoColorNegativo)';
+        }
+
+        function AlmacenCaratulaVentaCrear() {
+            let UrlAlmacenCaratulaVenta = '@(ViewBag.UrlAlmacenCaratulaVentaCrear)';
+            let AlmacenCaratulaVenta = ObtenerAlmacenCaratulaVenta();
+            let bodyData = JSON.stringify(AlmacenCaratulaVenta);
+            fetch(UrlAlmacenCaratulaVenta, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: bodyData
+            })
+            .then((res) => res.text())
+            .then((data) => {
+                if (data != 'error') {
+                    window.location.replace(data);
+                } else {
+                    console.log('error');
+                }
+            });
+        }
+
+        function ObtenerAlmacenCaratulaVenta() {
+            let ventaSistemaTotal = inputValorQuitarFormatoMoneda(inputVentaSistemaTotal.innerText);
+            let ventaNetaTotal = inputValorQuitarFormatoMoneda(inputVentaNetaTotal.innerText);
+            let ventaDiferencia = inputValorQuitarFormatoMoneda(inputVentaDiferencia.innerText);
+            ventaSistemaTotal = inputValorConvertirDecimal(ventaSistemaTotal);
+            ventaNetaTotal = inputValorConvertirDecimal(ventaNetaTotal);
+            ventaDiferencia = inputValorConvertirDecimal(ventaDiferencia);
+            let AlmacenCaratulaVenta = {
+                AlmacenCaratulaVentaId: 0,
+                AlmacenCaratulaId: parseInt(@Caratula.AlmacenCaratulaId),
+                UsuarioId: parseInt(@Caratula.UsuarioId),
+                FechaCaptura: null,
+                VentaSistemaTotal: inputValorConvertirDecimal(ventaSistemaTotal),
+                VentaNetaTotal: inputValorConvertirDecimal(ventaNetaTotal),
+                VentaDiferencia: inputValorConvertirDecimal(ventaDiferencia),
+            };
+            AlmacenCaratulaVenta.Categorias = ObtenerAlmacenCaratulaVentaCategorias();
+            return AlmacenCaratulaVenta;
+        }
+
+        function ObtenerAlmacenCaratulaVentaCategorias() {
+            let CategoriasVenta = [];
+            let TablaVenta = document.getElementById('@(idTablaVenta)');
+            let TBody = TablaVenta.getElementsByTagName('tbody')[0];
+            let TRows = TBody.children;
+            for (var i = 0; i < TRows.length; i++) {
+                let CategoriaVenta = {
+                    AlmacenCaratulaVentaCategoriaId: 0,
+                    AlmacenCaratulaVentaId: 0
+                };
+                let Fila = TRows[i].children;
+                for (var ii = 0; ii < Fila.length; ii++) {
+                    if (ii == 0) {
+                        CategoriaVenta.CategoriaId = parseInt(Fila[ii].dataset.id);
+                    }
+                    if (ii == 1) {
+                        let ventaSistema = inputValorQuitarFormatoMoneda(Fila[ii].innerHTML);
+                        ventaSistema = inputValorConvertirDecimal(ventaSistema);
+                        CategoriaVenta.VentaSistema = inputValorConvertirDecimal(ventaSistema);
+                    }
+                    if (ii == 2) {
+                        CategoriaVenta.VentaNeta = parseFloat(Fila[ii].children[0].value);
+                    }
+                    if (ii == 3) {
+                        CategoriaVenta.Comision = parseFloat(Fila[ii].children[0].value);
+                    }
+                }
+                CategoriasVenta.push(CategoriaVenta);
+            }
+            return CategoriasVenta;
+        }
+    </script>
+}

@@ -1,11 +1,19 @@
 ﻿@using hoka.HokaCli.Models.Ingresos.AlmacenCaratula;
 @using hoka.HokaCli.Models.Ingresos.AlmacenCaratulaVenta;
 @using hoka.HokaCli.Models.Compuadmo.AlmacenCategoriaVenta;
+@using hoka.HokaCli.Models.Compuadmo.Usuario;
 @using hoka.HokaCli.Models.Compuadmo.Usuario.Permiso.AlmacenCaratula;
 @using System.Globalization;
 @{
     ViewBag.Title = "Actualizar";
-    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    EnUsuario Usuario = ViewBag.Usuario;
+    string layoutUsuario =
+        Usuario.UsuarioRol.Prefijo == "ADMT"
+            ? "_LayoutAdminTotal.cshtml" :
+            Usuario.UsuarioRol.Prefijo == "ADM"
+                ? "_LayoutAdmin.cshtml"
+                : "_LayoutUser.cshtml";
+    Layout = $"~/Views/Shared/{layoutUsuario}";
     string tituloFondoColor = "#9c8050";
     string tituloTexto = "CARÁTULA VENTA (ACTUALIZAR)";
     string tituloTextoColor = "#fff";
@@ -95,30 +103,36 @@
                                 .FirstOrDefault()
                                 .Comision;
                             string textoCategoriaVenta = almacenCategoriaVenta.ImporteTotal.ToString("C", CultureInfo.CurrentCulture);
+                            string textoCategoriaVentaNeta = ventaNeta.ToString("C", CultureInfo.CurrentCulture);
+                            string textoCategoriaComision = comision.ToString("C", CultureInfo.CurrentCulture);
                             <tr>
+                                @*Categoria*@
                                 <td width="300"
                                     data-id="@AlmacenCaratulaVentaCategoriaId"
                                     data-categoria-id="@almacenCategoriaVenta.CategoriaId">
                                     @almacenCategoriaVenta.Categoria.Nombre
                                 </td>
+                                @*Venta*@
                                 <td class="text-right"
                                     width="200">
                                     @textoCategoriaVenta
                                 </td>
+                                @*Venta Neta*@
                                 <td width="200">
-                                    <input type="number"
-                                           class="@classVentaNeta text-right"
+                                    <input type="text"
+                                           class="@classVentaNeta text-right formato-numerico"
                                            name="ventaNeta"
                                            onchange="actualizarTotales(this)"
-                                           value="@ventaNeta" />
+                                           value="@textoCategoriaVentaNeta" />
                                 </td>
+                                @*Comisiones Clave*@
                                 <td width="200">
-                                    <input type="number"
-                                           class="text-right"
+                                    <input type="text"
+                                           class="text-right formato-numerico"
                                            id="comisionesClave"
                                            name="comisionesClave"
                                            onchange="actualizarTotales(this)"
-                                           value="@comision" />
+                                           value="@textoCategoriaComision" />
                                 </td>
                             </tr>
                         }
@@ -189,9 +203,7 @@
 </div>
 
 @section scripts {
-    <script type="text/javascript"
-            src="~/Scripts/app/fx-decimal.js">
-    </script>
+    <script type="text/javascript" src="~/Scripts/app/fx-input-typeNumber.js"></script>
     <script type="text/javascript">
         let inputVentaSistemaTotal = document.getElementById("@idVentaSistemaTotal");
         let inputVentaNetaTotal = document.getElementById("@idVentaNetaTotal");
@@ -200,16 +212,22 @@
         function actualizarTotales(input) {
             if (input.value.length === 0)
                 input.value = 0;
+
             inputsVentaNetaCaptura = document.getElementsByClassName("@classVentaNeta");
+
             let VentaNetaTotal = parseFloat(0);
             for (let inputVentaNeta of inputsVentaNetaCaptura) {
-                VentaNetaTotal += parseFloat(inputVentaNeta.value);
+                // Convertir valor del input a número
+                let valorNumerico = inputValorQuitarFormatoMoneda(inputVentaNeta.value);
+                VentaNetaTotal += valorNumerico;
             }
-            inputVentaNetaTotal.innerText = agregarFormatoMoneda(VentaNetaTotal);
-            let ventaNetaTotal = quitarFormatoMoneda(inputVentaNetaTotal.innerText);
-            let ventaSistemaTotal = quitarFormatoMoneda(inputVentaSistemaTotal.innerText);
+            inputVentaNetaTotal.innerText = inputValorAgregarFormatoMoneda(VentaNetaTotal);
+
+            let ventaNetaTotal = VentaNetaTotal;
+            let ventaSistemaTotal = inputValorQuitarFormatoMoneda(inputVentaSistemaTotal.innerText);
             let ventaDiferencia = ventaNetaTotal - ventaSistemaTotal;
-            inputVentaDiferencia.innerText = agregarFormatoMoneda(ventaDiferencia);
+
+            inputVentaDiferencia.innerText = inputValorAgregarFormatoMoneda(ventaDiferencia);
             inputVentaDiferencia.style.backgroundColor = ventaDiferencia >= 0
                 ? '@(ventaDiferenciaFondoColorPositivo)'
                 : '@(ventaDiferenciaFondoColorNegativo)';
@@ -237,20 +255,18 @@
         }
 
         function ObtenerAlmacenCaratulaVenta() {
-            let ventaSistemaTotal = quitarFormatoMoneda(inputVentaSistemaTotal.innerText);
-            let ventaNetaTotal = quitarFormatoMoneda(inputVentaNetaTotal.innerText);
-            let ventaDiferencia = quitarFormatoMoneda(inputVentaDiferencia.innerText);
-            ventaSistemaTotal = convertirValorDecimal(ventaSistemaTotal);
-            ventaNetaTotal = convertirValorDecimal(ventaNetaTotal);
-            ventaDiferencia = convertirValorDecimal(ventaDiferencia);
+            let ventaSistemaTotal = inputValorQuitarFormatoMoneda(inputVentaSistemaTotal.innerText);
+            let ventaNetaTotal = inputValorQuitarFormatoMoneda(inputVentaNetaTotal.innerText);
+            let ventaDiferencia = inputValorQuitarFormatoMoneda(inputVentaDiferencia.innerText);
+            
             let AlmacenCaratulaVenta = {
                 AlmacenCaratulaVentaId: parseInt(@AlmacenCaratulaVenta.AlmacenCaratulaVentaId),
                 AlmacenCaratulaId: parseInt(@Caratula.AlmacenCaratulaId),
                 UsuarioId: parseInt(@Caratula.UsuarioId),
                 FechaCaptura: null,
-                VentaSistemaTotal: convertirValorDecimal(ventaSistemaTotal),
-                VentaNetaTotal: convertirValorDecimal(ventaNetaTotal),
-                VentaDiferencia: convertirValorDecimal(ventaDiferencia),
+                VentaSistemaTotal: ventaSistemaTotal,
+                VentaNetaTotal: ventaNetaTotal,
+                VentaDiferencia: ventaDiferencia,
             };
             AlmacenCaratulaVenta.Categorias = ObtenerAlmacenCaratulaVentaCategorias();
             return AlmacenCaratulaVenta;
@@ -273,15 +289,18 @@
                         CategoriaVenta.CategoriaId = parseInt(Fila[ii].dataset.categoriaId);
                     }
                     if (ii == 1) {
-                        let ventaSistema = quitarFormatoMoneda(Fila[ii].innerHTML);
-                        ventaSistema = convertirValorDecimal(ventaSistema);
-                        CategoriaVenta.VentaSistema = convertirValorDecimal(ventaSistema);
+                        let ventaSistema = inputValorQuitarFormatoMoneda(Fila[ii].innerHTML);
+                        CategoriaVenta.VentaSistema = inputValorConvertirDecimal(ventaSistema);
                     }
                     if (ii == 2) {
-                        CategoriaVenta.VentaNeta = parseFloat(Fila[ii].children[0].value);
+                        let valorCalculo = Fila[ii].children[0].value;
+                        valorCalculo = inputValorQuitarFormatoMoneda(valorCalculo);
+                        CategoriaVenta.VentaNeta = valorCalculo;
                     }
                     if (ii == 3) {
-                        CategoriaVenta.Comision = parseFloat(Fila[ii].children[0].value);
+                        let valorCalculo = Fila[ii].children[0].value;
+                        valorCalculo = inputValorQuitarFormatoMoneda(valorCalculo);
+                        CategoriaVenta.Comision = valorCalculo;
                     }
                 }
                 CategoriasVenta.push(CategoriaVenta);

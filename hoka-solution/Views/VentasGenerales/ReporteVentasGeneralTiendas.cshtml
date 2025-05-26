@@ -1,0 +1,529 @@
+@{
+    ViewBag.Title = "REPORTE DE VENTAS GENERAL DE TIENDAS";
+    Layout = "~/Views/Shared/_LayoutAdminTotal.cshtml";
+}
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <link href="~/Content/css/selectcomprim.css" rel="stylesheet" />
+    <link href="~/Content/css/estilosfiltroscss.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="wrapper">
+        <!--Inicio de sidebar-->
+        <nav class="main-sidebar-custom-lg navbar navbar-expand navbar-white navbar-light">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="pushmenu" href="#" role="button">
+                        <i class="fas fa-bars"></i>
+                    </a>
+                </li>
+                <li class="nav-item d-none d-sm-inline-block">
+                    <a class="nav-link" href="@Url.Action("InicioAdminTotal", "AdminPages")">Inicio</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <!-- Ícono de pantalla completa -->
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+                        <i class="fas fa-expand-arrows-alt"></i>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="@Url.Action("CerrarSesion", "Acceso")">Salir</a>
+                </li>
+            </ul>
+        </nav>
+
+        <!--Inicio de paginación-->
+        <div class="content-header">
+            <section class="content-header">
+                <!--Título-->
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1>REPORTE DE VENTAS GENERAL DE TIENDAS</h1>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+
+                <!--Contenido-->
+                <div class="card">
+                    <!--Botones y filtros-->
+                    <div class="card-header">
+                        @using (Html.BeginForm("filtrarTablaAB", "VentasGenerales", FormMethod.Post, new { id = "filtrarBusqueda" }))
+                        {
+                            <div class="row">
+                                <div class="col-lg-2 col-md-4 col-sm-6 col-12">
+                                    <label for="fechaInicioR">Fecha inicio:</label>
+                                    <input type="text" id="fechaInicio" name="fechaInicio" class="form-control" placeholder="dd/mm/aaaa" autocomplete="off" />
+                                </div>
+                                <div class="col-lg-2 col-md-4 col-sm-6 col-12">
+                                    <label for="fechaFinR">Fecha fin:</label>
+                                    <input type="text" id="fechaFin" name="fechaFin" class="form-control" placeholder="dd/mm/aaaa" autocomplete="off" />
+                                </div>
+
+                                <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+                                    <label for="almacen">Almacen</label>
+                                    <select class="form-control select2 almacen-select" style="width: 100%" id="almacen" name="almacen">
+                                        <option value="todos" selected="selected">Mostrar todos</option>
+                                        @foreach (var almacen in ViewBag.Almacenes)
+                                        {
+                                            <option value="@almacen.Item1">@($"{almacen.Item1} - {almacen.Item2}")</option>
+                                        }
+                                    </select>
+                                </div>
+
+                                <div class="col-lg-2 col-md-4 col-sm-6 col-12 mt-2 mt-lg-0">
+                                    <label for="btn-filtrar">Filtrar:</label>
+                                    <div>
+                                        <button type="submit" id="btn-filtrar" class="btn btn-info">
+                                            <i class="fas fa-search"></i> Buscar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+
+                    <!--Tabla-->
+                    <div class="card-body">
+                        <div class="table table-responsive">
+                            <table class="table table-striped" id="tablaVAlmacen">
+                                <thead>
+                                    <tr>
+                                        <th>Fechas</th>
+                                        <th>Sucursal</th>
+                                        <th>Abarrotes</th>
+                                        <th>Farmacia</th>
+                                        <th>Artesanias</th>
+                                        <th>Artesanias Prem.</th>
+                                        <th>Souvenirs</th>
+                                        <th>Textiles</th>
+                                        <th>Tabaqueria</th>
+                                        <th>Calendarios Maya</th>
+                                        <th>S/Categoria</th>
+                                        <th>Total General</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Se llenará vía AJAX -->
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                        <th id="sumaAbarrotes">Total Abarrotes:</th>
+                                        <th id="sumaFarmacia">Total Farmacia:</th>
+                                        <th id="sumaArtesania">Total Artesanias:</th>
+                                        <th id="sumaArtesaniaPrem">Total Artesanias Prem.:</th>
+                                        <th id="sumaSouvenir">Total Souvenirs:</th>
+                                        <th id="sumaTextil">Total Textiles:</th>
+                                        <th id="sumaTabaqueria">Total Tabaqueria:</th>
+                                        <th id="sumaCalendarios">Total Calendarios:</th>
+                                        <th id="sumaSinCategoria">Total Sin Categoria:</th>
+                                        <th id="sumaTotal">Total General:</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+
+                            @section scripts {
+                                <script>
+                                    $(document).ready(function () {
+                                        var almacenMapping = {};
+                                        $('#almacen option:not([disabled])').each(function () {
+                                            var val = $(this).val();
+                                            var text = $(this).text();
+                                            if (val !== "todos") {
+                                                almacenMapping[val] = text;
+                                            }
+                                        });
+
+                                        var $filtrarBusqueda = $('#filtrarBusqueda');
+                                        var $tablaVAlmacen = $('#tablaVAlmacen');
+
+                                        $("#fechaInicio, #fechaFin").datepicker({
+                                            format: 'dd/mm/yyyy',
+                                            language: 'es',
+                                            autoclose: true,
+                                            todayHighlight: true
+                                        });
+
+                                        $("#fechaInicio, #fechaFin").on("keyup", function () {
+                                            var valor = $(this).val().replace(/\D/g, "").replace(/^(\d\d)(\d)/g, "$1/$2").replace(/\/(\d\d)(\d)/, "/$1/$2");
+                                            $(this).val(valor.substring(0, 10));
+                                        });
+
+                                        $("#fechaInicio, #fechaFin").keypress(function (e) {
+                                            var charCode = (e.which) ? e.which : e.keyCode;
+                                            if ($(this).val().length >= 10 && (charCode >= 48 && charCode <= 57)) {
+                                                return false;
+                                            } else if (charCode >= 48 && charCode <= 57) {
+                                                return true;
+                                            }
+                                            return false;
+                                        });
+
+                                        $("#fechaInicio, #fechaFin").on('paste', function (e) {
+                                            e.preventDefault();
+                                        });
+
+                                        $('.select2').select2();
+                                        $('.select2bs4').select2({ theme: 'bootstrap4' });
+
+                                        $tablaVAlmacen.DataTable({
+                                            language: {
+                                                "sProcessing": "Procesando...",
+                                                "sLengthMenu": "Mostrar _MENU_ registros",
+                                                "sZeroRecords": "No se encontraron resultados",
+                                                "sEmptyTable": "Ningun dato disponible en esta tabla",
+                                                "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                                                "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                                                "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                                                "sSearch": "Buscar:",
+                                                "sLoadingRecords": "Cargando...",
+                                                "oPaginate": {
+                                                    "sFirst": "Primero",
+                                                    "sLast": "Último",
+                                                    "sNext": "Siguiente",
+                                                    "sPrevious": "Anterior"
+                                                },
+                                                "oAria": {
+                                                    "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                                                    "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                                                }
+                                            },
+                                            "dom": 'Blfrtip',
+                                            "lengthMenu": [[10, 50, 100, 1000, 2000, -1], [10, 50, 100, 1000, 2000, "Todos"]],
+                                            "pageLength": -1,
+                                            buttons: [
+                                                {
+                                                    extend: 'excel',
+                                                    className: 'btn btn-excel rounded-0',
+                                                    text: '<i class="fas fa-file-excel"></i> Excel',
+                                                    filename: function () {
+                                                        var now = new Date();
+                                                        var day = ("0" + now.getDate()).slice(-2);
+                                                        var month = ("0" + (now.getMonth() + 1)).slice(-2);
+                                                        var year = now.getFullYear();
+                                                        var dateString = day + '-' + month + '-' + year;
+                                                        var hours = now.getHours();
+                                                        var minutes = now.getMinutes();
+                                                        var ampm = hours >= 12 ? 'PM' : 'AM';
+                                                        hours = hours % 12;
+                                                        hours = hours ? hours : 12;
+                                                        minutes = minutes < 10 ? '0' + minutes : minutes;
+                                                        var timeString = hours + '-' + minutes + ' ' + ampm;
+                                                        var almacenSeleccionado = $('#almacen option:selected').text();
+                                                        var nombreAlmacen = almacenSeleccionado.includes('-') ? almacenSeleccionado : 'SinNombre';
+                                                        var fechaInicio = $('#fechaInicio').val().replace(/\//g, '-');
+                                                        var fechaFin = $('#fechaFin').val().replace(/\//g, '-');
+                                                        return 'HOKA_REPORTE VENTA POR DEPARTAMENTO_' + nombreAlmacen + '_DEL_' + fechaInicio + '_AL_' + fechaFin + '_IMPRESO EL_' + dateString + '_CON HORA_' + timeString;
+                                                    },
+                                                    footer: true,
+                                                    exportOptions: {
+                                                        format: {
+                                                            body: function (data, row, column, node) {
+                                                                if (column >= 2 && column <= 10) {
+                                                                    return data.replace(/[^\d.-]/g, '');
+                                                                }
+                                                                return data;
+                                                            }
+                                                        }
+                                                    },
+                                                    customize: function (xlsx) {
+                                                        var sheet = xlsx.xl.worksheets['sheet1.xml'];
+                                                        $('row c', sheet).each(function () {
+                                                            var cell = $(this);
+                                                            if (cell.attr('r').match(/[C-K]\d+/)) {
+                                                                cell.attr('t', 'n');
+                                                            }
+                                                        });
+                                                    }
+                                                },
+                                                {
+                                                    extend: 'pdf',
+                                                    className: 'btn btn-pdf rounded-0',
+                                                    text: '<i class="fas fa-file-pdf"></i> PDF',
+                                                    title: null,
+                                                    pageSize: 'A2',
+                                                    orientation: 'landscape',
+                                                    filename: function () {
+                                                        var now = new Date();
+                                                        var dateString = now.toISOString().slice(0, 10);
+                                                        var almacenSeleccionado = $('#almacen option:selected').text();
+                                                        var nombreAlmacen = almacenSeleccionado.includes('-') ? almacenSeleccionado : 'SinNombre';
+                                                        return 'HOKA_REPORTE VENTA POR DEPARTAMENTO_SUCURSAL_' + nombreAlmacen + '_' + dateString;
+                                                    },
+                                                    customize: function (doc) {
+                                                        doc.defaultStyle.fontSize = 12;
+                                                        var currentDateTime = new Date();
+                                                        var currentDateTimeString = currentDateTime.toLocaleString();
+                                                        var fechaInicio = document.getElementById('fechaInicio').value;
+                                                        var fechaFin = document.getElementById('fechaFin').value;
+                                                        var fechaRango = 'DEL ' + fechaInicio + ' AL ' + fechaFin;
+                                                        var almacenSeleccionado = $('#almacen option:selected').text();
+                                                        var sucursal = 'SUCURSAL ' + almacenSeleccionado + ' - ' + fechaRango;
+                                                        var tituloReporte = 'HOKA - REPORTE VENTA POR DEPARTAMENTO';
+                                                        var reporteDelDia = 'REPORTE DEL DÍA ' + currentDateTimeString;
+
+                                                        doc.content.splice(0, 0, {
+                                                            text: tituloReporte,
+                                                            alignment: 'center',
+                                                            margin: [0, 0, 20, 20],
+                                                            fontSize: 20,
+                                                            bold: true
+                                                        });
+
+                                                        doc.content.splice(1, 0, {
+                                                            columns: [
+                                                                {
+                                                                    text: reporteDelDia,
+                                                                    alignment: 'left',
+                                                                    fontSize: 14
+                                                                },
+                                                                {
+                                                                    text: sucursal,
+                                                                    alignment: 'right',
+                                                                    fontSize: 14
+                                                                }
+                                                            ],
+                                                            columnGap: 10
+                                                        });
+                                                    },
+                                                    footer: true
+                                                }
+                                            ],
+                                            columns: [
+                                                {
+                                                    data: null,
+                                                    render: function (data, type, row) {
+                                                        var fechaInicio = $('#fechaInicio').val();
+                                                        var fechaFin = $('#fechaFin').val();
+                                                        return fechaInicio + ' - ' + fechaFin;
+                                                    }
+                                                },
+                                                {
+                                                    data: "Sucursal",
+                                                    render: function (data, type, row) {
+                                                        if (data && almacenMapping[data]) {
+                                                            return almacenMapping[data];
+                                                        } else {
+                                                            return $('#almacen option:selected').text();
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    data: 'Group_Abarrotes',
+                                                    render: function (data, type, row) {
+                                                        if (type === 'export') return data;
+                                                        return parseFloat(data).toLocaleString('es-MX', { style: 'currency', currency: 'MXN' });
+                                                    }
+                                                },
+                                                {
+                                                    data: 'Group_Farmacia',
+                                                    render: function (data, type, row) {
+                                                        if (type === 'export') return data;
+                                                        return parseFloat(data).toLocaleString('es-MX', { style: 'currency', currency: 'MXN' });
+                                                    }
+                                                },
+                                                {
+                                                    data: 'Group_Artesanias',
+                                                    render: function (data, type, row) {
+                                                        if (type === 'export') return data;
+                                                        return parseFloat(data).toLocaleString('es-MX', { style: 'currency', currency: 'MXN' });
+                                                    }
+                                                },
+                                                {
+                                                    data: 'Group_Artesanias_Premium',
+                                                    render: function (data, type, row) {
+                                                        if (type === 'export') return data;
+                                                        return parseFloat(data).toLocaleString('es-MX', { style: 'currency', currency: 'MXN' });
+                                                    }
+                                                },
+                                                {
+                                                    data: 'Group_Souvenir',
+                                                    render: function (data, type, row) {
+                                                        if (type === 'export') return data;
+                                                        return parseFloat(data).toLocaleString('es-MX', { style: 'currency', currency: 'MXN' });
+                                                    }
+                                                },
+                                                {
+                                                    data: 'Group_Textil',
+                                                    render: function (data, type, row) {
+                                                        if (type === 'export') return data;
+                                                        return parseFloat(data).toLocaleString('es-MX', { style: 'currency', currency: 'MXN' });
+                                                    }
+                                                },
+                                                {
+                                                    data: 'Group_Tabaqueria',
+                                                    render: function (data, type, row) {
+                                                        if (type === 'export') return data;
+                                                        return parseFloat(data).toLocaleString('es-MX', { style: 'currency', currency: 'MXN' });
+                                                    }
+                                                },
+                                                {
+                                                    data: 'Group_Calendarios',
+                                                    render: function (data, type, row) {
+                                                        if (type === 'export') return data;
+                                                        return parseFloat(data).toLocaleString('es-MX', { style: 'currency', currency: 'MXN' });
+                                                    }
+                                                },
+
+
+                                                {
+                                                    data: 'Group_SinCategoria',
+                                                    render: function (data, type, row) {
+                                                        if (type === 'export') return data;
+                                                        return parseFloat(data).toLocaleString('es-MX', { style: 'currency', currency: 'MXN' });
+                                                    }
+                                                },
+                                                {
+                                                    data: 'Group_TotalImporte',
+                                                    render: function (data, type, row) {
+                                                        if (type === 'export') return data;
+                                                        return parseFloat(data).toLocaleString('es-MX', { style: 'currency', currency: 'MXN' });
+                                                    }
+                                                }
+                                            ],
+                                            deferRender: true,
+                                            drawCallback: function (settings) {
+                                                var api = this.api();
+                                                var data = api.rows().data();
+
+                                                if (data.length > 0) {
+                                                    var totalAbarrotes = 0;
+                                                    var totalFarmacia = 0;
+                                                    var totalArtesanias = 0;
+                                                    var totalArtesaniasPrem = 0;
+                                                    var totalSouvenir = 0;
+                                                    var totalTextil = 0;
+                                                    var totalTabaqueria = 0;
+                                                    var totalCalendarios = 0;
+                                                    var totalSinCategoria = 0;
+                                                    var totalGeneral = 0;
+
+                                                    data.each(function (row) {
+                                                        totalAbarrotes += parseFloat(String(row.Group_Abarrotes).replace(/[^\d.-]/g, '')) || 0;
+                                                        totalFarmacia += parseFloat(String(row.Group_Farmacia).replace(/[^\d.-]/g, '')) || 0;
+                                                        totalArtesanias += parseFloat(String(row.Group_Artesanias).replace(/[^\d.-]/g, '')) || 0;
+                                                        totalArtesaniasPrem += parseFloat(String(row.Group_Artesanias_Premium).replace(/[^\d.-]/g, '')) || 0;
+                                                        totalSouvenir += parseFloat(String(row.Group_Souvenir).replace(/[^\d.-]/g, '')) || 0;
+                                                        totalTextil += parseFloat(String(row.Group_Textil).replace(/[^\d.-]/g, '')) || 0;
+                                                        totalTabaqueria += parseFloat(String(row.Group_Tabaqueria).replace(/[^\d.-]/g, '')) || 0;
+                                                        totalCalendarios += parseFloat(String(row.Group_Calendarios).replace(/[^\d.-]/g, '')) || 0;
+                                                        totalSinCategoria += parseFloat(String(row.Group_SinCategoria).replace(/[^\d.-]/g, '')) || 0;
+                                                        totalGeneral += parseFloat(String(row.Group_TotalImporte).replace(/[^\d.-]/g, '')) || 0;
+                                                    });
+
+                                                    $('#sumaAbarrotes').html('Total Abarrotes: ' + totalAbarrotes.toLocaleString('es-MX', { style: 'currency', currency: 'MXN' }));
+                                                    $('#sumaFarmacia').html('Total Farmacia: ' + totalFarmacia.toLocaleString('es-MX', { style: 'currency', currency: 'MXN' }));
+                                                    $('#sumaArtesania').html('Total Artesanias: ' + totalArtesanias.toLocaleString('es-MX', { style: 'currency', currency: 'MXN' }));
+                                                    $('#sumaArtesaniaPrem').html('Total Artesanias Prem.: ' + totalArtesaniasPrem.toLocaleString('es-MX', { style: 'currency', currency: 'MXN' }));
+                                                    $('#sumaSouvenir').html('Total Souvenirs: ' + totalSouvenir.toLocaleString('es-MX', { style: 'currency', currency: 'MXN' }));
+                                                    $('#sumaTextil').html('Total Textiles: ' + totalTextil.toLocaleString('es-MX', { style: 'currency', currency: 'MXN' }));
+                                                    $('#sumaTabaqueria').html('Total Tabaqueria: ' + totalTabaqueria.toLocaleString('es-MX', { style: 'currency', currency: 'MXN' }));
+                                                    $('#sumaCalendarios').html('Total Calendarios: ' + totalCalendarios.toLocaleString('es-MX', { style: 'currency', currency: 'MXN' }));
+                                                    $('#sumaSinCategoria').html('Total Sin Categoria: ' + totalSinCategoria.toLocaleString('es-MX', { style: 'currency', currency: 'MXN' }));
+                                                    $('#sumaTotal').html('Total General: ' + totalGeneral.toLocaleString('es-MX', { style: 'currency', currency: 'MXN' }));
+                                                }
+                                            }
+                                        });
+
+                                        $filtrarBusqueda.on('submit', function (event) {
+                                            event.preventDefault();
+
+                                            var fechaInicio = $('#fechaInicio').val();
+                                            var fechaFin = $('#fechaFin').val();
+                                            var almacen = $('#almacen').val();
+
+                                            if (!fechaInicio || !fechaFin || !almacen) {
+                                                Swal.fire({
+                                                    icon: 'error',
+                                                    title: 'Ups...',
+                                                    text: 'Por favor, complete todos los campos antes de realizar la busqueda.',
+                                                });
+                                                return;
+                                            }
+
+                                            var formData = {
+                                                fechaInicio: fechaInicio,
+                                                fechaFin: fechaFin,
+                                                almacen: almacen
+                                            };
+
+                                            $.ajax({
+                                                url: '/VentasGenerales/filtrarTablaAB',
+                                                type: 'POST',
+                                                data: formData,
+                                                success: function (data) {
+                                                    if (!data || data.length === 0) {
+                                                        Swal.fire({
+                                                            icon: 'error',
+                                                            title: 'No se han registrado datos para este filtro',
+                                                            text: 'Seleccione los campos donde sí haya datos y vuelva a intentar',
+                                                        });
+                                                        $tablaVAlmacen.DataTable().clear().draw();
+                                                    } else {
+                                                        if (almacen === "todos") {
+                                                            $tablaVAlmacen.DataTable().clear().rows.add(data).draw();
+                                                        } else {
+                                                            var totalAbarrotes = 0;
+                                                            var totalFarmacia = 0;
+                                                            var totalArtesanias = 0;
+                                                            var totalArtesaniasPrem = 0;
+                                                            var totalSouvenir = 0;
+                                                            var totalTextil = 0;
+                                                            var totalTabaqueria = 0;
+                                                            var totalCalendarios = 0;
+                                                            var totalSinCategoria = 0;
+                                                            var totalGeneral = 0;
+
+                                                            data.forEach(function (row) {
+                                                                totalAbarrotes += row.Group_Abarrotes || 0;
+                                                                totalFarmacia += row.Group_Farmacia || 0;
+                                                                totalArtesanias += row.Group_Artesanias || 0;
+                                                                totalArtesaniasPrem += row.Group_Artesanias_Premium || 0;
+                                                                totalSouvenir += row.Group_Souvenir || 0;
+                                                                totalTextil += row.Group_Textil || 0;
+                                                                totalTabaqueria += row.Group_Tabaqueria || 0;
+                                                                totalCalendarios += row.Group_Calendarios || 0;
+                                                                totalSinCategoria += row.Group_SinCategoria || 0;
+                                                                totalGeneral += row.Group_TotalImporte || 0;
+                                                            });
+
+                                                            var consolidatedData = [{
+                                                                Group_Abarrotes: totalAbarrotes,
+                                                                Group_Farmacia: totalFarmacia,
+                                                                Group_Artesanias: totalArtesanias,
+                                                                Group_Artesanias_Premium: totalArtesaniasPrem,
+                                                                Group_Souvenir: totalSouvenir,
+                                                                Group_Textil: totalTextil,
+                                                                Group_Tabaqueria: totalTabaqueria,
+                                                                Group_Calendarios: totalCalendarios,
+                                                                Group_SinCategoria: totalSinCategoria,
+                                                                Group_TotalImporte: totalGeneral
+                                                            }];
+
+                                                            $tablaVAlmacen.DataTable().clear().rows.add(consolidatedData).draw();
+                                                        }
+                                                    }
+                                                },
+                                                error: function (jqXHR, textStatus, errorThrown) {
+                                                    alert('Error al filtrar/verificar filtrobusqueda');
+                                                }
+                                            });
+                                        });
+                                    });
+                                </script>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+    <script src="~/Scripts/ScriptsAdmins/ScriptVentasAdminTotal.js"></script>
+</body>
+</html>

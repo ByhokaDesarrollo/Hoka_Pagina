@@ -1,11 +1,19 @@
 ﻿@using hoka.HokaCli.Models.Compuadmo.Voucher;
+@using hoka.HokaCli.Models.Compuadmo.Usuario;
 @using hoka.HokaCli.Models.Compuadmo.Usuario.Permiso.AlmacenCaratula;
 @using hoka.HokaCli.Models.Ingresos.AlmacenCaratula;
 @using hoka.HokaCli.Models.Ingresos.AlmacenCaratulaVoucher;
 @using Newtonsoft.Json;
 @{
-    ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    ViewBag.Title = "Actualizar";
+    EnUsuario Usuario = ViewBag.Usuario;
+    string layoutUsuario =
+        Usuario.UsuarioRol.Prefijo == "ADMT"
+            ? "_LayoutAdminTotal.cshtml" :
+            Usuario.UsuarioRol.Prefijo == "ADM"
+                ? "_LayoutAdmin.cshtml"
+                : "_LayoutUser.cshtml";
+    Layout = $"~/Views/Shared/{layoutUsuario}";
     string tituloFondoColor = "#9c8050";
     string tituloTexto = "CARÁTULA VOUCHER (ACTUALIZAR)";
     string tituloTextoColor = "#fff";
@@ -22,6 +30,7 @@
     string idModalCrearVoucherButtonCerrar = "modalCrearVoucherButtonCerrar";
     string idModalCrearVoucherSelectVoucher = "modalCrearVoucherSelectVoucher";
     string idModalCrearVoucherInputVoucherImporte = "modalCrearVoucherInputVoucherImporte";
+    string idModalCrearVoucherInputVoucherDocumento = "modalCrearVoucherInputVoucherDocumento";
     string idTableVoucher = "tableVoucher";
     string classVoucherConsecutivo = "voucher-consecutivo";
     string classVoucherImporte = "voucher-importe";
@@ -118,6 +127,20 @@
                             </div>
                             <div class="row g-1 align-items-center">
                                 <div class="col-3">
+                                    <label for="@idModalCrearVoucherInputVoucherDocumento"
+                                           class="col-form-label">
+                                        Evidencia
+                                    </label>
+                                </div>
+                                <div class="col-9">
+                                    <input type="file"
+                                           class="form-control form-control-sm text-right"
+                                           id="@idModalCrearVoucherInputVoucherDocumento"
+                                           accept=".pdf, .jpg, .png">
+                                </div>
+                            </div>
+                            <div class="row g-1 align-items-center">
+                                <div class="col-3">
                                     <label for="@idModalCrearVoucherInputVoucherImporte"
                                            class="col-form-label">
                                         Importe
@@ -170,9 +193,74 @@
                 <table class="table table-responsive table-sm table table-bordered"
                        id="@idTableVoucher">
                     <thead>
+                        @*Insertar*@
                         <tr>
-                            <th colspan="6"
-                                style="background-color: @(tablaEncabezadoFondoColor);">
+                            <th scope="row"
+                                colspan="7"
+                                style="background-color: #9c8050; color:white;">Cuadre Voucher</th>
+                        </tr>
+                        <tr>
+                            <th style="background-color: @(tablaEncabezadoFondoColor);">Voucher</th>
+                            <th style="background-color: @(tablaEncabezadoFondoColor);">Importe Origen</th>
+                            <th style="background-color: @(tablaEncabezadoFondoColor);">Importe Mxn</th>
+                            <th colspan="4" scope="row" style="background-color: @(tablaEncabezadoFondoColor);"></th>
+                        </tr>
+                        @foreach (var voucher in CaratulaVoucher.Vouchers)
+                        {
+                            string idVoucherImporte = classImporteTotal + voucher.VoucherId;
+                            string idVoucherImporteMxn = classImporteTotalMxn + voucher.VoucherId;
+                            decimal importe = Math.Round(voucher.ImporteTotal, 2);
+                            decimal importeMxn = Math.Round(voucher.ImporteTotalMXN, 2);
+                            <tr>
+                                <th scope="row"
+                                    class="text-left">
+                                    <input type="text"
+                                           class="input form-control form-control-sm"
+                                           name="name"
+                                           value="@voucher.Voucher.Nombre"
+                                           disabled />
+                                </th>
+                                <td>
+                                    <input type="number"
+                                           class="@classImporteTotal text-right"
+                                           id="@idVoucherImporte"
+                                           name="campo_importe"
+                                           value="@importe"
+                                           data-voucher-id="@voucher.VoucherId"
+                                           data-voucher-class-importe="@classVoucherImporte"
+                                           disabled />
+                                </td>
+                                <td>
+                                    <input type="number"
+                                           class="@(classImporteTotalMxn) text-right"
+                                           id="@idVoucherImporteMxn"
+                                           name="campo_importe"
+                                           value="@importeMxn"
+                                           data-voucher-id="@voucher.VoucherId"
+                                           data-voucher-class-importemxn="@classVoucherImporteMxn"
+                                           disabled />
+                                </td>
+                                <td colspan="4"></td>
+                            </tr>
+                        }
+                        <tr>
+                            <th scope="row" style="background-color: @(tablaEncabezadoFondoColor);">Total Vouchers</th>
+                            <td style="background-color: @(tablaEncabezadoFondoColor);"></td>
+                            <td style="background-color: @(tablaEncabezadoFondoColor);">
+                                <input type="number"
+                                       class="text-right"
+                                       id="@idInputImporteTotalMxn"
+                                       name="campo_importe_Mxn"
+                                       value="@importeMxnTotal"
+                                       data-voucher-class-importemxn="@classImporteTotalMxn"
+                                       disabled />
+                            </td>
+                            <td colspan="4"></td>
+                        </tr>
+                        @*/Insertar*@
+                        <tr>
+                            <th colspan="7"
+                                style="background-color: #9c8050; color: white;">
                                 Voucher
                             </th>
                         </tr>
@@ -182,20 +270,24 @@
                                 Voucher
                             </th>
                             <th style="background-color: @(tablaEncabezadoFondoColor);"
-                                width="180">
+                                width="120">
                                 Tipo Cambio
                             </th>
                             <th style="background-color: @(tablaEncabezadoFondoColor);"
-                                width="180">
+                                width="120">
                                 Consecutivo
                             </th>
                             <th style="background-color: @(tablaEncabezadoFondoColor);"
-                                width="180">
+                                width="120">
                                 Importe
                             </th>
                             <th style="background-color: @(tablaEncabezadoFondoColor);"
-                                width="180">
+                                width="120">
                                 Importe Mxn
+                            </th>
+                            <th style="background-color: @(tablaEncabezadoFondoColor);"
+                                width="400">
+                                Evidencia
                             </th>
                             <th style="background-color: @(tablaEncabezadoFondoColor);"
                                 width="120">
@@ -213,12 +305,15 @@
                             string claseVoucherEliminar = classVoucherEliminar + voucher.VoucherId;
                             foreach (var recibo in voucher.Recibos.OrderBy(x => x.Consecutivo))
                             {
+                                string archivoSubirId = $"archivoSubirId_{recibo.AlmacenCaratulaVoucherReciboId}";
+
                                 string idVoucherConsecutivo = claseVoucherConsecutivo + recibo.Consecutivo;
                                 string idVoucherImporte = claseVoucherImporte + recibo.Consecutivo;
                                 string idVoucherImporteMxn = claseVoucherImporteMxn + recibo.Consecutivo;
                                 string idVoucherEliminar = claseVoucherEliminar + recibo.Consecutivo;
                                 decimal importe = Math.Round(recibo.Importe, 2);
                                 decimal importeMxn = Math.Round(recibo.ImporteMXN, 2);
+
                                 <tr class="@classRegistro @claseRegistroVoucher"
                                     data-recibo-id="@recibo.AlmacenCaratulaVoucherReciboId"
                                     data-voucher-id="@recibo.AlmacenCaratulaVoucherVoucherId">
@@ -267,6 +362,22 @@
                                                data-class="@claseVoucherImporteMxn"
                                                disabled />
                                     </td>
+                                    <td class="text-center" style="display: flex;">
+                                        <input type="file"
+                                               class="form-control form-control-sm text-right"
+                                               id="@archivoSubirId"
+                                               accept=".pdf, .jpg, .png"
+                                               style="max-width: 335px; margin-left: 4px; margin-right: 4px;">
+                                        @if (!string.IsNullOrEmpty(recibo.ArchivoNombre))
+                                        {
+                                            <a href="@Url.Action("DescargarArchivo", "AlmacenCaratulaVoucher", new { id = recibo.AlmacenCaratulaVoucherReciboId })"
+                                               id=""
+                                               class="btn btn-sm btn-primary"
+                                               style="width: 40px; margin-left: 4px; margin-right: 4px; ">
+                                                <i class="fa-regular fa-eye" style="color: #ffffff;"></i>
+                                            </a>
+                                        }
+                                    </td>
                                     <td>
                                         <button type="button"
                                                 class="btn btn-sm btn-danger @claseVoucherEliminar"
@@ -286,67 +397,6 @@
                         }
                     </tbody>
                     <tfoot>
-                        <tr>
-                            <th scope="row" colspan="6">Cuadre Voucher</th>
-                        </tr>
-                        <tr>
-                            <th style="background-color: @(tablaEncabezadoFondoColor);">Voucher</th>
-                            <th style="background-color: @(tablaEncabezadoFondoColor);">Importe Origen</th>
-                            <th style="background-color: @(tablaEncabezadoFondoColor);">Importe Mxn</th>
-                            <th colspan="3" scope="row" style="background-color: @(tablaEncabezadoFondoColor);"></th>
-                        </tr>
-                        @foreach (var voucher in CaratulaVoucher.Vouchers)
-                        {
-                            string idVoucherImporte = classImporteTotal + voucher.VoucherId;
-                            string idVoucherImporteMxn = classImporteTotalMxn + voucher.VoucherId;
-                            decimal importe = Math.Round(voucher.ImporteTotal, 2);
-                            decimal importeMxn = Math.Round(voucher.ImporteTotalMXN, 2);
-                            <tr>
-                                <th scope="row"
-                                    class="text-left">
-                                    <input type="text"
-                                           class="input form-control form-control-sm"
-                                           name="name"
-                                           value="@voucher.Voucher.Nombre"
-                                           disabled />
-                                </th>
-                                <td>
-                                    <input type="number"
-                                           class="@classImporteTotal text-right"
-                                           id="@idVoucherImporte"
-                                           name="campo_importe"
-                                           value="@importe"
-                                           data-voucher-id="@voucher.VoucherId"
-                                           data-voucher-class-importe="@classVoucherImporte"
-                                           disabled />
-                                </td>
-                                <td>
-                                    <input type="number"
-                                           class="@(classImporteTotalMxn) text-right"
-                                           id="@idVoucherImporteMxn"
-                                           name="campo_importe"
-                                           value="@importeMxn"
-                                           data-voucher-id="@voucher.VoucherId"
-                                           data-voucher-class-importemxn="@classVoucherImporteMxn"
-                                           disabled />
-                                </td>
-                                <td colspan="3"></td>
-                            </tr>
-                        }
-                        <tr>
-                            <th scope="row" style="background-color: @(tablaEncabezadoFondoColor);">Total Vouchers</th>
-                            <td style="background-color: @(tablaEncabezadoFondoColor);"></td>
-                            <td style="background-color: @(tablaEncabezadoFondoColor);">
-                                <input type="number"
-                                       class="text-right"
-                                       id="@idInputImporteTotalMxn"
-                                       name="campo_importe_Mxn"
-                                       value="@importeMxnTotal"
-                                       data-voucher-class-importemxn="@classImporteTotalMxn"
-                                       disabled />
-                            </td>
-                            <td colspan="3"></td>
-                        </tr>
                     </tfoot>
                 </table>
             </div>
@@ -367,12 +417,6 @@
                     <i class="bi bi-floppy-fill"></i>
                     Actualizar
                 </button>
-                @*<button type="button"
-                        class="btn btn-sm btn-primary"
-                        onclick="GrabarAlmacenCaratulaVoucher()">
-                    <i class="bi bi-floppy-fill"></i>
-                    Grabar
-                </button>*@
             </div>
         </div>
     </div>
@@ -380,10 +424,12 @@
 @section scripts {
     <script type="text/javascript">
     const jsonObjetoCaratulaVoucher = '@(Html.Raw(JsonConvert.SerializeObject(CaratulaVoucher)))';
-    const oCaratulaVoucher = JSON.parse(jsonObjetoCaratulaVoucher);
+        const oCaratulaVoucher = JSON.parse(jsonObjetoCaratulaVoucher);
+        console.log(oCaratulaVoucher);
     const elementoModal = document.getElementById('@(idModalCrearVoucher)');
     const elementoModalSelectVoucher = document.getElementById('@(idModalCrearVoucherSelectVoucher)');
     const elementoModalInputVoucherImporte = document.getElementById('@(idModalCrearVoucherInputVoucherImporte)');
+    const elementoModalInputVoucherDocumento = document.getElementById('@(idModalCrearVoucherInputVoucherDocumento)');
     const elementoModalTextoError = document.getElementById('@(idModalCrearVoucherTextoError)');
     const elementoTableVoucherRecibo = document.getElementById('@(idTableVoucher)');
 
@@ -414,7 +460,8 @@
         let b_ValidarVoucherId = validarVoucherId(voucherId);
         if (!b_ValidarVoucherId)
             return b_ValidarVoucherId;
-        let voucherImporte = convertirInputDecimal(elementoModalInputVoucherImporte);
+        let voucherImporte = inputConvertirDecimal(elementoModalInputVoucherImporte);
+        let voucherDocumento = elementoModalInputVoucherDocumento;
         let b_ValidarVoucherImporte = validarVoucherImporte(voucherImporte);
         if (!b_ValidarVoucherImporte)
             return b_ValidarVoucherImporte;
@@ -424,8 +471,11 @@
             voucherId = voucherId,
             voucherTexto = voucherTexto,
             voucherTipoCambio = voucherTipoCambio,
-            voucherImporte = voucherImporte
+            voucherImporte = voucherImporte,
+            voucherDocumento = voucherDocumento
         );
+        if (voucherDocumento.files[0])
+            voucherDocumento.value = '';
         elementoModalInputVoucherImporte.value = '';
         elementoModalInputVoucherImporte.focus();
     }
@@ -453,18 +503,18 @@
         return true;
     }
 
-    function convertirInputDecimal(elementoInput) {
+    function inputConvertirDecimal(elementoInput) {
         return parseFloat(elementoInput.value).toFixed(2);
     }
 
-    function convertirValorDecimal(valor) {
+    function inputValorConvertirDecimal(valor) {
         return parseFloat(valor).toFixed(2);
     }
 
-    function crearVoucherTablaVoucher(voucherId, voucherTexto, voucherTipoCambio, voucherImporte) {
-        let tipoCambio = convertirValorDecimal(voucherTipoCambio);
-        let importe = convertirValorDecimal(voucherImporte);
-        let importeMxn = convertirValorDecimal(tipoCambio * importe);
+    function crearVoucherTablaVoucher(voucherId, voucherTexto, voucherTipoCambio, voucherImporte, voucherDocumento) {
+        let tipoCambio = inputValorConvertirDecimal(voucherTipoCambio);
+        let importe = inputValorConvertirDecimal(voucherImporte);
+        let importeMxn = inputValorConvertirDecimal(tipoCambio * importe);
         let tbody = elementoTableVoucherRecibo.getElementsByTagName('tbody')[0];
         let tr = document.createElement('tr');
         tr.classList.add('@(classRegistro)');
@@ -480,7 +530,8 @@
         let idVoucherImporte = classVoucherImporte + valorConsecutivo;
         let idVoucherImporteMxn = classVoucherImporteMxn + valorConsecutivo;
         let idVoucherEliminar = classVoucherEliminar + valorConsecutivo;
-        for (var i = 0; i <= 5; i++) {
+        let tablaValorFinal = 6;
+        for (var i = 0; i <= tablaValorFinal; i++) {
             let td = document.createElement('td');
             let elementoInput;
             if (i <= 4) {
@@ -488,7 +539,22 @@
                 elementoInput.classList.add('form-control');
                 elementoInput.classList.add('form-control-sm');
             }
-            if (i == 5)
+            if (i == 5) {
+                elementoInput = document.createElement('input');
+                elementoInput.classList.add('form-control');
+                elementoInput.classList.add('form-control-sm');
+                elementoInput.type = "file";
+
+                const archivo = voucherDocumento.files;
+                if (archivo.length > 0) {
+                    const archivoTransferencia = new DataTransfer();
+                    for (let i = 0; i < archivo.length; i++) {
+                        archivoTransferencia.items.add(archivo[i]);
+                    }
+                    elementoInput.files = archivoTransferencia.files;
+                }
+            }
+            if (i == tablaValorFinal)
                 elementoInput = document.createElement('button');
             switch (i) {
                 case 0: // VoucherTexto
@@ -540,7 +606,7 @@
                             "'" + idVoucherImporte + "', " +
                             "'" + idVoucherImporteMxn + "'" +
                         ')"> ';
-            if (i == 5)
+            if (i == 6)
                 elementoInput.outerHTML =
                     '<button ' +
                         'type="button" ' +
@@ -643,8 +709,8 @@
                 inputConsecutivoSiguiente.dataset.idVoucherImporte = nuevoImporteId;
                 inputConsecutivoSiguiente.dataset.idVoucherImporteMxn = nuevoImporteMxnId;
                 // inputImporteSiguiente
-                let importe = convertirInputDecimal(inputImporteSiguiente);
-                let tipoCambio = convertirValorDecimal(inputImporteSiguiente.dataset.tipoCambio);
+                let importe = inputConvertirDecimal(inputImporteSiguiente);
+                let tipoCambio = inputValorConvertirDecimal(inputImporteSiguiente.dataset.tipoCambio);
                 inputImporteSiguiente.outerHTML =
                     '<input ' +
                         'type="number" ' +
@@ -658,9 +724,9 @@
                             "'" + nuevoImporteMxnId + "'" +
                         ')"> ';
                 //// inputImporteMxnSiguiente
-                let importeMxn = convertirValorDecimal(importe * tipoCambio);
+                let importeMxn = inputValorConvertirDecimal(importe * tipoCambio);
                 inputImporteMxnSiguiente.id = nuevoImporteMxnId;
-                inputImporteMxnSiguiente.value = convertirValorDecimal(importeMxn);
+                inputImporteMxnSiguiente.value = inputValorConvertirDecimal(importeMxn);
                 // buttonEliminar
                 buttonEliminarSiguiente.id = nuevoEliminarId;
                 buttonEliminarSiguiente.dataset.idVoucherConsecutivo = nuevoConsecutivoId;
@@ -682,9 +748,9 @@
     function actualizarImporteRecibo(idVoucherImporte, idVoucherImporteMxn) {
         let inputImporte = document.getElementById(idVoucherImporte);
         let inputImporteMxn = document.getElementById(idVoucherImporteMxn);
-        let tipoCambio = convertirValorDecimal(inputImporte.dataset.tipoCambio);
-        let nuevoImporte = convertirInputDecimal(inputImporte);
-        let nuevoImporteMxn = convertirValorDecimal(nuevoImporte * tipoCambio);
+        let tipoCambio = inputValorConvertirDecimal(inputImporte.dataset.tipoCambio);
+        let nuevoImporte = inputConvertirDecimal(inputImporte);
+        let nuevoImporteMxn = inputValorConvertirDecimal(nuevoImporte * tipoCambio);
         inputImporte.value = nuevoImporte;
         inputImporteMxn.value = nuevoImporteMxn;
         actualizarTotales();
@@ -717,11 +783,12 @@
         inputVoucherImporteMxn.value = parseFloat(totales).toFixed(2);
     }
 
-    function actualizarAlmacenCaratulaVoucher() {
+    async function actualizarAlmacenCaratulaVoucher() {
         let UrlAlmacenCaratulaVoucher =
             '@(Url.Action("ActualizarAlmacenCaratulaVoucher", "AlmacenCaratulaVoucher"))';
-        let AlmacenCaratulaVoucher = ObtenerAlmacenCaratulaVoucher();
+        let AlmacenCaratulaVoucher = await ObtenerAlmacenCaratulaVoucher();
         let bodyData = JSON.stringify(AlmacenCaratulaVoucher);
+
         fetch(UrlAlmacenCaratulaVoucher, {
             method: 'POST',
             headers: {
@@ -739,7 +806,7 @@
         });
     }
 
-    function ObtenerAlmacenCaratulaVoucher() {
+    async function ObtenerAlmacenCaratulaVoucher() {
         let inputVoucherImporteMxn = document.getElementById('@(idInputImporteTotalMxn)');
         let importeTotal = parseFloat(inputVoucherImporteMxn.value);
         let AlmacenCaratulaVoucher = {
@@ -749,19 +816,19 @@
             FechaCaptura: null,
             ImporteTotal: parseFloat(importeTotal)
         };
-        AlmacenCaratulaVoucher.Vouchers = ObtenerAlmacenCaratulaVoucherVouchers();
+        AlmacenCaratulaVoucher.Vouchers = await ObtenerAlmacenCaratulaVoucherVouchers();
         return AlmacenCaratulaVoucher;
     }
 
-    function ObtenerAlmacenCaratulaVoucherVouchers() {
+    async function ObtenerAlmacenCaratulaVoucherVouchers() {
         let listaVouchers = [];
         for (var oVoucher of oCaratulaVoucher.Vouchers) {
             let idVoucherImporte = '@(classImporteTotal)' + oVoucher.VoucherId;
             let idVoucherImporteMxn = '@(classImporteTotalMxn)' + oVoucher.VoucherId;
             let inputImporte = document.getElementById(idVoucherImporte);
             let inputImporteMxn = document.getElementById(idVoucherImporteMxn);
-            let importeTotal = convertirInputDecimal(inputImporte);
-            let importeTotalMxn = convertirInputDecimal(inputImporteMxn);
+            let importeTotal = inputConvertirDecimal(inputImporte);
+            let importeTotalMxn = inputConvertirDecimal(inputImporteMxn);
             let voucher = {
                 AlmacenCaratulaVoucherVoucherId: oVoucher.AlmacenCaratulaVoucherVoucherId,
                 AlmacenCaratulaVoucherId: oVoucher.AlmacenCaratulaVoucherId,
@@ -770,16 +837,17 @@
                 ImporteTotal: parseFloat(importeTotal),
                 ImporteTotalMxn: parseFloat(importeTotalMxn)
             }
-            voucher.Recibos = ObtenerAlmacenCaratulaVoucherRecibos(oVoucher.VoucherId);
+            voucher.Recibos = await ObtenerAlmacenCaratulaVoucherRecibos(oVoucher.VoucherId);
             listaVouchers.push(voucher);
         }
         return listaVouchers;
     }
 
-    function ObtenerAlmacenCaratulaVoucherRecibos(voucherId) {
+    async function ObtenerAlmacenCaratulaVoucherRecibos(voucherId) {
         let listaRecibos = [];
         let classRegistroVoucher = '@(classRegistroVoucher)' + voucherId;
         let oRecibos = document.getElementsByClassName(classRegistroVoucher);
+
         for (var oRecibo of oRecibos) {
             let recibo = {
                 AlmacenCaratulaVoucherReciboId: parseInt(oRecibo.dataset.reciboId),
@@ -788,6 +856,14 @@
                 Importe: parseFloat(oRecibo.children[3].children[0].value),
                 ImporteMxn: parseFloat(oRecibo.children[4].children[0].value)
             };
+            const archivoInput = oRecibo.children[5].children[0];
+            const archivoGuardar = archivoInput.files;
+            if (archivoGuardar.length > 0) {
+                let archivo = archivoGuardar[0];
+                recibo.Archivo = await leerArchivoBase64(archivo);
+                recibo.ArchivoNombre = archivo.name;
+                recibo.ArchivoTipo = archivo.type;
+            }
             listaRecibos.push(recibo);
         }
         for (var oVoucher of oCaratulaVoucher.Vouchers) {
@@ -798,6 +874,15 @@
                 }
         }
         return listaRecibos;
+    }
+
+    function leerArchivoBase64(archivo) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = reject;
+            reader.readAsDataURL(archivo);
+        });
     }
 
     function GrabarAlmacenCaratulaVoucher() {

@@ -1,14 +1,12 @@
-﻿using hoka.Hoka.Models.Almacen.Caratula.AlmacenCaratula.Servicios;
-using hoka.Hoka.Models.Almacen.Caratula.AlmacenCaratulaEfectivo.Servicios;
-using hoka.Hoka.Models.Almacen.Caratula.Rutas;
-using hoka.Hoka.Models.Banco.Caratula.Rutas;
+﻿using hoka.AppServicios.Ingresos.AlmacenCaratula;
+using hoka.AppServicios.Ingresos.AlmacenCaratulaEfectivo;
+using hoka.AppServicios.Ingresos.BancoCaratulaEfectivo;
+using hoka.AppServicios.Ingresos.BancoCaratulaRutas;
 using hoka.HokaCli.Models.Compuadmo.Moneda;
 using hoka.HokaCli.Models.Compuadmo.Usuario;
-using hoka.HokaCli.Models.Compuadmo.Usuario.Permiso.AlmacenCaratula;
 using hoka.HokaCli.Models.Ingresos.AlmacenCaratula;
 using hoka.HokaCli.Models.Ingresos.AlmacenCaratulaEfectivo;
 using System.Collections.Generic;
-using System.Linq;
 using System.Web.Mvc;
 
 namespace hoka.Controllers.Finanza.Administracion.BancoEfectivo
@@ -22,16 +20,10 @@ namespace hoka.Controllers.Finanza.Administracion.BancoEfectivo
         [HttpGet]
         public ActionResult Actualizar(EnAlmacenCaratula parametroCaratula)
         {
+            EnUsuario Usuario = (EnUsuario)Session["SsUsuario"];
+            ViewBag.Usuario = Usuario;
             EnAlmacenCaratula Caratula =
                 SvAppAlmacenCaratulaConsultar.Consultar(parametroCaratula.AlmacenCaratulaId);
-            EnUsuario Usuario = (EnUsuario)Session["SsUsuario"];
-            //EnUsuarioPermisoAlmacenCaratula PermisoCaratula = Usuario
-            //    .Permiso
-            //    .PermisosAlmacenCaratula
-            //    .Where(
-            //        x =>
-            //        x.AlmacenId == Caratula.AlmacenId)
-            //    .Single();
             EnAlmacenCaratulaEfectivo AlmacenCaratulaEfectivo =
                 SvAppAlmacenCaratulaEfectivoConsultar.Consultar(parametroCaratula.AlmacenCaratulaId);
             ICollection<EnMoneda> MonedasDenominacion =
@@ -41,8 +33,8 @@ namespace hoka.Controllers.Finanza.Administracion.BancoEfectivo
             ViewBag.AlmacenCaratulaEfectivo = AlmacenCaratulaEfectivo;
             ViewBag.MonedasDenominacion = MonedasDenominacion;
             ViewBag.UrlIndexAlmacenCaratula = Url.Action("Index", _textoCaratula);
-            ViewBag.UrlActualizarAlmacenCaratulaEfectivo = Url.Action("ActualizarBancoCaratulaEfectivo", _textoCaratulaEfectivo);
-            ViewBag.UrlGrabarAlmacenCaratulaEfectivo = Url.Action("GrabarBancoCaratulaEfectivo", _textoCaratulaEfectivo);
+            ViewBag.UrlActualizarBancoCaratulaEfectivo = Url.Action("ActualizarBancoCaratulaEfectivo", _textoCaratulaEfectivo);
+            ViewBag.UrlGrabarBancoCaratulaEfectivo = Url.Action("GrabarBancoCaratulaEfectivo", _textoCaratulaEfectivo);
             return View();
         }
 
@@ -52,7 +44,7 @@ namespace hoka.Controllers.Finanza.Administracion.BancoEfectivo
             var respuesta = "error";
             if (parametroCaratulaEfectivo == null)
                 return respuesta;
-            bool B_ActualizarRegistro = SvAppAlmacenCaratulaEfectivoActualizar.Actualizar(parametroCaratulaEfectivo);
+            bool B_ActualizarRegistro = SvAppBancoCaratulaEfectivoActualizar.Actualizar(parametroCaratulaEfectivo);
             if (B_ActualizarRegistro)
                 respuesta = Url.Action("Index", _textoCaratula);
             return respuesta;
@@ -64,35 +56,10 @@ namespace hoka.Controllers.Finanza.Administracion.BancoEfectivo
             var respuesta = "error";
             if (parametroCaratulaEfectivo == null)
                 return respuesta;
-            bool B_GrabarRegistro = SvAppAlmacenCaratulaEfectivoGrabar.Grabar(parametroCaratulaEfectivo);
+            bool B_GrabarRegistro = SvAppBancoCaratulaEfectivoGrabar.Grabar(parametroCaratulaEfectivo);
             if (B_GrabarRegistro)
                 respuesta = Url.Action("Index", _textoCaratula);
             return respuesta;
-        }
-
-        [HttpGet]
-        public ActionResult Consultar(EnAlmacenCaratula parametroCaratula)
-        {
-            EnAlmacenCaratula Caratula =
-                SvAppAlmacenCaratulaConsultar.Consultar(parametroCaratula.AlmacenCaratulaId);
-            EnUsuario Usuario = (EnUsuario)Session["SsUsuario"];
-            EnUsuarioPermisoAlmacenCaratula PermisoCaratula = Usuario
-                .Permiso
-                .PermisosAlmacenCaratula
-                .Where(
-                    x =>
-                    x.AlmacenId == Caratula.AlmacenId)
-                .Single();
-            EnAlmacenCaratulaEfectivo AlmacenCaratulaEfectivo =
-                SvAppAlmacenCaratulaEfectivoConsultar.Consultar(parametroCaratula.AlmacenCaratulaId);
-            ICollection<EnMoneda> MonedasDenominacion =
-                SvAppMonedaDenominacionConsultar.Consultar();
-            ViewBag.Caratula = Caratula;
-            ViewBag.PermisoCaratula = PermisoCaratula;
-            ViewBag.AlmacenCaratulaEfectivo = AlmacenCaratulaEfectivo;
-            ViewBag.MonedasDenominacion = MonedasDenominacion;
-            ViewBag.UrlIndexAlmacenCaratula = Url.Action("Index", _textoCaratula);
-            return View();
         }
     }
 }

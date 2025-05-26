@@ -22,6 +22,8 @@ namespace hoka_cli.Models.Ingresos.AlmacenCaratulaEfectivo.Moneda
         public decimal ImporteTotalMXN { get; set; }
         public decimal ImporteTotalBanco { get; set; }
         public decimal ImporteTotalMXNBanco { get; set; }
+        public decimal ImporteTotalDiferencia { get; set; }
+        public decimal ImporteTotalMXNDiferencia { get; set; }
 
         [NotMapped]
         public ICollection<EnAlmacenCaratulaEfectivoDenominacion> Denominaciones { get; set; }

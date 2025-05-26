@@ -1,9 +1,17 @@
-﻿@using hoka.HokaCli.Models.Compuadmo.Voucher;
+﻿@using hoka.HokaCli.Models.Compuadmo.Usuario;
+@using hoka.HokaCli.Models.Compuadmo.Voucher;
 @using hoka.HokaCli.Models.Ingresos.AlmacenCaratula;
 @using hoka.HokaCli.Models.Ingresos.AlmacenCaratulaVoucher;
 @{
-    ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    ViewBag.Title = "Consultar";
+    EnUsuario Usuario = ViewBag.Usuario;
+    string layoutUsuario =
+        Usuario.UsuarioRol.Prefijo == "ADMT"
+            ? "_LayoutAdminTotal.cshtml" :
+            Usuario.UsuarioRol.Prefijo == "ADM"
+                ? "_LayoutAdmin.cshtml"
+                : "_LayoutUser.cshtml";
+    Layout = $"~/Views/Shared/{layoutUsuario}";
     string tituloFondoColor = "#9c8050";
     string tituloTexto = "CARÁTULA VOUCHER (ACTUALIZAR)";
     string tituloTextoColor = "#fff";
@@ -65,9 +73,74 @@
                 <table class="table table-responsive table-sm table table-bordered"
                        id="@idTableVoucher">
                     <thead>
+                        @*Insertar*@
                         <tr>
-                            <th colspan="5"
-                                style="background-color: @(tablaEncabezadoFondoColor);">
+                            <th scope="row"
+                                colspan="6"
+                                style="background-color: #9c8050; color:white;">Cuadre Voucher</th>
+                        </tr>
+                        <tr>
+                            <th style="background-color: @(tablaEncabezadoFondoColor);">Voucher</th>
+                            <th style="background-color: @(tablaEncabezadoFondoColor);">Importe Origen</th>
+                            <th style="background-color: @(tablaEncabezadoFondoColor);">Importe Mxn</th>
+                            <th colspan="3" scope="row" style="background-color: @(tablaEncabezadoFondoColor);"></th>
+                        </tr>
+                        @foreach (var voucher in CaratulaVoucher.Vouchers)
+                        {
+                            string idVoucherImporte = classImporteTotal + voucher.VoucherId;
+                            string idVoucherImporteMxn = classImporteTotalMxn + voucher.VoucherId;
+                            decimal importe = Math.Round(voucher.ImporteTotal, 2);
+                            decimal importeMxn = Math.Round(voucher.ImporteTotalMXN, 2);
+                            <tr>
+                                <th scope="row"
+                                    class="text-left">
+                                    <input type="text"
+                                           class="input form-control form-control-sm"
+                                           name="name"
+                                           value="@voucher.Voucher.Nombre"
+                                           disabled />
+                                </th>
+                                <td>
+                                    <input type="number"
+                                           class="@classImporteTotal text-right"
+                                           id="@idVoucherImporte"
+                                           name="campo_importe"
+                                           value="@importe"
+                                           data-voucher-id="@voucher.VoucherId"
+                                           data-voucher-class-importe="@classVoucherImporte"
+                                           disabled />
+                                </td>
+                                <td>
+                                    <input type="number"
+                                           class="@(classImporteTotalMxn) text-right"
+                                           id="@idVoucherImporteMxn"
+                                           name="campo_importe"
+                                           value="@importeMxn"
+                                           data-voucher-id="@voucher.VoucherId"
+                                           data-voucher-class-importemxn="@classVoucherImporteMxn"
+                                           disabled />
+                                </td>
+                                <td colspan="3"></td>
+                            </tr>
+                        }
+                        <tr>
+                            <th scope="row" style="background-color: @(tablaEncabezadoFondoColor);">Total Vouchers</th>
+                            <td style="background-color: @(tablaEncabezadoFondoColor);"></td>
+                            <td style="background-color: @(tablaEncabezadoFondoColor);">
+                                <input type="number"
+                                       class="text-right"
+                                       id="@idInputImporteTotalMxn"
+                                       name="campo_importe_Mxn"
+                                       value="@importeMxnTotal"
+                                       data-voucher-class-importemxn="@classImporteTotalMxn"
+                                       disabled />
+                            </td>
+                            <td colspan="3"></td>
+                        </tr>
+                        @*/Insertar*@
+                        <tr>
+                            <th colspan="6"
+                                style="background-color: #9c8050; color: white;">
                                 Voucher
                             </th>
                         </tr>
@@ -91,6 +164,10 @@
                             <th style="background-color: @(tablaEncabezadoFondoColor);"
                                 width="180">
                                 Importe Mxn
+                            </th>
+                            <th style="background-color: @(tablaEncabezadoFondoColor);"
+                                width="100">
+                                Acciones
                             </th>
                         </tr>
                     </thead>
@@ -158,72 +235,22 @@
                                                data-class="@claseVoucherImporteMxn"
                                                disabled />
                                     </td>
+                                    <td>
+                                        @if (!string.IsNullOrEmpty(recibo.ArchivoNombre))
+                                        {
+                                            <a href="@Url.Action("DescargarArchivo", "AlmacenCaratulaVoucher", new { id = recibo.AlmacenCaratulaVoucherReciboId })"
+                                               id=""
+                                               class="btn btn-sm btn-primary"
+                                               style="width: 40px;">
+                                                <i class="fa-regular fa-eye" style="color: #ffffff;"></i>
+                                            </a>
+                                        }
+                                    </td>
                                 </tr>
                             }
                         }
                     </tbody>
                     <tfoot>
-                        <tr>
-                            <th scope="row" colspan="6">Cuadre Voucher</th>
-                        </tr>
-                        <tr>
-                            <th style="background-color: @(tablaEncabezadoFondoColor);">Voucher</th>
-                            <th style="background-color: @(tablaEncabezadoFondoColor);">Importe Origen</th>
-                            <th style="background-color: @(tablaEncabezadoFondoColor);">Importe Mxn</th>
-                            <th colspan="2" scope="row" style="background-color: @(tablaEncabezadoFondoColor);"></th>
-                        </tr>
-                        @foreach (var voucher in CaratulaVoucher.Vouchers)
-                        {
-                            string idVoucherImporte = classImporteTotal + voucher.VoucherId;
-                            string idVoucherImporteMxn = classImporteTotalMxn + voucher.VoucherId;
-                            decimal importe = Math.Round(voucher.ImporteTotal, 2);
-                            decimal importeMxn = Math.Round(voucher.ImporteTotalMXN, 2);
-                            <tr>
-                                <th scope="row"
-                                    class="text-left">
-                                    <input type="text"
-                                           class="input form-control form-control-sm"
-                                           name="name"
-                                           value="@voucher.Voucher.Nombre"
-                                           disabled />
-                                </th>
-                                <td>
-                                    <input type="number"
-                                           class="@classImporteTotal text-right"
-                                           id="@idVoucherImporte"
-                                           name="campo_importe"
-                                           value="@importe"
-                                           data-voucher-id="@voucher.VoucherId"
-                                           data-voucher-class-importe="@classVoucherImporte"
-                                           disabled />
-                                </td>
-                                <td>
-                                    <input type="number"
-                                           class="@(classImporteTotalMxn) text-right"
-                                           id="@idVoucherImporteMxn"
-                                           name="campo_importe"
-                                           value="@importeMxn"
-                                           data-voucher-id="@voucher.VoucherId"
-                                           data-voucher-class-importemxn="@classVoucherImporteMxn"
-                                           disabled />
-                                </td>
-                                <td colspan="2"></td>
-                            </tr>
-                        }
-                        <tr>
-                            <th scope="row" style="background-color: @(tablaEncabezadoFondoColor);">Total Vouchers</th>
-                            <td style="background-color: @(tablaEncabezadoFondoColor);"></td>
-                            <td style="background-color: @(tablaEncabezadoFondoColor);">
-                                <input type="number"
-                                       class="text-right"
-                                       id="@idInputImporteTotalMxn"
-                                       name="campo_importe_Mxn"
-                                       value="@importeMxnTotal"
-                                       data-voucher-class-importemxn="@classImporteTotalMxn"
-                                       disabled />
-                            </td>
-                            <td colspan="2"></td>
-                        </tr>
                     </tfoot>
                 </table>
             </div>

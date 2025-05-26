@@ -49,7 +49,17 @@ namespace hoka_cli.Models.Ingresos.AlmacenCaratula
                 if (FiltroConsulta.FechaInicio != null)
                     Query = Query.Where(q => q.FechaRegistro >= FiltroConsulta.FechaInicio);
                 if (FiltroConsulta.FechaFin != null)
-                    Query = Query.Where(q => q.FechaRegistro >= FiltroConsulta.FechaFin);
+                    Query = Query.Where(q => q.FechaRegistro <= FiltroConsulta.FechaFin);
+                if(FiltroConsulta.ListaIds != null &&
+                   FiltroConsulta.ListaIds.Count > 0)
+                {
+                    Query = Query
+                        .Where( q => FiltroConsulta.ListaIds
+                            .Any(
+                                x => x == q.AlmacenId
+                            )
+                        );
+                }
             }
             if (FiltroPaginacion != null && FiltroPaginacion.B_Paginacion)
             {

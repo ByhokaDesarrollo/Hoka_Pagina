@@ -1,11 +1,20 @@
 ﻿@using hoka.HokaCli.Models.Compuadmo.Moneda;
+@using hoka.HokaCli.Models.Compuadmo.Usuario;
 @using hoka.HokaCli.Models.Compuadmo.Usuario.Permiso.AlmacenCaratula;
 @using hoka.HokaCli.Models.Ingresos.AlmacenCaratula;
 @using hoka.HokaCli.Models.Ingresos.AlmacenCaratulaEfectivo;
 @using Newtonsoft.Json;
+@using System.Globalization;
 @{
     ViewBag.Title = "Actualizar";
-    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    EnUsuario Usuario = ViewBag.Usuario;
+    string layoutUsuario =
+        Usuario.UsuarioRol.Prefijo == "ADMT"
+            ? "_LayoutAdminTotal.cshtml" :
+            Usuario.UsuarioRol.Prefijo == "ADM"
+                ? "_LayoutAdmin.cshtml"
+                : "_LayoutUser.cshtml";
+    Layout = $"~/Views/Shared/{layoutUsuario}";
     string tituloFondoColor = "#9c8050";
     string tituloTexto = "CARÁTULA EFECTIVO (ACTUALIZAR)";
     string tituloTextoColor = "#fff";
@@ -84,7 +93,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var moneda in CaratulaEfectivo.Monedas) //ListaMonedas
+                        @foreach (var moneda in CaratulaEfectivo.Monedas.OrderBy(x => x.MonedaId)) //ListaMonedas
                         {
                             string monedaDenominacionImporteClase = "MonedaId" + moneda.MonedaId;
                             <tr data-es-denominacion=false>
@@ -96,10 +105,14 @@
                             {
                                 string monedaDenominacionCantidadId = "MonedaDenominacionIdCantidad" + denominacion.MonedaDenominacionId;
                                 string monedaDenominacionImporteId = "MonedaDenominacionIdImporte" + denominacion.MonedaDenominacionId;
+                                string textoDenominacionImporte = denominacion.Importe.ToString("C", CultureInfo.CurrentCulture);
+
                                 <tr class="moneda-denominacion">
+                                    @*Denominación*@
                                     <td>
                                         @denominacion.MonedaDenominacion.Denominacion
                                     </td>
+                                    @*Cantidad*@
                                     <td>
                                         <input type="number"
                                                class=""
@@ -109,12 +122,13 @@
                                                 this, @denominacion.MonedaDenominacion.Denominacion, '@(monedaDenominacionImporteId)', '@(monedaDenominacionImporteClase)', @moneda.Moneda.Valor)"
                                                value="@denominacion.Cantidad" />
                                     </td>
+                                    @*Importe*@
                                     <td>
-                                        <input type="number"
-                                               class="@monedaDenominacionImporteClase"
+                                        <input type="text"
+                                               class="text-right formato-numerico @monedaDenominacionImporteClase"
                                                id="@monedaDenominacionImporteId"
                                                name="campo_importe"
-                                               value="@denominacion.Importe"
+                                               value="@textoDenominacionImporte"
                                                disabled />
                                     </td>
                                 </tr>
@@ -132,40 +146,53 @@
                             <th style="background-color: @(tablaEncabezadoFondoColor);">Importe Moneda Origen</th>
                             <th style="background-color: @(tablaEncabezadoFondoColor);">Importe MXN</th>
                         </tr>
-                        @foreach (var moneda in CaratulaEfectivo.Monedas) //ListaMonedas
+                        @foreach (var moneda in CaratulaEfectivo.Monedas.OrderBy(x => x.MonedaId)) //ListaMonedas
                         {
                             string monedaDenominacionImporteId = "MonedaId" + moneda.MonedaId;
                             string monedaDenominacionImporteIdMXN = "MonedaId" + moneda.MonedaId + @prefijoPesos;
+
+                            string textoMonedaImporte = moneda.ImporteTotal.ToString("C", CultureInfo.CurrentCulture);
+                            string textoMonedaImporteMXN = moneda.ImporteTotalMXN.ToString("C", CultureInfo.CurrentCulture);
+
                             <tr>
+                                @*Moneda*@
                                 <th scope="row">@moneda.Moneda.Nombre</th>
+                                @*Importe Moneda Origen*@
                                 <td>
-                                    <input type="number"
+                                    <input type="text"
+                                           class="text-right formato-numerico"
                                            id="@monedaDenominacionImporteId"
                                            name="campo_importe"
-                                           value="@moneda.ImporteTotal"
+                                           value="@textoMonedaImporte"
                                            disabled />
                                 </td>
+                                @*Importe MXN*@
                                 <td>
-                                    <input type="number"
-                                           class="@claseTotales"
+                                    <input type="text"
+                                           class="text-right formato-numerico @claseTotales"
                                            id="@monedaDenominacionImporteIdMXN"
                                            name="campo_importe"
-                                           value="@moneda.ImporteTotalMXN"
+                                           value="@textoMonedaImporteMXN"
                                            disabled />
                                 </td>
                             </tr>
                         }
                         <tr>
+                            @{
+                                string textoImporteTotalMXN = CaratulaEfectivo.ImporteTotal.ToString("C", CultureInfo.CurrentCulture);
+                            }
                             <th scope="row"
                                 style="background-color: @(tablaEncabezadoFondoColor);">
                                 Total Efectivo
                             </th>
                             <td style="background-color: @(tablaEncabezadoFondoColor);"></td>
+                            @*Total Efectivo*@
                             <td style="background-color: @(tablaEncabezadoFondoColor);">
-                                <input type="number"
+                                <input type="text"
+                                       class="text-right formato-numerico"
                                        id="@importeEfectivoTotalId"
                                        name="campo_importe_mxn"
-                                       value="@CaratulaEfectivo.ImporteTotal"
+                                       value="@textoImporteTotalMXN"
                                        disabled />
                             </td>
                         </tr>
@@ -197,141 +224,161 @@
     </div>
 </div>
 @section scripts {
+    <script type="text/javascript" src="~/Scripts/app/fx-input-typeNumber.js"></script>
     <script type="text/javascript">
-    @*const jsonObjetoMonedas = '@(Html.Raw(JsonConvert.SerializeObject(MonedasDenominacion)))';
-    const objetoMonedas = JSON.parse(jsonObjetoMonedas);*@
-    const jsonObjetoCaratulaEfectivo = '@(Html.Raw(JsonConvert.SerializeObject(CaratulaEfectivo)))';
-    const objetoCaratulaEfectivo = JSON.parse(jsonObjetoCaratulaEfectivo);
+        @*const jsonObjetoMonedas = '@(Html.Raw(JsonConvert.SerializeObject(MonedasDenominacion)))';
+        const objetoMonedas = JSON.parse(jsonObjetoMonedas);*@
+        const jsonObjetoCaratulaEfectivo = '@(Html.Raw(JsonConvert.SerializeObject(CaratulaEfectivo)))';
+        const objetoCaratulaEfectivo = JSON.parse(jsonObjetoCaratulaEfectivo);
 
-    function actualizarImporteInput(
-        inputCantidad, denominacion, monedaDenominacionImporteId, monedaDenominacionImporteClase, tipoCambio) {
-        let InputImporte = document.getElementById(monedaDenominacionImporteId);
-        let InputsImporte = document.getElementsByClassName(monedaDenominacionImporteClase);
-        let InputImporteTotal = document.getElementById(monedaDenominacionImporteClase);
-        let InputImporteTotalMXN = document.getElementById(monedaDenominacionImporteClase + "@(prefijoPesos)");
-        let InputImporteEfectivoTotal = document.getElementById("@(importeEfectivoTotalId)");
-        let valorImporte = parseFloat(denominacion) * parseFloat(inputCantidad.value);
-        let sumaImportes = 0;
-        InputImporte.value = valorImporte.toFixed(2);
-        for (var inputImporte of InputsImporte) {
-            sumaImportes += parseFloat(inputImporte.value);
-        }
-        InputImporteTotal.value = parseFloat(sumaImportes).toFixed(2);
-        let sumaImporteTotalMXN = parseFloat(sumaImportes) * parseFloat(tipoCambio);
-        InputImporteTotalMXN.value = sumaImporteTotalMXN.toFixed(2);
+        function actualizarImporteInput(
+            inputCantidad,
+            denominacion,
+            monedaDenominacionImporteId,
+            monedaDenominacionImporteClase,
+            tipoCambio) {
+            let InputImporte = document.getElementById(monedaDenominacionImporteId);
+            let InputsImporte = document.getElementsByClassName(monedaDenominacionImporteClase);
+            let InputImporteTotal = document.getElementById(monedaDenominacionImporteClase);
+            let InputImporteTotalMXN = document.getElementById(monedaDenominacionImporteClase + "@(prefijoPesos)");
+            let InputImporteEfectivoTotal = document.getElementById("@(importeEfectivoTotalId)");
 
-        let InputsTotalesMXN = document.getElementsByClassName("@claseTotales");
-        let sumaTotalesMXN = 0;
-        for (var inputTotal of InputsTotalesMXN) {
-            sumaTotalesMXN += parseFloat(inputTotal.value);
-        }
-        InputImporteEfectivoTotal.value = sumaTotalesMXN.toFixed(2);
-    }
+            if (inputCantidad.value.length === 0)
+                inputCantidad.value = 0;
 
-    function ActualizarAlmacenCaratulaEfectivo() {
-        let UrlAlmacenCaratulaEfectivo =
-            '@(Url.Action("ActualizarAlmacenCaratulaEfectivo", "AlmacenCaratulaEfectivo"))';
-        let AlmacenCaratulaEfectivo = ObtenerAlmacenCaratulaEfectivo();
-        let bodyData = JSON.stringify(AlmacenCaratulaEfectivo);
-        fetch(UrlAlmacenCaratulaEfectivo, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: bodyData
-        })
-        .then((res) => res.text())
-        .then((data) => {
-            if (data != 'error') {
-                window.location.replace(data);
-            } else {
-                console.log('error');
+            // NUEVO
+            // Calcular Importe
+            let valorImporte = parseFloat(denominacion) * parseFloat(inputCantidad.value);
+            InputImporte.value = inputValorAgregarFormatoMoneda(valorImporte);
+
+            // Calcular InputImporteTotal
+            let sumaImportes = parseFloat(0);
+            for (var inputImporte of InputsImporte) {
+                let valorSuma = inputValorQuitarFormatoMoneda(inputImporte.value);
+                if (valorSuma > 0)
+                    sumaImportes += valorSuma;
             }
-        });
-    }
+            InputImporteTotal.value = inputValorAgregarFormatoMoneda(sumaImportes);
 
-    function ObtenerAlmacenCaratulaEfectivo() {
-        let inputImporteEfectivoTotal = document.getElementById('@importeEfectivoTotalId');
-        let importeTotal = parseFloat(inputImporteEfectivoTotal.value);
-        let AlmacenCaratulaEfectivo = {
-            AlmacenCaratulaEfectivoId: parseInt(@(CaratulaEfectivo.AlmacenCaratulaEfectivoId)),
-            AlmacenCaratulaId: parseInt(@Caratula.AlmacenCaratulaId),
-            UsuarioId: 1,
-            FechaCaptura: null,
-            ImporteTotal: parseFloat(importeTotal)
-        };
-        AlmacenCaratulaEfectivo.Monedas = ObtenerAlmacenCaratulaEfectivoMonedas();
-        return AlmacenCaratulaEfectivo;
-    }
+            // Calcular InputImporteTotalMXN
+            let sumaImporteTotalMXN = parseFloat(sumaImportes) * parseFloat(tipoCambio);
+            InputImporteTotalMXN.value = inputValorAgregarFormatoMoneda(sumaImporteTotalMXN);
 
-    function ObtenerAlmacenCaratulaEfectivoMonedas() {
-        let listaMonedas = [];
-        for (var oMoneda of objetoCaratulaEfectivo.Monedas) { // objetoMonedas
-            console.log(oMoneda);
-            let monedaDenominacionImporteId = "MonedaId" + oMoneda.MonedaId;
-            let monedaDenominacionImporteIdMXN = "MonedaId" + oMoneda.MonedaId + '@(prefijoPesos)';
-            let inputMonedaDenominacionImporteId = document.getElementById(monedaDenominacionImporteId);
-            let inputMonedaDenominacionImporteIdMXN = document.getElementById(monedaDenominacionImporteIdMXN);
-            let importeTotal = parseFloat(inputMonedaDenominacionImporteId.value);
-            let importeTotalMXN = parseFloat(inputMonedaDenominacionImporteIdMXN.value);
-            let moneda = {
-                AlmacenCaratulaEfectivoMonedaId: parseInt(oMoneda.AlmacenCaratulaEfectivoMonedaId),
-                AlmacenCaratulaEfectivoId: parseInt(oMoneda.AlmacenCaratulaEfectivoId),
-                MonedaId: parseInt(oMoneda.MonedaId),
-                TipoCambio: parseFloat(oMoneda.TipoCambio),
-                ImporteTotal: parseFloat(importeTotal),
-                ImporteTotalMXN: parseFloat(importeTotalMXN)
+            // Calcular InputImporteEfectivoTotal
+            let InputsTotalesMXN = document.getElementsByClassName("@claseTotales");
+            let sumaTotalesMXN = parseFloat(0);
+            for (var inputTotal of InputsTotalesMXN) {
+                let valorDecimalInputTotal = inputValorQuitarFormatoMoneda(inputTotal.value);
+                valorDecimalInputTotal = parseFloat(valorDecimalInputTotal);
+                sumaTotalesMXN += valorDecimalInputTotal;
             }
-            moneda.Denominaciones = ObtenerAlmacenCaratulaEfectivoMonedaDenominaciones(oMoneda.MonedaId);
-            listaMonedas.push(moneda);
+            InputImporteEfectivoTotal.value = inputValorAgregarFormatoMoneda(sumaTotalesMXN);
         }
-        return listaMonedas;
-    }
 
-    function ObtenerAlmacenCaratulaEfectivoMonedaDenominaciones(monedaId) {
-        let Denominaciones = [];
-        let objetoMoneda = objetoCaratulaEfectivo.Monedas.find(moneda => moneda.MonedaId == monedaId);
-        for (var oDenominacion of objetoMoneda.Denominaciones) {
-            let monedaDenominacionCantidadId = "MonedaDenominacionIdCantidad" + oDenominacion.MonedaDenominacionId;
-            let monedaDenominacionImporteId = "MonedaDenominacionIdImporte" + oDenominacion.MonedaDenominacionId;
-            let inputMonedaDenominacionCantidadId = document.getElementById(monedaDenominacionCantidadId);
-            let inputMonedaDenominacionImporteId = document.getElementById(monedaDenominacionImporteId);
-            let cantidad = parseFloat(inputMonedaDenominacionCantidadId.value);
-            let importe = parseFloat(inputMonedaDenominacionImporteId.value);
-            let importeMXN = parseFloat(importe * objetoMoneda.Valor);
-            let denominacion = {
-                AlmacenCaratulaEfectivoDenominacionId: parseInt(oDenominacion.AlmacenCaratulaEfectivoDenominacionId),
-                AlmacenCaratulaEfectivoMonedaId: parseInt(oDenominacion.AlmacenCaratulaEfectivoMonedaId),
-                MonedaDenominacionId: parseInt(oDenominacion.MonedaDenominacionId),
-                Cantidad: parseFloat(cantidad),
-                Importe: parseFloat(importe),
-                ImporteMXN: parseFloat(importeMXN)
-            }
-            Denominaciones.push(denominacion);
+        function ActualizarAlmacenCaratulaEfectivo() {
+            let UrlAlmacenCaratulaEfectivo =
+                '@(Url.Action("ActualizarAlmacenCaratulaEfectivo", "AlmacenCaratulaEfectivo"))';
+            let AlmacenCaratulaEfectivo = ObtenerAlmacenCaratulaEfectivo();
+            let bodyData = JSON.stringify(AlmacenCaratulaEfectivo);
+            fetch(UrlAlmacenCaratulaEfectivo, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: bodyData
+            })
+            .then((res) => res.text())
+            .then((data) => {
+                if (data != 'error') {
+                    window.location.replace(data);
+                } else {
+                    console.log('error');
+                }
+            });
         }
-        return Denominaciones;
-    }
 
-    function GrabarAlmacenCaratulaEfectivo() {
-        let UrlAlmacenCaratulaVenta =
-            '@(Url.Action("GrabarAlmacenCaratulaEfectivo", "AlmacenCaratulaEfectivo"))';
-        let AlmacenCaratulaEfectivo = ObtenerAlmacenCaratulaEfectivo();
-        let bodyData = JSON.stringify(AlmacenCaratulaEfectivo);
-        fetch(UrlAlmacenCaratulaVenta, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: bodyData
-        })
-        .then((res) => res.text())
-        .then((data) => {
-            if (data != 'error') {
-                window.location.replace(data);
-            } else {
-                console.log('error');
+        function ObtenerAlmacenCaratulaEfectivo() {
+            let inputImporteEfectivoTotal = document.getElementById('@importeEfectivoTotalId');
+            let importeTotal = inputValorQuitarFormatoMoneda(inputImporteEfectivoTotal.value);
+            let AlmacenCaratulaEfectivo = {
+                AlmacenCaratulaEfectivoId: parseInt(@(CaratulaEfectivo.AlmacenCaratulaEfectivoId)),
+                AlmacenCaratulaId: parseInt(@Caratula.AlmacenCaratulaId),
+                UsuarioId: 1,
+                FechaCaptura: null,
+                ImporteTotal: importeTotal
+            };
+            AlmacenCaratulaEfectivo.Monedas = ObtenerAlmacenCaratulaEfectivoMonedas();
+            return AlmacenCaratulaEfectivo;
+        }
+
+        function ObtenerAlmacenCaratulaEfectivoMonedas() {
+            let listaMonedas = [];
+            for (var oMoneda of objetoCaratulaEfectivo.Monedas) { // objetoMonedas
+                console.log(oMoneda);
+                let monedaDenominacionImporteId = "MonedaId" + oMoneda.MonedaId;
+                let monedaDenominacionImporteIdMXN = "MonedaId" + oMoneda.MonedaId + '@(prefijoPesos)';
+                let inputMonedaDenominacionImporteId = document.getElementById(monedaDenominacionImporteId);
+                let inputMonedaDenominacionImporteIdMXN = document.getElementById(monedaDenominacionImporteIdMXN);
+                let importeTotal = inputValorQuitarFormatoMoneda(inputMonedaDenominacionImporteId.value);
+                let importeTotalMXN = inputValorQuitarFormatoMoneda(inputMonedaDenominacionImporteIdMXN.value);
+                let moneda = {
+                    AlmacenCaratulaEfectivoMonedaId: parseInt(oMoneda.AlmacenCaratulaEfectivoMonedaId),
+                    AlmacenCaratulaEfectivoId: parseInt(oMoneda.AlmacenCaratulaEfectivoId),
+                    MonedaId: parseInt(oMoneda.MonedaId),
+                    TipoCambio: parseFloat(oMoneda.TipoCambio),
+                    ImporteTotal: importeTotal,
+                    ImporteTotalMXN: importeTotalMXN
+                }
+                moneda.Denominaciones = ObtenerAlmacenCaratulaEfectivoMonedaDenominaciones(oMoneda.MonedaId);
+                listaMonedas.push(moneda);
             }
-        });
-    }
+            return listaMonedas;
+        }
+
+        function ObtenerAlmacenCaratulaEfectivoMonedaDenominaciones(monedaId) {
+            let Denominaciones = [];
+            let objetoMoneda = objetoCaratulaEfectivo.Monedas.find(moneda => moneda.MonedaId == monedaId);
+            for (var oDenominacion of objetoMoneda.Denominaciones) {
+                let monedaDenominacionCantidadId = "MonedaDenominacionIdCantidad" + oDenominacion.MonedaDenominacionId;
+                let monedaDenominacionImporteId = "MonedaDenominacionIdImporte" + oDenominacion.MonedaDenominacionId;
+                let inputMonedaDenominacionCantidadId = document.getElementById(monedaDenominacionCantidadId);
+                let inputMonedaDenominacionImporteId = document.getElementById(monedaDenominacionImporteId);
+                let cantidad = parseFloat(inputMonedaDenominacionCantidadId.value);
+                let importe = inputValorQuitarFormatoMoneda(inputMonedaDenominacionImporteId.value);
+                let importeMXN = parseFloat(importe * objetoMoneda.Valor);
+                let denominacion = {
+                    AlmacenCaratulaEfectivoDenominacionId: parseInt(oDenominacion.AlmacenCaratulaEfectivoDenominacionId),
+                    AlmacenCaratulaEfectivoMonedaId: parseInt(oDenominacion.AlmacenCaratulaEfectivoMonedaId),
+                    MonedaDenominacionId: parseInt(oDenominacion.MonedaDenominacionId),
+                    Cantidad: parseFloat(cantidad),
+                    Importe: importe,
+                    ImporteMXN: importeMXN
+                }
+                Denominaciones.push(denominacion);
+            }
+            return Denominaciones;
+        }
+
+        function GrabarAlmacenCaratulaEfectivo() {
+            let UrlAlmacenCaratulaVenta =
+                '@(Url.Action("GrabarAlmacenCaratulaEfectivo", "AlmacenCaratulaEfectivo"))';
+            let AlmacenCaratulaEfectivo = ObtenerAlmacenCaratulaEfectivo();
+            let bodyData = JSON.stringify(AlmacenCaratulaEfectivo);
+            fetch(UrlAlmacenCaratulaVenta, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: bodyData
+            })
+            .then((res) => res.text())
+            .then((data) => {
+                if (data != 'error') {
+                    window.location.replace(data);
+                } else {
+                    console.log('error');
+                }
+            });
+        }
     </script>
 }

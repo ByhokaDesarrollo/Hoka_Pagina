@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>HOKA - @ViewBag.Title</title>
-
+    @RenderSection("Styles", required: false) <!-- Agrega esta línea -->
     <link rel="icon" type="image/png" href="~/Content/img/icons/favicon.png" />
 
     <!--bootstrap DE TODO-->
@@ -211,11 +211,12 @@
                             List<int?> permisosSesion = Session["permisosId"] as List<int?>;
                         }
 
-                        @* BANCO *@
+                        @* BANCO / TIENDA *@
                         @if (usuarioSesion != null && usuarioSesion.Id_Rol == 3)
                         {
                             bool tienePermiso17 = permisosSesion?.Contains(17) ?? false;
 
+                            //Banco
                             <li class="nav-item">
                                 <a href="#" class="nav-link toggle-menu">
                                     <i class="fas fa-vault"></i>
@@ -240,6 +241,45 @@
                                                     <a href="@Url.RouteUrl("banco-caratula")" class="nav-link">
                                                         <i class="fas fa-list-alt"></i>
                                                         <p>Gestor Almacen Caja</p>
+                                                    </a>
+                                                </li>
+                                                @*Reporte*@
+                                                <li class="nav-item @(ViewBag.ActivePage == "banco-caratula-efectivo-reporte" ? "active" : "")">
+                                                    <a href="@Url.RouteUrl("banco-caratula-efectivo-reporte")" class="nav-link">
+                                                        <i class="fas fa-list-alt"></i>
+                                                        <p>Reporte Banco Efectivo</p>
+                                                    </a>
+                                                </li>
+                                            }
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                            //Tienda
+                            <li class="nav-item">
+                                <a href="#" class="nav-link toggle-menu">
+                                    <i class="fas fa-cash-register"></i>
+                                    <p>
+                                        CAJA
+                                        <i class="fas fa-angle-left right"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview1">
+                                    <li class="nav-item">
+                                        <a href="#" class="nav-link toggle-menu">
+                                            <i class="fas fa-pie-chart"></i>
+                                            <p>
+                                                Carátula
+                                                <i class="fas fa-angle-left right"></i>
+                                            </p>
+                                        </a>
+                                        <ul class="nav nav-treeview1">
+                                            @if (tienePermiso17)
+                                            {
+                                                <li class="nav-item @(ViewBag.ActivePage == "Index" ? "active" : "")">
+                                                    <a href="@Url.RouteUrl("almacen-caja-caratula")" class="nav-link">
+                                                        <i class="fas fa-file-alt"></i>
+                                                        <p>Gestor Almacen Carátula</p>
                                                     </a>
                                                 </li>
                                             }
@@ -299,15 +339,6 @@
 
 
 
-                                                    @if (tienePermiso1)
-                                                    {
-                                                        <li class="nav-item @(ViewBag.ActivePage == "VProductosNoVendidosAdminTotal" ? "active" : "")">
-                                                            <a href="@Url.Action("VProductosNoVendidosAdminTotal", "AdminPages")" class="nav-link">
-                                                                <i class="fas fa-file-alt"></i>
-                                                                <p>Reporte de producto no Vendido</p>
-                                                            </a>
-                                                        </li>
-                                                    }
 
                                                     @if (tienePermiso2)
                                                     {
@@ -315,6 +346,18 @@
                                                             <a href="@Url.Action("VAlmacenAdminTotal", "AdminPages")" class="nav-link">
                                                                 <i class="fas fa-file-alt"></i>
                                                                 <p>Reporte venta por departamento</p>
+                                                            </a>
+                                                        </li>
+                                                    }
+
+                                                    @if (tienePermiso2)
+                                                    {
+                                                        <li class="nav-item @(ViewBag.ActivePage == "ReporteVentasGeneralTiendas" ? "active" : "")">
+                                                            <a href="@Url.Action("ReporteVentasGeneralTiendas", "VentasGenerales")" class="nav-link">
+                                                                <i class="fas fa-file-alt"></i>
+                                                                <p>
+                                                                    Reporte ventas general de tiendas
+                                                                </p>
                                                             </a>
                                                         </li>
                                                     }

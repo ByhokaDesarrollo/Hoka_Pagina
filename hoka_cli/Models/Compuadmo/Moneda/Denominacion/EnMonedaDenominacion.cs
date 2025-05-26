@@ -9,7 +9,7 @@ namespace hoka_cli.Models.Compuadmo.Moneda.Denominacion
         [Key]
         public int MonedaDenominacionId { get; set; }
         public int MonedaId { get; set; }
-        public int Denominacion { get; set; }
+        public decimal Denominacion { get; set; }
         public bool B_Activo { get; set; }
     }
 }

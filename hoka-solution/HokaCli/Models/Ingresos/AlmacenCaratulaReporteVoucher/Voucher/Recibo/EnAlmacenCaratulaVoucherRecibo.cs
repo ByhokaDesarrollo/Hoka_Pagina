@@ -15,5 +15,16 @@ namespace hoka.HokaCli.Models.Ingresos.AlmacenCaratulaVoucher.Moneda.Recibo
 
         [NotMapped]
         public bool B_Eliminar { get; set; }
+
+        [NotMapped] public string Archivo { get; set; } // Base64
+        [NotMapped] public string ArchivoNombre { get; set; }
+        [NotMapped] public string ArchivoTipo { get; set; }
+        [NotMapped] public string ArchivoNombreConsulta
+        {
+            get
+            {
+                return $"{AlmacenCaratulaVoucherReciboId}_{ArchivoNombre}";
+            }
+        }
     }
 }

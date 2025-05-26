@@ -1,24 +1,25 @@
-﻿using hoka.Hoka.Models.Almacen.Caratula.AlmacenCaratulaReporte.Servicios;
-using hoka.Hoka.Models.Almacen.Caratula.AlmacenCaratula.Servicios;
+﻿using hoka.AppServicios.Ingresos.AlmacenCaratulaReporte;
 using hoka.HokaCli.Models.Ingresos.AlmacenCaratula;
 using System.Web.Mvc;
-using hoka.Hoka.Models.Almacen.Caratula.Rutas;
+using hoka.AppServicios.Ingresos.AlmacenCaratulaRutas;
 using hoka.HokaCli.Models.Compuadmo.Usuario;
 using hoka.HokaCli.Models.Compuadmo.Usuario.Permiso.AlmacenCaratula;
 using System.Linq;
+using hoka.AppServicios.Ingresos.AlmacenCaratula;
 
 namespace hoka.Controllers.Almacen.Caratula
 {
     public class AlmacenCaratulaReporteController : Controller
     {
-        string _textoCaratula = RtAlmacenCaratulaRutas.TextoCaratula;
-        string _textoCaratulaReporte = RtAlmacenCaratulaRutas.TextoCaratulaReporte;
+        private readonly string _textoCaratula = RtAlmacenCaratulaRutas.TextoCaratula;
+        private readonly string _textoCaratulaReporte = RtAlmacenCaratulaRutas.TextoCaratulaReporte;
 
         // GET: AlmacenCaratulaController
         public ActionResult Index(EnAlmacenCaratula parametroCaratula)
         {
-            EnAlmacenCaratula Caratula = SvAppAlmacenCaratulaReporteConsultar.Consultar(parametroCaratula);
             EnUsuario Usuario = (EnUsuario)Session["SsUsuario"];
+            ViewBag.Usuario = Usuario;
+            EnAlmacenCaratula Caratula = SvAppAlmacenCaratulaReporteConsultar.Consultar(parametroCaratula);
             EnUsuarioPermisoAlmacenCaratula PermisoCaratula = Usuario
                 .Permiso
                 .PermisosAlmacenCaratula

@@ -1,7 +1,11 @@
 ﻿using hoka_cli.Context.EntityFramework.Entities;
 using hoka_cli.Struct;
+using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.IO;
 using System.Linq;
+using static System.Data.Entity.Infrastructure.Design.Executor;
 
 namespace hoka_cli.Models.Ingresos.AlmacenCaratulaVoucher.Voucher.Recibo
 {
@@ -10,6 +14,7 @@ namespace hoka_cli.Models.Ingresos.AlmacenCaratulaVoucher.Voucher.Recibo
         private RpAlmacenCaratulaVoucherRecibo _rpAlmacenCaratulaVoucherRecibo;
         private EsAlmacenCaratulaVoucherRecibo _estructuraEntidad;
         private ICollection<EnAlmacenCaratulaVoucherRecibo> _entidades;
+        private readonly string _rutaBase = ConfigurationManager.AppSettings["RutaAlmacenCaratulaVoucherRecibo"];
 
         public SvAlmacenCaratulaVoucherReciboConsultar(
             RpAlmacenCaratulaVoucherRecibo repositorio,
@@ -27,6 +32,11 @@ namespace hoka_cli.Models.Ingresos.AlmacenCaratulaVoucher.Voucher.Recibo
             bool consultarPropiedades = ConsultarPropiedades();
             if (consultarPropiedades)
                 ObtnerPropiedades();
+
+            if (_estructuraEntidad.ConsultarArchivo)
+            {
+                ConsultarEvidencia();
+            }
 
             return _entidades;
         }
@@ -80,6 +90,25 @@ namespace hoka_cli.Models.Ingresos.AlmacenCaratulaVoucher.Voucher.Recibo
             //{
             //    Insertar Codigo
             //}
+        }
+
+        private void ConsultarEvidencia()
+        {
+            foreach (var entidad in _entidades)
+            {
+                string archivoNombre = Directory.GetFiles(_rutaBase, $"{entidad.AlmacenCaratulaVoucherReciboId}_*").FirstOrDefault();
+                if (!string.IsNullOrEmpty(archivoNombre))
+                { 
+                    string archivoRuta = Path.Combine(_rutaBase, archivoNombre);
+                    string archivoNombreWeb = Path.GetFileName(archivoRuta);
+                    string archivoExtension = Path.GetExtension(archivoRuta);
+                    //byte[] archivoBytes = File.ReadAllBytes(archivoRuta);
+
+                    //entidad.Archivo = Convert.ToBase64String(archivoBytes);
+                    entidad.ArchivoNombre = archivoNombreWeb;
+                    entidad.ArchivoTipo = archivoExtension;
+                }
+            }
         }
     }
 }

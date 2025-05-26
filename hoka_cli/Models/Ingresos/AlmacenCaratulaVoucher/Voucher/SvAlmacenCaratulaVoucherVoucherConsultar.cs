@@ -115,6 +115,7 @@ namespace hoka_cli.Models.Ingresos.AlmacenCaratulaVoucher.Voucher
             EsAlmacenCaratulaVoucherRecibo esAlmacenCaratulaVoucherRecibo =
                 new EsAlmacenCaratulaVoucherRecibo()
                 {
+                    ConsultarArchivo = true,
                     Recibo = new EnAlmacenCaratulaVoucherRecibo()
                     {
                         AlmacenCaratulaVoucherVoucherId = almacenCaratulaVoucherVoucherId

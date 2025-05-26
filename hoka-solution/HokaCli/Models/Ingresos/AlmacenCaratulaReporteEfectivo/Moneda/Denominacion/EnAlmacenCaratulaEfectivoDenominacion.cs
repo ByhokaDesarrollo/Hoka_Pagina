@@ -18,5 +18,10 @@ namespace hoka.HokaCli.Models.Ingresos.AlmacenCaratulaEfectivo.Moneda.Denominaci
         public int Cantidad { get; set; }
         public decimal Importe { get; set; }
         public decimal ImporteMXN { get; set; }
+        public int CantidadBanco { get; set; }
+        public decimal ImporteBanco { get; set; }
+        public decimal ImporteMXNBanco { get; set; }
+        public decimal ImporteDiferencia { get; set; }
+        public decimal ImporteMXNDiferencia { get; set; }
     }
 }

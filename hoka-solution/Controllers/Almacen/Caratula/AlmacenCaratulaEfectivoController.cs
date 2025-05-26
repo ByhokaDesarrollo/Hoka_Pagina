@@ -1,6 +1,6 @@
-﻿using hoka.Hoka.Models.Almacen.Caratula.AlmacenCaratula.Servicios;
-using hoka.Hoka.Models.Almacen.Caratula.AlmacenCaratulaEfectivo.Servicios;
-using hoka.Hoka.Models.Almacen.Caratula.Rutas;
+﻿using hoka.AppServicios.Ingresos.AlmacenCaratula;
+using hoka.AppServicios.Ingresos.AlmacenCaratulaEfectivo;
+using hoka.AppServicios.Ingresos.AlmacenCaratulaRutas;
 using hoka.HokaCli.Models.Compuadmo.Moneda;
 using hoka.HokaCli.Models.Compuadmo.Usuario;
 using hoka.HokaCli.Models.Compuadmo.Usuario.Permiso.AlmacenCaratula;
@@ -24,9 +24,9 @@ namespace hoka.Controllers.Almacen.Caratula
         [HttpGet]
         public ActionResult Index(EnAlmacenCaratula parametroCaratula)
         {
+            EnUsuario Usuario = (EnUsuario)Session["SsUsuario"];
             EnAlmacenCaratula Caratula = SvAppAlmacenCaratulaConsultar
                 .Consultar(parametroCaratula.AlmacenCaratulaId);
-            EnUsuario Usuario = (EnUsuario)Session["SsUsuario"];
             EnUsuarioPermisoAlmacenCaratula PermisoCaratula = Usuario
                 .Permiso
                 .PermisosAlmacenCaratula
@@ -36,6 +36,7 @@ namespace hoka.Controllers.Almacen.Caratula
                 .Single();
             ICollection<EnMoneda> MonedasDenominacion =
                 SvAppMonedaDenominacionConsultar.Consultar();
+            ViewBag.Usuario = Usuario;
             ViewBag.TextoCaratulaVoucher = _textoCaratulaVoucher;
             ViewBag.Caratula = Caratula;
             ViewBag.PermisoCaratula = PermisoCaratula;
@@ -75,9 +76,9 @@ namespace hoka.Controllers.Almacen.Caratula
         [HttpGet]
         public ActionResult Actualizar(EnAlmacenCaratula parametroCaratula)
         {
+            EnUsuario Usuario = (EnUsuario)Session["SsUsuario"];
             EnAlmacenCaratula Caratula =
                 SvAppAlmacenCaratulaConsultar.Consultar(parametroCaratula.AlmacenCaratulaId);
-            EnUsuario Usuario = (EnUsuario)Session["SsUsuario"];
             EnUsuarioPermisoAlmacenCaratula PermisoCaratula = Usuario
                 .Permiso
                 .PermisosAlmacenCaratula
@@ -89,6 +90,7 @@ namespace hoka.Controllers.Almacen.Caratula
                 SvAppAlmacenCaratulaEfectivoConsultar.Consultar(parametroCaratula.AlmacenCaratulaId);
             ICollection<EnMoneda> MonedasDenominacion =
                 SvAppMonedaDenominacionConsultar.Consultar();
+            ViewBag.Usuario = Usuario;
             ViewBag.Caratula = Caratula;
             ViewBag.PermisoCaratula = PermisoCaratula;
             ViewBag.AlmacenCaratulaEfectivo = AlmacenCaratulaEfectivo;
@@ -126,9 +128,9 @@ namespace hoka.Controllers.Almacen.Caratula
         [HttpGet]
         public ActionResult Consultar(EnAlmacenCaratula parametroCaratula)
         {
+            EnUsuario Usuario = (EnUsuario)Session["SsUsuario"];
             EnAlmacenCaratula Caratula =
                 SvAppAlmacenCaratulaConsultar.Consultar(parametroCaratula.AlmacenCaratulaId);
-            EnUsuario Usuario = (EnUsuario)Session["SsUsuario"];
             EnUsuarioPermisoAlmacenCaratula PermisoCaratula = Usuario
                 .Permiso
                 .PermisosAlmacenCaratula
@@ -140,6 +142,7 @@ namespace hoka.Controllers.Almacen.Caratula
                 SvAppAlmacenCaratulaEfectivoConsultar.Consultar(parametroCaratula.AlmacenCaratulaId);
             ICollection<EnMoneda> MonedasDenominacion =
                 SvAppMonedaDenominacionConsultar.Consultar();
+            ViewBag.Usuario = Usuario;
             ViewBag.Caratula = Caratula;
             ViewBag.PermisoCaratula = PermisoCaratula;
             ViewBag.AlmacenCaratulaEfectivo = AlmacenCaratulaEfectivo;

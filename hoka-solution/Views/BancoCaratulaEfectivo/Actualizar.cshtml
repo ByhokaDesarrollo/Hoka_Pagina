@@ -1,17 +1,25 @@
 ﻿@using hoka.HokaCli.Models.Compuadmo.Moneda;
+@using hoka.HokaCli.Models.Compuadmo.Usuario;
 @using hoka.HokaCli.Models.Ingresos.AlmacenCaratula;
 @using hoka.HokaCli.Models.Ingresos.AlmacenCaratulaEfectivo;
 @using Newtonsoft.Json;
 @{
     ViewBag.Title = "Actualizar";
-    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    EnUsuario Usuario = ViewBag.Usuario;
+    string layoutUsuario =
+        Usuario.UsuarioRol.Prefijo == "ADMT"
+            ? "_LayoutAdminTotal.cshtml" :
+            Usuario.UsuarioRol.Prefijo == "ADM"
+                ? "_LayoutAdmin.cshtml"
+                : "_LayoutUser.cshtml";
+    Layout = $"~/Views/Shared/{layoutUsuario}";
     string tituloFondoColor = "#9c8050";
     string tituloTexto = "BANCO CAPTURA EFECTIVO";
     string tituloTextoColor = "#fff";
     string tablaEncabezadoFondoColor = "#f3f3f3";
+    string tablaEncabezadoFondoColorBanco = "#81d3a4";
     string buttonFooterAncho = "width:220px;";
     EnAlmacenCaratula Caratula = ViewBag.Caratula;
-    //EnUsuarioPermisoAlmacenCaratula PermisoCaratula = ViewBag.PermisoCaratula;
     EnAlmacenCaratulaEfectivo CaratulaEfectivo = ViewBag.AlmacenCaratulaEfectivo;
     ICollection<EnMoneda> MonedasDenominacion = ViewBag.MonedasDenominacion;
     List<EnMoneda> ListaMonedas = MonedasDenominacion
@@ -30,10 +38,12 @@
             x => x.MonedaId
         )
         .ToList();
-    //string jsonMonedas = Html.Raw(JsonConvert.SerializeObject(MonedasDenominacion));
     string prefijoPesos = "MXN";
     string importeEfectivoTotalId = "ImporteEfectivoTotal";
+    string importeEfectivoTotalIdDiferencia = "ImporteEfectivoTotalDiferencia";
     string claseTotales = "ImportesTotales";
+    string claseTotalesDiferencia = "ImportesTotalesDiferencia";
+    string bancoCantidadBackgroudColor = "rgb(129 211 164 / 30%)";
 }
 
 <style>
@@ -71,49 +81,102 @@
                        id="tabla_Moneda">
                     <thead>
                         <tr>
-                            <th colspan="3"
+                            <th colspan="6"
                                 style="background-color: @(tablaEncabezadoFondoColor);">
                                 Efectivo
                             </th>
                         </tr>
                         <tr>
-                            <th style="background-color: @(tablaEncabezadoFondoColor);">Denominación</th>
+                            <th rowspan="2"
+                                style="background-color: @(tablaEncabezadoFondoColor);">
+                                <p style="margin-top: 15px;">Denominación</p>
+                            </th>
+                            <th colspan="2"
+                                style="background-color: @(tablaEncabezadoFondoColor);">
+                                Tienda
+                            </th>
+                            <th colspan="3"
+                                style="background-color: @(tablaEncabezadoFondoColorBanco);">
+                                Banco
+                            </th>
+                        </tr>
+                        <tr>
+                            @*Tienda*@
                             <th style="background-color: @(tablaEncabezadoFondoColor);">Cantidad</th>
                             <th style="background-color: @(tablaEncabezadoFondoColor);">Importe</th>
+                            @*Banco*@
+                            <th style="background-color: @(tablaEncabezadoFondoColorBanco);">Cantidad</th>
+                            <th style="background-color: @(tablaEncabezadoFondoColorBanco);">Importe</th>
+                            <th style="background-color: @(tablaEncabezadoFondoColorBanco);">Diferencia</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var moneda in CaratulaEfectivo.Monedas) //ListaMonedas
+                        @foreach (var moneda in CaratulaEfectivo.Monedas.OrderBy(x => x.MonedaId)) //ListaMonedas
                         {
+                            string monedaDenominacionTiendaImporteIdMXN = "TiendaMonedaId" + moneda.MonedaId + @prefijoPesos;
                             string monedaDenominacionImporteClase = "MonedaId" + moneda.MonedaId;
+                            string monedaDenominacionDiferenciaClase = "MonedaIdDiferencia" + moneda.MonedaId + @prefijoPesos;
                             <tr data-es-denominacion=false>
-                                <td colspan="3">
+                                <td colspan="5">
                                     @moneda.Moneda.Nombre
                                 </td>
                             </tr>
-                            foreach (var denominacion in moneda.Denominaciones)
+                            foreach (var denominacion in moneda.Denominaciones.OrderBy(x => x.MonedaDenominacionId))
                             {
+                                string monedaDenominacionTiendaImporteId = "monedaDenominacionIdTiendaImporte" + denominacion.MonedaDenominacionId;
                                 string monedaDenominacionCantidadId = "MonedaDenominacionIdCantidad" + denominacion.MonedaDenominacionId;
                                 string monedaDenominacionImporteId = "MonedaDenominacionIdImporte" + denominacion.MonedaDenominacionId;
+                                string monedaDenominacionDiferenciaId = "MonedaDenominacionIdDiferencia" + denominacion.MonedaDenominacionId;
                                 <tr class="moneda-denominacion">
                                     <td>
                                         @denominacion.MonedaDenominacion.Denominacion
                                     </td>
+                                    @*Tienda*@
                                     <td>
+                                        <input type="number"
+                                               name="campo_cantidad"
+                                               value="@denominacion.Cantidad"
+                                               disabled />
+                                    </td>
+                                    <td>
+                                        <input type="number"
+                                               id="@monedaDenominacionTiendaImporteId"
+                                               name="campo_importe"
+                                               value="@denominacion.Importe"
+                                               disabled />
+                                    </td>
+                                    @*Banco*@
+                                    <td style="background-color:@bancoCantidadBackgroudColor;">
                                         <input type="number"
                                                class=""
                                                id="@monedaDenominacionCantidadId"
                                                name="campo_cantidad"
                                                onchange="actualizarImporteInput(
-                                                this, @denominacion.MonedaDenominacion.Denominacion, '@(monedaDenominacionImporteId)', '@(monedaDenominacionImporteClase)', @moneda.Moneda.Valor)"
-                                               value="@denominacion.Cantidad" />
+                                                    tipoCambio = @moneda.Moneda.Valor,
+                                                    inputCantidad = this,
+                                                    denominacion = @denominacion.MonedaDenominacion.Denominacion,
+                                                    monedaDenominacionTiendaImporteId = '@(monedaDenominacionTiendaImporteId)',
+                                                    monedaDenominacionImporteId = '@(monedaDenominacionImporteId)',
+                                                    monedaDenominacionDiferenciaId = '@(monedaDenominacionDiferenciaId)',
+                                                    monedaDenominacionImporteClase = '@(monedaDenominacionImporteClase)',
+                                                    monedaDenominacionDiferenciaClase = '@(monedaDenominacionDiferenciaClase)',
+                                                    monedaDenominacionTiendaTotalImporteIdMXN = '@(monedaDenominacionTiendaImporteIdMXN)')"
+                                               value="@denominacion.CantidadBanco" />
                                     </td>
-                                    <td>
+                                    <td style="background-color:@bancoCantidadBackgroudColor;">
                                         <input type="number"
                                                class="@monedaDenominacionImporteClase"
                                                id="@monedaDenominacionImporteId"
                                                name="campo_importe"
-                                               value="@denominacion.Importe"
+                                               value="@denominacion.ImporteBanco"
+                                               disabled />
+                                    </td>
+                                    <td style="background-color:@bancoCantidadBackgroudColor;">
+                                        <input type="number"
+                                               class="@monedaDenominacionDiferenciaClase"
+                                               id="@monedaDenominacionDiferenciaId"
+                                               name="campo_importe"
+                                               value="@denominacion.ImporteDiferencia"
                                                disabled />
                                     </td>
                                 </tr>
@@ -122,34 +185,70 @@
                     <tbody>
                     <tfoot>
                         <tr>
+                            <th rowspan="2"
+                                style="background-color: @(tablaEncabezadoFondoColor);">
+                                <p style="margin-top: 15px;">Moneda</p>
+                            </th>
+                            <th scope="row"
+                                colspan="2"
+                                style="background-color: @(tablaEncabezadoFondoColor);">Tienda</th>
                             <th scope="row"
                                 colspan="3"
-                                style="background-color: @(tablaEncabezadoFondoColor);">Cuadre Efectivo</th>
+                                style="background-color: @(tablaEncabezadoFondoColorBanco);">Banco</th>
                         </tr>
                         <tr>
-                            <th style="background-color: @(tablaEncabezadoFondoColor);">Moneda</th>
+                            @*Tienda*@
                             <th style="background-color: @(tablaEncabezadoFondoColor);">Importe Moneda Origen</th>
                             <th style="background-color: @(tablaEncabezadoFondoColor);">Importe MXN</th>
+                            @*Banco*@
+                            <th style="background-color: @(tablaEncabezadoFondoColorBanco);">Importe Moneda Origen</th>
+                            <th style="background-color: @(tablaEncabezadoFondoColorBanco);">Importe MXN</th>
+                            <th style="background-color: @(tablaEncabezadoFondoColorBanco);">Diferencia MXN</th>
                         </tr>
                         @foreach (var moneda in CaratulaEfectivo.Monedas) //ListaMonedas
                         {
                             string monedaDenominacionImporteId = "MonedaId" + moneda.MonedaId;
+                            string monedaDenominacionTiendaImporteIdMXN = "TiendaMonedaId" + moneda.MonedaId + @prefijoPesos;
                             string monedaDenominacionImporteIdMXN = "MonedaId" + moneda.MonedaId + @prefijoPesos;
+                            string monedaDenominacionDiferenciaIdMXN = "MonedaIdDiferencia" + moneda.MonedaId + @prefijoPesos;
                             <tr>
                                 <th scope="row">@moneda.Moneda.Nombre</th>
+                                @*Tienda*@
                                 <td>
                                     <input type="number"
-                                           id="@monedaDenominacionImporteId"
                                            name="campo_importe"
                                            value="@moneda.ImporteTotal"
                                            disabled />
                                 </td>
                                 <td>
                                     <input type="number"
+                                           id="@monedaDenominacionTiendaImporteIdMXN"
+                                           name="campo_importe"
+                                           value="@moneda.ImporteTotalMXN"
+                                           disabled />
+                                </td>
+                                @*Banco*@
+                                <td style="background-color:@bancoCantidadBackgroudColor;">
+                                    <input type="number"
+                                           id="@monedaDenominacionImporteId"
+                                           name="campo_importe"
+                                           value="@moneda.ImporteTotalBanco"
+                                           disabled />
+                                </td>
+                                <td style="background-color:@bancoCantidadBackgroudColor;">
+                                    <input type="number"
                                            class="@claseTotales"
                                            id="@monedaDenominacionImporteIdMXN"
                                            name="campo_importe"
-                                           value="@moneda.ImporteTotalMXN"
+                                           value="@moneda.ImporteTotalMXNBanco"
+                                           disabled />
+                                </td>
+                                <td style="background-color:@bancoCantidadBackgroudColor;">
+                                    <input type="number"
+                                           class="@claseTotalesDiferencia"
+                                           id="@monedaDenominacionDiferenciaIdMXN"
+                                           name="campo_importe"
+                                           value="@moneda.ImporteTotalMXNDiferencia"
                                            disabled />
                                 </td>
                             </tr>
@@ -157,14 +256,30 @@
                         <tr>
                             <th scope="row"
                                 style="background-color: @(tablaEncabezadoFondoColor);">
-                                Total Efectivo
+                                Totales
                             </th>
+                            @*Tienda*@
                             <td style="background-color: @(tablaEncabezadoFondoColor);"></td>
                             <td style="background-color: @(tablaEncabezadoFondoColor);">
                                 <input type="number"
-                                       id="@importeEfectivoTotalId"
                                        name="campo_importe_mxn"
                                        value="@CaratulaEfectivo.ImporteTotal"
+                                       disabled />
+                            </td>
+                            @*Banco*@
+                            <td style="background-color: @(tablaEncabezadoFondoColorBanco);"></td>
+                            <td style="background-color: @(tablaEncabezadoFondoColorBanco);">
+                                <input type="number"
+                                       id="@importeEfectivoTotalId"
+                                       name="campo_importe_mxn"
+                                       value="@CaratulaEfectivo.ImporteTotalBanco"
+                                       disabled />
+                            </td>
+                            <td style="background-color: @(tablaEncabezadoFondoColorBanco);">
+                                <input type="number"
+                                       id="@importeEfectivoTotalIdDiferencia"
+                                       name="campo_importe_mxn"
+                                       value="@CaratulaEfectivo.ImporteTotalDiferencia"
                                        disabled />
                             </td>
                         </tr>
@@ -181,16 +296,20 @@
                     <i class="bi bi-house-door-fill"></i>
                     Gestor Banco
                 </a>
-                @*@if (PermisoCaratula.B_CaratulaEfectivoActualizar)
-                {*@
-                    <button type="button"
+                <button type="button"
+                        class="btn btn-sm btn-primary"
+                        style="@buttonFooterAncho"
+                        onclick="ActualizarBancoCaratulaEfectivo()">
+                    <i class="bi bi-floppy2-fill"></i>
+                    Actualizar
+                </button>
+                @*<button type="button"
                             class="btn btn-sm btn-success"
                             style="@buttonFooterAncho"
-                            onclick="ActualizarBancoCaratulaEfectivo()">
-                        <i class="bi bi-floppy2-fill"></i>
-                        Guardar
-                    </button>
-                @*}*@
+                            onclick="GrabarBancoCaratulaEfectivo()">
+                        <i class="bi bi-cloud-arrow-up-fill"></i>
+                        Grabar
+                    </button>*@
             </div>
         </div>
     </div>
@@ -203,21 +322,55 @@
     const objetoCaratulaEfectivo = JSON.parse(jsonObjetoCaratulaEfectivo);
 
     function actualizarImporteInput(
-        inputCantidad, denominacion, monedaDenominacionImporteId, monedaDenominacionImporteClase, tipoCambio) {
+        tipoCambio,
+        inputCantidad,
+        denominacion,
+        monedaDenominacionTiendaImporteId,
+        monedaDenominacionImporteId,
+        monedaDenominacionDiferenciaId,
+        monedaDenominacionImporteClase,
+        monedaDenominacionDiferenciaClase,
+        monedaDenominacionTiendaTotalImporteIdMXN) {
+        // TBODY FOREACH DENOMINACIÓN IMPORTE TIENDA
+        let InputImporteTienda = document.getElementById(monedaDenominacionTiendaImporteId);
+        // TBODY FOREACH DENOMINACIÓN IMPORTE BANCO
         let InputImporte = document.getElementById(monedaDenominacionImporteId);
+        // TBODY FOREACH DENOMINACIÓN IMPORTE DIFERENCIA (BANCO - TIENDA)
+        let InputImporteDiferencia = document.getElementById(monedaDenominacionDiferenciaId);
+        // TBODY FOREACH DENOMINACIÓN > LISTA INPUT IMPORTE
         let InputsImporte = document.getElementsByClassName(monedaDenominacionImporteClase);
+        let InputsImporteDiferencia = document.getElementsByClassName(monedaDenominacionDiferenciaClase);
+        // TFOOT TOTALES IMPORTE IMPORTE_MXN DIFERENCIA_MXN (IMPORTE_MXN - TIENDA_MXN)
         let InputImporteTotal = document.getElementById(monedaDenominacionImporteClase);
         let InputImporteTotalMXN = document.getElementById(monedaDenominacionImporteClase + "@(prefijoPesos)");
+        let InputImporteDiferenciaTotalMXN = document.getElementById(monedaDenominacionDiferenciaClase);
+        // TFOOT TOTALES MXN
+        let InputImporteTiendaTotal = document.getElementById(monedaDenominacionTiendaTotalImporteIdMXN);
         let InputImporteEfectivoTotal = document.getElementById("@(importeEfectivoTotalId)");
-        let valorImporte = parseFloat(denominacion) * parseFloat(inputCantidad.value);
-        let sumaImportes = 0;
+        let InputImporteEfectivoDiferenciaTotal = document.getElementById("@(importeEfectivoTotalIdDiferencia)");
+
+        let valorImporte = parseFloat(denominacion) * parseFloat(inputCantidad.value).toFixed(2);
         InputImporte.value = valorImporte.toFixed(2);
-        for (var inputImporte of InputsImporte) {
-            sumaImportes += parseFloat(inputImporte.value);
+        InputImporteDiferencia.value = valorImporte.toFixed(2) - parseFloat(InputImporteTienda.value).toFixed(2);
+
+        // IMPOTE
+        let sumaImportes = 0;
+        for (var _inputImporte of InputsImporte) {
+            sumaImportes += parseFloat(_inputImporte.value);
         }
         InputImporteTotal.value = parseFloat(sumaImportes).toFixed(2);
-        let sumaImporteTotalMXN = parseFloat(sumaImportes) * parseFloat(tipoCambio);
+        let sumaImporteTotalMXN = parseFloat(sumaImportes).toFixed(2) * parseFloat(tipoCambio).toFixed(2);
         InputImporteTotalMXN.value = sumaImporteTotalMXN.toFixed(2);
+
+        // DIFERENCIA
+        let sumaImportesDiferencia = 0;
+        for (var _inputImporteDiferencia of InputsImporteDiferencia) {
+            sumaImportesDiferencia += parseFloat(_inputImporteDiferencia.value);
+        }
+        let calculoTotalDiferenciaMoneda = InputImporteTotalMXN.value - InputImporteTiendaTotal.value
+        InputImporteDiferenciaTotalMXN.value = calculoTotalDiferenciaMoneda.toFixed(2);
+        //let sumaImporteDiferenciaTotalMXN = parseFloat(sumaImportesDiferencia).toFixed(2) * parseFloat(tipoCambio).toFixed(2);
+        //InputImporteDiferenciaTotalMXN.value = sumaImporteDiferenciaTotalMXN.toFixed(2);
 
         let InputsTotalesMXN = document.getElementsByClassName("@claseTotales");
         let sumaTotalesMXN = 0;
@@ -225,6 +378,13 @@
             sumaTotalesMXN += parseFloat(inputTotal.value);
         }
         InputImporteEfectivoTotal.value = sumaTotalesMXN.toFixed(2);
+
+        let InputsTotalesDiferenciaMXN = document.getElementsByClassName("@claseTotalesDiferencia");
+        let sumaTotalesDiferenciaMXN = 0;
+        for (var inputTotalDiferencia of InputsTotalesDiferenciaMXN) {
+            sumaTotalesDiferenciaMXN += parseFloat(inputTotalDiferencia.value);
+        }
+        InputImporteEfectivoDiferenciaTotal.value = sumaTotalesDiferenciaMXN.toFixed(2);
     }
 
     function ActualizarBancoCaratulaEfectivo() {
@@ -251,13 +411,18 @@
 
     function ObtenerAlmacenCaratulaEfectivo() {
         let inputImporteEfectivoTotal = document.getElementById('@importeEfectivoTotalId');
+        let InputImporteEfectivoDiferenciaTotal = document.getElementById("@(importeEfectivoTotalIdDiferencia)");
         let importeTotal = parseFloat(inputImporteEfectivoTotal.value);
+        let importeTotalDiferencia = parseFloat(InputImporteEfectivoDiferenciaTotal.value);
+
         let AlmacenCaratulaEfectivo = {
             AlmacenCaratulaEfectivoId: parseInt(@(CaratulaEfectivo.AlmacenCaratulaEfectivoId)),
             AlmacenCaratulaId: parseInt(@Caratula.AlmacenCaratulaId),
             UsuarioId: 1,
             FechaCaptura: null,
-            ImporteTotal: parseFloat(importeTotal)
+            //ImporteTotal: parseFloat(importeTotal)
+            ImporteTotalBanco: parseFloat(importeTotal),
+            ImporteTotalDiferencia: parseFloat(importeTotalDiferencia)
         };
         AlmacenCaratulaEfectivo.Monedas = ObtenerAlmacenCaratulaEfectivoMonedas();
         return AlmacenCaratulaEfectivo;
@@ -269,17 +434,27 @@
             console.log(oMoneda);
             let monedaDenominacionImporteId = "MonedaId" + oMoneda.MonedaId;
             let monedaDenominacionImporteIdMXN = "MonedaId" + oMoneda.MonedaId + '@(prefijoPesos)';
+            let monedaDenominacionDiferenciaIdMXN = "MonedaIdDiferencia" + oMoneda.MonedaId + '@(prefijoPesos)';
             let inputMonedaDenominacionImporteId = document.getElementById(monedaDenominacionImporteId);
             let inputMonedaDenominacionImporteIdMXN = document.getElementById(monedaDenominacionImporteIdMXN);
+            let inputMonedaDenominacionDiferenciaIdMXN = document.getElementById(monedaDenominacionDiferenciaIdMXN);
+
             let importeTotal = parseFloat(inputMonedaDenominacionImporteId.value);
+            let importeTotalDiferencia = parseFloat(importeTotal) - parseFloat(oMoneda.ImporteTotal);
             let importeTotalMXN = parseFloat(inputMonedaDenominacionImporteIdMXN.value);
+            let importeTotalMXNDiferencia = parseFloat(inputMonedaDenominacionDiferenciaIdMXN.value);
+
             let moneda = {
                 AlmacenCaratulaEfectivoMonedaId: parseInt(oMoneda.AlmacenCaratulaEfectivoMonedaId),
                 AlmacenCaratulaEfectivoId: parseInt(oMoneda.AlmacenCaratulaEfectivoId),
                 MonedaId: parseInt(oMoneda.MonedaId),
                 TipoCambio: parseFloat(oMoneda.TipoCambio),
-                ImporteTotal: parseFloat(importeTotal),
-                ImporteTotalMXN: parseFloat(importeTotalMXN)
+                //ImporteTotal: parseFloat(importeTotal),
+                //ImporteTotalMXN: parseFloat(importeTotalMXN)
+                ImporteTotalBanco: parseFloat(importeTotal),
+                ImporteTotalMXNBanco: parseFloat(importeTotalMXN),
+                ImporteTotalDiferencia: parseFloat(importeTotalDiferencia),
+                ImporteTotalMXNDiferencia: parseFloat(importeTotalMXNDiferencia)
             }
             moneda.Denominaciones = ObtenerAlmacenCaratulaEfectivoMonedaDenominaciones(oMoneda.MonedaId);
             listaMonedas.push(moneda);
@@ -293,18 +468,30 @@
         for (var oDenominacion of objetoMoneda.Denominaciones) {
             let monedaDenominacionCantidadId = "MonedaDenominacionIdCantidad" + oDenominacion.MonedaDenominacionId;
             let monedaDenominacionImporteId = "MonedaDenominacionIdImporte" + oDenominacion.MonedaDenominacionId;
+            let monedaDenominacionDiferenciaId = "MonedaDenominacionIdDiferencia" + oDenominacion.MonedaDenominacionId;
+
             let inputMonedaDenominacionCantidadId = document.getElementById(monedaDenominacionCantidadId);
             let inputMonedaDenominacionImporteId = document.getElementById(monedaDenominacionImporteId);
+            let inputMonedaDenominacionDiferenciaId = document.getElementById(monedaDenominacionDiferenciaId);
+
             let cantidad = parseFloat(inputMonedaDenominacionCantidadId.value);
             let importe = parseFloat(inputMonedaDenominacionImporteId.value);
-            let importeMXN = parseFloat(importe * objetoMoneda.Valor);
+            let importeMXN = parseFloat(importe * objetoMoneda.Moneda.Valor);
+            let importeDiferencia = parseFloat(inputMonedaDenominacionDiferenciaId.value);
+            let importeMXNDiferencia = parseFloat(importeDiferencia * objetoMoneda.Moneda.Valor);
+
             let denominacion = {
                 AlmacenCaratulaEfectivoDenominacionId: parseInt(oDenominacion.AlmacenCaratulaEfectivoDenominacionId),
                 AlmacenCaratulaEfectivoMonedaId: parseInt(oDenominacion.AlmacenCaratulaEfectivoMonedaId),
                 MonedaDenominacionId: parseInt(oDenominacion.MonedaDenominacionId),
-                Cantidad: parseFloat(cantidad),
-                Importe: parseFloat(importe),
-                ImporteMXN: parseFloat(importeMXN)
+                //Cantidad: parseFloat(cantidad),
+                //Importe: parseFloat(importe),
+                //ImporteMXN: parseFloat(importeMXN)
+                CantidadBanco: parseFloat(cantidad),
+                ImporteBanco: parseFloat(importe),
+                ImporteMXNBanco: parseFloat(importeMXN),
+                ImporteDiferencia: parseFloat(importeDiferencia),
+                ImporteMXNDiferencia: parseFloat(importeMXNDiferencia)
             }
             Denominaciones.push(denominacion);
         }

@@ -13,5 +13,6 @@ namespace hoka_cli.Models.Ingresos.AlmacenCaratulaVoucher.Voucher.Recibo
 
         public EnAlmacenCaratulaVoucherRecibo Recibo { get; set; }
         public ICollection<EnAlmacenCaratulaVoucherRecibo> Recibos { get; set; }
+        public bool ConsultarArchivo { get; set; }
     }
 }

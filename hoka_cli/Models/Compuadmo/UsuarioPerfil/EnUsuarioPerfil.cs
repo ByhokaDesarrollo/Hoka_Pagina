@@ -1,4 +1,5 @@
 ﻿using hoka_cli.Models.Compuadmo.UsuarioRol;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 

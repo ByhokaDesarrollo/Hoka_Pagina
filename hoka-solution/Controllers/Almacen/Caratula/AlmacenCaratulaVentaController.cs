@@ -1,6 +1,5 @@
-﻿using hoka.Hoka.Models.Almacen.Caratula.AlmacenCaratula.Servicios;
-using hoka.Hoka.Models.Almacen.Caratula.AlmacenCaratulaVenta.Servicio;
-using hoka.Hoka.Models.Almacen.Caratula.Rutas;
+﻿using hoka.AppServicios.Ingresos.AlmacenCaratulaVenta;
+using hoka.AppServicios.Ingresos.AlmacenCaratulaRutas;
 using hoka.HokaCli.Models.Compuadmo.AlmacenCategoriaVenta;
 using hoka.HokaCli.Models.Compuadmo.Usuario;
 using hoka.HokaCli.Models.Compuadmo.Usuario.Permiso.AlmacenCaratula;
@@ -9,24 +8,25 @@ using hoka.HokaCli.Models.Ingresos.AlmacenCaratulaVenta;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using hoka.AppServicios.Ingresos.AlmacenCaratula;
 
 namespace hoka.Controllers.Almacen.Caratula
 {
     public class AlmacenCaratulaVentaController : Controller
     {
-        string _textoCaratula = RtAlmacenCaratulaRutas.TextoCaratula;
-        string _textoCaratulaVenta = RtAlmacenCaratulaRutas.TextoCaratulaVenta;
-        string _textoCaratulaEfectivo = RtAlmacenCaratulaRutas.TextoCaratulaEfectivo;
-        string _textoCaratulaVoucher = RtAlmacenCaratulaRutas.TextoCaratulaVoucher;
-        string _textoCaratulaReporte = RtAlmacenCaratulaRutas.TextoCaratulaReporte;
+        private readonly string _textoCaratula = RtAlmacenCaratulaRutas.TextoCaratula;
+        private readonly string _textoCaratulaVenta = RtAlmacenCaratulaRutas.TextoCaratulaVenta;
+        private readonly string _textoCaratulaEfectivo = RtAlmacenCaratulaRutas.TextoCaratulaEfectivo;
+        private readonly string _textoCaratulaVoucher = RtAlmacenCaratulaRutas.TextoCaratulaVoucher;
+        private readonly string _textoCaratulaReporte = RtAlmacenCaratulaRutas.TextoCaratulaReporte;
 
         // GET: AlmacenCaratulaVenta
         [HttpGet]
-        public ActionResult Index(EnAlmacenCaratula parametroCaratula)
+        public ActionResult Index(int almacenCaratulaId)
         {
-            EnAlmacenCaratula Caratula = SvAppAlmacenCaratulaConsultar
-                .Consultar(parametroCaratula.AlmacenCaratulaId);
             EnUsuario Usuario = (EnUsuario)Session["SsUsuario"];
+            EnAlmacenCaratula Caratula = SvAppAlmacenCaratulaConsultar
+                .Consultar(almacenCaratulaId);
             EnUsuarioPermisoAlmacenCaratula PermisoCaratula = Usuario
                 .Permiso
                 .PermisosAlmacenCaratula
@@ -35,7 +35,9 @@ namespace hoka.Controllers.Almacen.Caratula
                     x.AlmacenId == Caratula.AlmacenId)
                 .Single();
             ICollection<EnAlmacenCategoriaVenta> CategoriasVenta =
-                SvAppAlmacenCaratulaVentaConsultarCategoriaVentaDelDia.Consultar(parametroCaratula);
+                SvAppAlmacenCaratulaVentaConsultarCategoriaVentaDelDia.Consultar(Caratula);
+            
+            ViewBag.Usuario = Usuario;
             ViewBag.TextoCaratulaEfectivo = _textoCaratulaEfectivo;
             ViewBag.Caratula = Caratula;
             ViewBag.PermisoCaratula = PermisoCaratula;
@@ -74,11 +76,11 @@ namespace hoka.Controllers.Almacen.Caratula
         }
 
         [HttpGet]
-        public ActionResult Actualizar(EnAlmacenCaratula parametroCaratula)
+        public ActionResult Actualizar(int almacenCaratulaId)
         {
-            EnAlmacenCaratula Caratula =
-                SvAppAlmacenCaratulaConsultar.Consultar(parametroCaratula.AlmacenCaratulaId);
             EnUsuario Usuario = (EnUsuario)Session["SsUsuario"];
+            EnAlmacenCaratula Caratula =
+                SvAppAlmacenCaratulaConsultar.Consultar(almacenCaratulaId);
             EnUsuarioPermisoAlmacenCaratula PermisoCaratula = Usuario
                 .Permiso
                 .PermisosAlmacenCaratula
@@ -87,9 +89,11 @@ namespace hoka.Controllers.Almacen.Caratula
                     x.AlmacenId == Caratula.AlmacenId)
                 .Single();
             EnAlmacenCaratulaVenta AlmacenCaratulaVenta =
-                SvAppAlmacenCaratulaVentaConsultar.Consultar(parametroCaratula.AlmacenCaratulaId);
+                SvAppAlmacenCaratulaVentaConsultar.Consultar(Caratula.AlmacenCaratulaId);
             ICollection<EnAlmacenCategoriaVenta> AlmacenCategoriasVenta =
-                SvAppAlmacenCaratulaVentaConsultarCategoriaVentaDelDia.Consultar(parametroCaratula);
+                SvAppAlmacenCaratulaVentaConsultarCategoriaVentaDelDia.Consultar(Caratula);
+
+            ViewBag.Usuario = Usuario;
             ViewBag.TextoCaratulaEfectivo = _textoCaratulaEfectivo;
             ViewBag.Caratula = Caratula;
             ViewBag.PermisoCaratula = PermisoCaratula;
@@ -126,11 +130,11 @@ namespace hoka.Controllers.Almacen.Caratula
         }
 
         [HttpGet]
-        public ActionResult Consultar(EnAlmacenCaratula parametroCaratula)
+        public ActionResult Consultar(int almacenCaratulaId)
         {
-            EnAlmacenCaratula Caratula =
-                SvAppAlmacenCaratulaConsultar.Consultar(parametroCaratula.AlmacenCaratulaId);
             EnUsuario Usuario = (EnUsuario)Session["SsUsuario"];
+            EnAlmacenCaratula Caratula =
+                SvAppAlmacenCaratulaConsultar.Consultar(almacenCaratulaId);
             EnUsuarioPermisoAlmacenCaratula PermisoCaratula = Usuario
                 .Permiso
                 .PermisosAlmacenCaratula
@@ -139,9 +143,11 @@ namespace hoka.Controllers.Almacen.Caratula
                     x.AlmacenId == Caratula.AlmacenId)
                 .Single();
             EnAlmacenCaratulaVenta AlmacenCaratulaVenta =
-                SvAppAlmacenCaratulaVentaConsultar.Consultar(parametroCaratula.AlmacenCaratulaId);
+                SvAppAlmacenCaratulaVentaConsultar.Consultar(Caratula.AlmacenCaratulaId);
             ICollection<EnAlmacenCategoriaVenta> AlmacenCategoriasVenta =
-                SvAppAlmacenCaratulaVentaConsultarCategoriaVentaDelDia.Consultar(parametroCaratula);
+                SvAppAlmacenCaratulaVentaConsultarCategoriaVentaDelDia.Consultar(Caratula);
+
+            ViewBag.Usuario = Usuario;
             ViewBag.TextoCaratulaEfectivo = _textoCaratulaEfectivo;
             ViewBag.Caratula = Caratula;
             ViewBag.PermisoCaratula = PermisoCaratula;

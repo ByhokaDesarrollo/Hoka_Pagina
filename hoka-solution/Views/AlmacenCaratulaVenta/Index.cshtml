@@ -1,11 +1,19 @@
 ﻿@using hoka.HokaCli.Models.Ingresos.AlmacenCaratula;
 @using hoka.HokaCli.Models.Compuadmo.AlmacenCategoriaVenta;
 @using hoka.HokaCli.Models.Compuadmo.Catalogo.Almacen;
+@using hoka.HokaCli.Models.Compuadmo.Usuario;
 @using hoka.HokaCli.Models.Compuadmo.Usuario.Permiso.AlmacenCaratula;
 @using System.Globalization;
 @{
     ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    EnUsuario Usuario = ViewBag.Usuario;
+    string layoutUsuario =
+        Usuario.UsuarioRol.Prefijo == "ADMT"
+            ? "_LayoutAdminTotal.cshtml" :
+            Usuario.UsuarioRol.Prefijo == "ADM"
+                ? "_LayoutAdmin.cshtml"
+                : "_LayoutUser.cshtml";
+    Layout = $"~/Views/Shared/{layoutUsuario}";
     string tituloFondoColor = "#9c8050";
     string tituloTexto = "CARÁTULA VENTA (CREAR)";
     string tituloTextoColor = "#fff";
@@ -20,7 +28,6 @@
     ICollection<EnAlmacenCategoriaVenta> CategoriasVenta = ViewBag.CategoriasVenta;
     EnCatalogoAlmacen Almacen = CategoriasVenta.Select(x => x.Almacen).Distinct().FirstOrDefault();
     decimal ventaSistemaTotal = CategoriasVenta.Sum(x => x.ImporteTotal);
-    string textoVentaSistemaTotal = ventaSistemaTotal.ToString("C", CultureInfo.CurrentCulture);
     string idVentaNetaTotal = "idVentaNetaTotal";
     string idVentaSistemaTotal = "idVentaSistemaTotal";
     string idVentaDiferencia = "idVentaDiferencia";
@@ -65,35 +72,45 @@
                         @foreach (var categoriaVenta in ViewBag.CategoriasVenta)
                         {
                             string textoCategoriaVenta = categoriaVenta.ImporteTotal.ToString("C", CultureInfo.CurrentCulture);
-                            decimal categoriaVentaImporteTotal = Math.Round(categoriaVenta.ImporteTotal, 2);
+                            string textoCategoriaComision = 0.ToString("C", CultureInfo.CurrentCulture);
+                            //decimal categoriaVentaImporteTotal = Math.Round(categoriaVenta.ImporteTotal, 2);
                             <tr>
+                                @*Categoria*@
                                 <td width="300"
                                     data-id="@categoriaVenta.Categoria.CategoriaId">
                                     @categoriaVenta.Categoria.Nombre
                                 </td>
+                                @*Venta*@
                                 <td class="text-right"
                                     width="200">
                                     @textoCategoriaVenta
                                 </td>
+                                @*Venta Neta*@
                                 <td width="200">
-                                    <input type="number"
-                                           class="@classVentaNeta text-right"
+                                    <input type="text"
+                                           class="@classVentaNeta text-right formato-numerico"
                                            name="ventaNeta"
                                            onchange="actualizarTotales(this)"
-                                           value="@categoriaVentaImporteTotal" />
+                                           value="@textoCategoriaVenta" />
+                                    @*value="@categoriaVentaImporteTotal" />*@
                                 </td>
+                                @*Comisiones Clave*@
                                 <td width="200">
-                                    <input type="number"
-                                           class="text-right"
+                                    <input type="text"
+                                           class="text-right formato-numerico"
                                            id="comisionesClave"
                                            name="comisionesClave"
                                            onchange="actualizarTotales(this)"
-                                           value="0" />
+                                           value="@textoCategoriaComision" />
                                 </td>
                             </tr>
                         }
                     </tbody>
                     <tfoot>
+                        @{
+                            string textoVentaSistemaTotal = ventaSistemaTotal.ToString("C", CultureInfo.CurrentCulture);
+                            string textoTotalCero = 0.ToString("C", CultureInfo.CurrentCulture);
+                        }
                         <tr>
                             <th scope="row"
                                 style="background-color: @(tablaEncabezadoFondoColor);">
@@ -103,7 +120,7 @@
                                 id="@idVentaNetaTotal"
                                 style="background-color: @(tablaEncabezadoFondoColor);"
                                 colspan="3">
-                                0
+                                @textoTotalCero
                             </td>
                         </tr>
                         <tr>
@@ -127,7 +144,7 @@
                                 id="@idVentaDiferencia"
                                 style="background-color: @(ventaDiferenciaFondoColorNegativo);"
                                 colspan="3">
-                                0
+                                @textoTotalCero
                             </td>
                         </tr>
                     </tfoot>
@@ -157,7 +174,7 @@
                         break;
                     case 2:
                         if (PermisoCaratula.B_CaratulaEfectivoActualizar)
-                        { 
+                        {
                             <a href="@Url.Action("Actualizar", @controladorCaratulaEfectivo, Caratula)"
                                class="btn btn-sm btn-primary"
                                role="button"
@@ -170,7 +187,7 @@
                         break;
                     case 3:
                         if (PermisoCaratula.B_CaratulaEfectivoConsultar)
-                        { 
+                        {
                             <a href="@Url.Action("Consultar", @controladorCaratulaEfectivo, Caratula)"
                                class="btn btn-sm btn-info"
                                role="button"
@@ -190,30 +207,38 @@
 </div>
 
 @section scripts {
-    <script type="text/javascript"
-            src="~/Scripts/app/fx-decimal.js">
-    </script>
+    <script type="text/javascript" src="~/Scripts/app/fx-input-typeNumber.js"></script>
     <script type="text/javascript">
-        let inputVentaSistemaTotal = document.getElementById("@idVentaSistemaTotal");
-        let inputVentaNetaTotal = document.getElementById("@idVentaNetaTotal");
-        let inputVentaDiferencia = document.getElementById("@idVentaDiferencia");
+        const inputVentaSistemaTotal = document.getElementById("@idVentaSistemaTotal");
+        const inputVentaNetaTotal = document.getElementById("@idVentaNetaTotal");
+        const inputVentaDiferencia = document.getElementById("@idVentaDiferencia");
+
+        function cargarCalculosTotales() {
+            inputsVentaNetaCaptura = document.getElementsByClassName("@classVentaNeta");
+
+            let VentaNetaTotal = parseFloat(0);
+            for (let inputVentaNeta of inputsVentaNetaCaptura) {
+                // Convertir valor del input a número
+                let valorNumerico = inputValorQuitarFormatoMoneda(inputVentaNeta.value);
+                VentaNetaTotal += valorNumerico;
+            }
+            inputVentaNetaTotal.innerText = inputValorAgregarFormatoMoneda(VentaNetaTotal);
+
+            let ventaNetaTotal = VentaNetaTotal;
+            let ventaSistemaTotal = inputValorQuitarFormatoMoneda(inputVentaSistemaTotal.innerText);
+            let ventaDiferencia = ventaNetaTotal - ventaSistemaTotal;
+
+            inputVentaDiferencia.innerText = inputValorAgregarFormatoMoneda(ventaDiferencia);
+            inputVentaDiferencia.style.backgroundColor = ventaDiferencia >= 0
+                ? '@(ventaDiferenciaFondoColorPositivo)'
+                : '@(ventaDiferenciaFondoColorNegativo)';
+        }
+        cargarCalculosTotales();
 
         function actualizarTotales(input) {
             if (input.value.length === 0)
                 input.value = 0;
-            inputsVentaNetaCaptura = document.getElementsByClassName("@classVentaNeta");
-            let VentaNetaTotal = parseFloat(0);
-            for (let inputVentaNeta of inputsVentaNetaCaptura) {
-                VentaNetaTotal += parseFloat(inputVentaNeta.value);
-            }
-            inputVentaNetaTotal.innerText = agregarFormatoMoneda(VentaNetaTotal);
-            let ventaNetaTotal = quitarFormatoMoneda(inputVentaNetaTotal.innerText);
-            let ventaSistemaTotal = quitarFormatoMoneda(inputVentaSistemaTotal.innerText);
-            let ventaDiferencia = ventaNetaTotal - ventaSistemaTotal;
-            inputVentaDiferencia.innerText = agregarFormatoMoneda(ventaDiferencia);
-            inputVentaDiferencia.style.backgroundColor = ventaDiferencia >= 0
-                ? '@(ventaDiferenciaFondoColorPositivo)'
-                : '@(ventaDiferenciaFondoColorNegativo)';
+            cargarCalculosTotales();
         }
 
         function AlmacenCaratulaVentaCrear() {
@@ -238,20 +263,18 @@
         }
 
         function ObtenerAlmacenCaratulaVenta() {
-            let ventaSistemaTotal = quitarFormatoMoneda(inputVentaSistemaTotal.innerText);
-            let ventaNetaTotal = quitarFormatoMoneda(inputVentaNetaTotal.innerText);
-            let ventaDiferencia = quitarFormatoMoneda(inputVentaDiferencia.innerText);
-            ventaSistemaTotal = convertirValorDecimal(ventaSistemaTotal);
-            ventaNetaTotal = convertirValorDecimal(ventaNetaTotal);
-            ventaDiferencia = convertirValorDecimal(ventaDiferencia);
+            let ventaSistemaTotal = inputValorQuitarFormatoMoneda(inputVentaSistemaTotal.innerText);
+            let ventaNetaTotal = inputValorQuitarFormatoMoneda(inputVentaNetaTotal.innerText);
+            let ventaDiferencia = inputValorQuitarFormatoMoneda(inputVentaDiferencia.innerText);
+
             let AlmacenCaratulaVenta = {
                 AlmacenCaratulaVentaId: 0,
                 AlmacenCaratulaId: parseInt(@Caratula.AlmacenCaratulaId),
                 UsuarioId: parseInt(@Caratula.UsuarioId),
                 FechaCaptura: null,
-                VentaSistemaTotal: convertirValorDecimal(ventaSistemaTotal),
-                VentaNetaTotal: convertirValorDecimal(ventaNetaTotal),
-                VentaDiferencia: convertirValorDecimal(ventaDiferencia),
+                VentaSistemaTotal: ventaSistemaTotal,
+                VentaNetaTotal: ventaNetaTotal,
+                VentaDiferencia: ventaDiferencia,
             };
             AlmacenCaratulaVenta.Categorias = ObtenerAlmacenCaratulaVentaCategorias();
             return AlmacenCaratulaVenta;
@@ -273,15 +296,18 @@
                         CategoriaVenta.CategoriaId = parseInt(Fila[ii].dataset.id);
                     }
                     if (ii == 1) {
-                        let ventaSistema = quitarFormatoMoneda(Fila[ii].innerHTML);
-                        ventaSistema = convertirValorDecimal(ventaSistema);
-                        CategoriaVenta.VentaSistema = convertirValorDecimal(ventaSistema);
+                        let ventaSistema = inputValorQuitarFormatoMoneda(Fila[ii].innerHTML);
+                        CategoriaVenta.VentaSistema = ventaSistema;
                     }
                     if (ii == 2) {
-                        CategoriaVenta.VentaNeta = parseFloat(Fila[ii].children[0].value);
+                        let valorCalculo = Fila[ii].children[0].value;
+                        valorCalculo = inputValorQuitarFormatoMoneda(valorCalculo);
+                        CategoriaVenta.VentaNeta = valorCalculo;
                     }
                     if (ii == 3) {
-                        CategoriaVenta.Comision = parseFloat(Fila[ii].children[0].value);
+                        let valorCalculo = Fila[ii].children[0].value;
+                        valorCalculo = inputValorQuitarFormatoMoneda(valorCalculo);
+                        CategoriaVenta.Comision = valorCalculo;
                     }
                 }
                 CategoriasVenta.push(CategoriaVenta);

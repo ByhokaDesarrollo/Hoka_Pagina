@@ -12,7 +12,7 @@ using hoka.Permisos;
 using hoka.Models;
 using System.Web.WebPages;
 using hoka.HokaCli.Models.Compuadmo.Usuario;
-using hoka.Hoka.Models.Usuario.Sesion.Servicios;
+using hoka.AppServicios.Compuadmo.Usuario.Sesion;
 
 namespace hoka.Controllers
 {
@@ -26,7 +26,7 @@ namespace hoka.Controllers
         private static string DBJoyTEST = ConfigurationManager.ConnectionStrings["CadenaConexionPruebaHokaJoyeria"].ToString();
 
         private static bool conexionDBDEV = ConfigurationManager.AppSettings["ENV_DB_DEV"].AsBool();
-        
+
         private static string conexionDBHoka;
         private static string conexionDBJoy;
 
@@ -110,12 +110,12 @@ namespace hoka.Controllers
 
                 if (reader.HasRows)
                 {
-                    
+
                     List<int?> almacenesId = new List<int?>();
                     List<int?> permisosId = new List<int?>();
                     while (reader.Read())
                     {
-                        
+
                         // Verifica si el resultado contiene la columna 'Mensaje'
                         if (reader.GetSchemaTable().Rows.OfType<DataRow>().Any(r => r["ColumnName"].Equals("Mensaje")))
                         {
@@ -244,7 +244,7 @@ namespace hoka.Controllers
             return Sb.ToString();
 
         }
-        
+
 
 
     }

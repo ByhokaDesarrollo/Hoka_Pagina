@@ -1,10 +1,18 @@
 ﻿@model hoka.HokaCli.Models.Ingresos.AlmacenCaratula.EnAlmacenCaratula
+@using hoka.HokaCli.Models.Compuadmo.Usuario;
 @using hoka.HokaCli.Models.Compuadmo.Usuario.Permiso.AlmacenCaratula;
 @using System;
 @using System.Globalization;
 @{
-    ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    ViewBag.Title = "Reporte";
+    EnUsuario Usuario = ViewBag.Usuario;
+    string layoutUsuario =
+        Usuario.UsuarioRol.Prefijo == "ADMT"
+            ? "_LayoutAdminTotal.cshtml" :
+            Usuario.UsuarioRol.Prefijo == "ADM"
+                ? "_LayoutAdmin.cshtml"
+                : "_LayoutUser.cshtml";
+    Layout = $"~/Views/Shared/{layoutUsuario}";
     string tituloFondoColor = "#9c8050";
     string tituloTexto = "REPORTE CARÁTULA";
     string tituloTextoColor = "#fff";
@@ -17,9 +25,12 @@
     decimal VentaTotalSistema = Model.CaratulaVenta?.Categorias?.Count > 0
         ? Model.CaratulaVenta.Categorias.Sum(x => x.VentaSistema)
         : 0;
-    decimal VentaTotalNeta = Model.CaratulaVenta?.Categorias?.Count > 0
-        ? Model.CaratulaVenta.Categorias.Sum(x => x.VentaNeta)
-        : 0;
+    decimal VentaTotalNeta = Model.CaratulaReporte?.Count > 0
+    ? Model.CaratulaReporte.Sum(x => x.ImporteMXN)
+    : 0;
+    //decimal VentaTotalNeta = Model.CaratulaVenta?.Categorias?.Count > 0
+    //    ? Model.CaratulaVenta.Categorias.Sum(x => x.VentaNeta)
+    //    : 0;
     decimal VentaTotalDiferencia = VentaTotalNeta - VentaTotalSistema;
     string colorDiferencia = VentaTotalDiferencia >= 0 ? "#399d72;" : "#cb4141;";
     string textoVentaTotalSistema = VentaTotalSistema.ToString("C", CultureInfo.CurrentCulture);

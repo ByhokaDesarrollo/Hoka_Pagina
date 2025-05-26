@@ -27,5 +27,6 @@ namespace hoka.HokaCli.Models.Ingresos.AlmacenCaratulaVoucher
                 return FechaCaptura?.ToString("yyyyMMdd") ?? "";
             }
         }
+
     }
 }

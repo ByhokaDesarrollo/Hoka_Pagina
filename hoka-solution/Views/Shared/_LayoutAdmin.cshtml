@@ -218,6 +218,13 @@
                                                         <p>Gestor Almacen Caja</p>
                                                     </a>
                                                 </li>
+                                                @*Reporte*@
+                                                <li class="nav-item @(ViewBag.ActivePage == "banco-caratula-efectivo-reporte" ? "active" : "")">
+                                                    <a href="@Url.RouteUrl("banco-caratula-efectivo-reporte")" class="nav-link">
+                                                        <i class="fas fa-list-alt"></i>
+                                                        <p>Reporte Banco Efectivo</p>
+                                                    </a>
+                                                </li>
                                             }
                                         </ul>
                                     </li>

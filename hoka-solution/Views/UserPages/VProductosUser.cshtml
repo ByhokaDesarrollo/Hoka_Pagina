@@ -1,4 +1,4 @@
-﻿@{
+@{
     ViewBag.Title = "REPORTE VENTA POR PRODUCTO";
     Layout = "~/Views/Shared/_LayoutUser.cshtml";
 }
@@ -34,7 +34,6 @@
             </ul>
         </nav>
 
-
         <!--Inicio de paginacion-->
         <div class="content-header">
             <section class="content-header">
@@ -48,14 +47,12 @@
                 </div>
                 <hr />
 
-
                 <!--Inicio de contenido-->
                 <div class="card">
                     <!--Inicio de Botones del sidebar de la tabla de contenido-->
                     <div class="card-header">
                         @using (Html.BeginForm("AdminPages", "filtrarTablaR", FormMethod.Post, new { id = "filtrarBusqueda" }))
                         {
-
                             <div class="row">
                                 <div class="col-lg-2 col-md-4 col-sm-6 col-12">
                                     <label for="fechaInicioR">Fecha inicio:</label>
@@ -66,11 +63,10 @@
                                     <input type="text" id="fechaFin" name="fechaFin" class="form-control" placeholder="dd/mm/aaaa" autocomplete="off">
                                 </div>
 
-
                                 <div class="col-lg-2 col-md-4 col-sm-6 col-12">
-                                    <label for="almacen">Almacén</label>
+                                    <label for="almacen">Almacen</label>
                                     <select class="form-control select2 almacen-select" style="width: 100%" id="almacen" name="almacen" data-url="@Url.Action("AdminPages", "ObtenerCategorias")">
-                                        <option selected="selected">Selecciona un almacén</option>
+                                        <option selected="selected">Selecciona un almacen</option>
                                         @foreach (var almacen in ViewBag.Almacenes)
                                         {
                                             <option value="@almacen.Item1">@($"{almacen.Item1} - {almacen.Item2}")</option>
@@ -78,11 +74,10 @@
                                     </select>
                                 </div>
 
-
                                 <div class="col-lg-3 col-md-6 col-sm-6 col-12">
                                     <label for="categoria">Categoria</label>
                                     <select class="form-control select2 categoria-select" style="width: 100%" id="categoria" name="categoria[]" disabled data-url="@Url.Action("AdminPages", "ObtenerGrupos")" multiple>
-                                        <option selected="selected">Selecciona una categoría</option>
+                                        <option selected="selected">Selecciona una categoria</option>
                                         <option value="all">Seleccionar todo</option>
                                     </select>
                                 </div>
@@ -101,15 +96,10 @@
                                             <i class="fas fa-search"></i> Buscar
                                         </button>
                                     </div>
-
                                 </div>
-
                             </div>
                         }
-
-
                     </div>
-
 
                     <!--Cuerpo del contenido(en este caso la tabla)-->
                     <div class="card-body">
@@ -117,35 +107,28 @@
                             <table class="table table-striped" id="tablaRemisiod">
                                 <thead>
                                     <tr>
-                                        <th>CodigoBarra</th> <!--esta en remisioD-->
+                                        <th>CodigoBarra</th>
                                         <th>Producto</th>
-                                        <th>Almacen</th> <!--remisioD-->
-                                        <th>Linea</th> <!--categoria esta en remisioD-->
-                                        <th>Grupo</th><!--esta en remisioD-->
-                                        <!--<th>Uni. Vendidas Mes Anterior</th>--> <!--tabla:remisioD. columna:Cantidads-->
-                                        <th>Uni. Vendidas Periodo</th> <!--tabla:remisioD. columna:Cantidads-->
-                                        <th>Venta Real</th> <!--una formula con el stotal-->
+                                        <th>Almacen</th>
+                                        <th>Linea</th>
+                                        <th>Grupo</th>
+                                        <th>Uni. Vendidas Periodo</th>
+                                        <th>Venta Real</th>
                                         <th>Venta S/IVA</th>
-                                        @*<th>IVA 16%</th>
-                                            <th>Venta C/IVA</th>*@
-                                        <th>Venta Costo</th> <!--Formula venta costo-->
-                                        <th>Costo</th> <!--Formula venta costo-->
-                                        <th>Existencias</th> <!--if del alma_prod-->
+                                        <th>Venta Costo</th>
+                                        <th>Costo</th>
+                                        <th>Existencias</th>
                                         <th>Valor Inventario</th>
-                                        <th>P.Pub</th><!--almaproducto.preciopub (se tuvoo que agarrar el p_unitario de la tabla producto)-->
-                                        <th>Utilidad</th> <!--formula para la utilidad-->
-                                        <th>DEPOR</th> <!-- formula Deportiva-->
-                                        <th>Fijo</th> <!--formula fijo-->
-                                        <th>Ult.Fecha</th> <!--fecha de la tabla remisioD-->
+                                        <th>P.Pub</th>
+                                        <th>Utilidad</th>
+                                        <th>DEPOR</th>
+                                        <th>Fijo</th>
+                                        <th>Ult.Fecha</th>
                                         <th>DEPORT STRING</th>
-                                        @*<th>ULTCOST</th>*@
-
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <!--Aqui ira el contenido de la peticion
-                                    por filtrado de busqueda
-                                    -->
+                                    <!--Contenido de la petición por filtrado de busqueda-->
                                 </tbody>
                                 <tfoot>
                                     <tr>
@@ -157,8 +140,6 @@
                                         <th id="sumaCantidads">Cantidades:</th>
                                         <th id="sumaVreal">VentaReal:</th>
                                         <th id="sumaVSiva">VentaSinIVA:</th>
-                                        @*<th id="sumaViva">VentaIVA:</th>
-                                            <th id="sumaVCiva">VentaConIVA:</th>*@
                                         <th id="sumaVcosto">VentaCosto:</th>
                                         <th id="sumaCosto">Costo(Ultcost)</th>
                                         <th></th>
@@ -169,17 +150,14 @@
                                         <th></th>
                                         <th></th>
                                         <th></th>
-                                        @*<th></th>*@
                                     </tr>
                                 </tfoot>
                             </table>
                         </div>
 
-
                         @section scripts {
                             <script>
                                 $(document).ready(function () {
-
                                     //Funciones para hacer interaccion con cada select
                                     var selectedAlmacen = null;
                                     var selectedCategorias = [];
@@ -190,12 +168,11 @@
                                         var categoriaSelect = $('.categoria-select');
                                         var grupoSelect = $('.grupo-select');
 
-                                        if (!selectedAlmacen || selectedAlmacen === "Selecciona un almacén") {
+                                        if (!selectedAlmacen || selectedAlmacen === "Selecciona un almacen") {
                                             categoriaSelect.prop('disabled', true);
                                             grupoSelect.prop('disabled', true);
                                             selectedCategorias = [];
-                                            // Agrega el valor por defecto a la selección cuando el select está deshabilitado
-                                            categoriaSelect.val('Selecciona una categoría').change();
+                                            categoriaSelect.val('Selecciona una categoria').change();
                                             grupoSelect.val('Selecciona un grupo').change();
                                         } else {
                                             categoriaSelect.prop('disabled', false);
@@ -280,7 +257,6 @@
                                                     categoriaSelect.find('option').not(':first').remove();
 
                                                     if (Array.isArray(data)) {
-                                                        // Agrega la opción de "Seleccionar todo" al principio
                                                         categoriaSelect.append($('<option>', {
                                                             value: 'all',
                                                             text: 'Seleccionar todo'
@@ -309,18 +285,17 @@
                                     }
 
                                     function obtenerGrupos() {
-                                        if (selectedAlmacen !== null && selectedCategorias.length > 0) { // Cambio: Verificar si se ha seleccionado al menos una categoría
+                                        if (selectedAlmacen !== null && selectedCategorias.length > 0) {
                                             var grupoSelect = $('.grupo-select');
                                             grupoSelect.prop('disabled', true).val('').change();
 
                                             $.ajax({
                                                 url: '/AdminPages/ObtenerGrupos',
                                                 type: 'GET',
-                                                data: { ObAlmacen: selectedAlmacen, ObCategoria: JSON.stringify(selectedCategorias) }, // Cambio: Pasar el array de categorías seleccionadas como una cadena JSON
+                                                data: { ObAlmacen: selectedAlmacen, ObCategoria: JSON.stringify(selectedCategorias) },
                                                 success: function (data) {
                                                     grupoSelect.find('option').not(':first').remove();
                                                     if (Array.isArray(data)) {
-                                                        // Agrega la opción de "Seleccionar todo" al principio
                                                         grupoSelect.append($('<option>', {
                                                             value: 'all',
                                                             text: 'Seleccionar todo'
@@ -352,13 +327,10 @@
                                     }
 
                                     //Aqui empieza la tabla
-
                                     var $filtrarBusqueda = $('#filtrarBusqueda');
                                     var $tablaRemisiod = $('#tablaRemisiod');
 
-
                                     // modificaciones de los selects fecha
-                                    //, #fechaInicioRo, #fechaFinRo
                                     $("#fechaInicio, #fechaFin").datepicker({
                                         format: 'dd/mm/yyyy',
                                         language: 'es',
@@ -368,11 +340,10 @@
 
                                     $("#fechaInicio, #fechaFin").on("keyup", function () {
                                         var valor = $(this).val().replace(/\D/g, "").replace(/^(\d\d)(\d)/g, "$1/$2").replace(/\/(\d\d)(\d)/, "/$1/$2");
-                                        $(this).val(valor.substring(0, 10));  // Limitar a 10 caracteres
+                                        $(this).val(valor.substring(0, 10));
                                     });
 
                                     $("#fechaInicio, #fechaFin").keypress(function (e) {
-                                        // Permitir solo números y limitar a 10 caracteres (incluyendo '/')
                                         var charCode = (e.which) ? e.which : e.keyCode;
                                         if ($(this).val().length >= 10 && (charCode >= 48 && charCode <= 57)) {
                                             return false;
@@ -400,7 +371,7 @@
                                             "sProcessing": "Procesando...",
                                             "sLengthMenu": "Mostrar _MENU_ registros",
                                             "sZeroRecords": "No se encontraron resultados",
-                                            "sEmptyTable": "Ningún dato disponible en esta tabla",
+                                            "sEmptyTable": "Ningun dato disponible en esta tabla",
                                             "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
                                             "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
                                             "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
@@ -426,96 +397,67 @@
                                         "pageLength": -1,
 
                                         buttons: [
-
                                             {
                                                 extend: 'excel',
                                                 className: 'btn btn-excel rounded-0',
                                                 text: '<i class="fas fa-file-excel"></i> Excel',
                                                 filename: function () {
-                                                    // Obtiene la fecha y hora actual.
                                                     var now = new Date();
-
-                                                    // Formatea la fecha actual en dd-mm-yyyy.
                                                     var day = ("0" + now.getDate()).slice(-2);
                                                     var month = ("0" + (now.getMonth() + 1)).slice(-2);
                                                     var year = now.getFullYear();
                                                     var dateString = day + '-' + month + '-' + year;
-
-                                                    // Convierte la hora a formato de 12 horas con AM o PM.
                                                     var hours = now.getHours();
                                                     var minutes = now.getMinutes();
                                                     var ampm = hours >= 12 ? 'PM' : 'AM';
                                                     hours = hours % 12;
-                                                    hours = hours ? hours : 12; // La hora '0' debería ser '12'.
+                                                    hours = hours ? hours : 12;
                                                     minutes = minutes < 10 ? '0' + minutes : minutes;
                                                     var timeString = hours + '-' + minutes + ' ' + ampm;
-
-                                                    // Obtiene la información del almacén seleccionado.
                                                     var almacenSeleccionado = $('#almacen option:selected').text();
                                                     var nombreAlmacen = almacenSeleccionado.includes('-') ? almacenSeleccionado : 'SinNombre';
-
-                                                    // Obtiene las fechas de inicio y fin seleccionadas y las formatea.
                                                     var fechaInicio = $('#fechaInicio').val().replace(/\//g, '-');
                                                     var fechaFin = $('#fechaFin').val().replace(/\//g, '-');
-
-                                                    // Formato del nombre del archivo: 'HOKA_REPORTE VENTA POR DEPARTAMENTO_NombreDelAlmacen_FechaInicio_FechaFin_FechaActual_HoraActual AM/PM.xlsx'
                                                     return 'HOKA_REPORTE VENTA POR PRODUCTO_SUCURSAL_' + nombreAlmacen + '_DEL_' + fechaInicio + '_AL_' + fechaFin + '_IMPRESO EL_' + dateString + '_CON HORA_' + timeString;
                                                 },
                                                 footer: {
                                                     columns: [3]
                                                 }
                                             },
-
-
                                             {
                                                 extend: 'pdf',
                                                 className: 'btn btn-pdf rounded-0',
                                                 text: '<i class="fas fa-file-pdf"></i> PDF',
                                                 title: null,
-                                                pageSize: 'A2',  // Establece el tamaño de página a A3
+                                                pageSize: 'A2',
                                                 orientation: 'landscape',
                                                 filename: function () {
-                                                    // Obtiene la fecha actual en formato string.
                                                     var now = new Date();
                                                     var dateString = now.toISOString().slice(0, 10);
-
-                                                    // Obtiene la información del almacén seleccionado.
                                                     var almacenSeleccionado = $('#almacen option:selected').text();
                                                     var nombreAlmacen = almacenSeleccionado.includes('-') ? almacenSeleccionado : 'SinNombre';
-
-                                                    // Formato del nombre del archivo: 'HOKA - REPORTE VENTA POR PRODUCTO_NombreDelAlmacen_Fecha.pdf'
                                                     return 'HOKA_REPORTE VENTA POR PRODUCTO_SUCURSAL_' + nombreAlmacen + '_' + dateString;
                                                 },
                                                 customize: function (doc) {
-                                                    doc.defaultStyle.fontSize = 14; //tamaño de las letras dentro de la tablas al exportar
-
-                                                    // Obtiene la fecha y hora actuales.
+                                                    doc.defaultStyle.fontSize = 14;
                                                     var currentDateTime = new Date();
                                                     var currentDateTimeString = currentDateTime.toLocaleString();
-
-                                                    // Obtiene el rango de fechas ingresado.
                                                     var fechaInicio = document.getElementById('fechaInicio').value;
                                                     var fechaFin = document.getElementById('fechaFin').value;
                                                     var fechaRango = 'DEL ' + fechaInicio + ' AL ' + fechaFin;
-
-                                                    // Obtiene la información del almacén seleccionado.
                                                     var almacenSeleccionado = $('#almacen option:selected').text();
                                                     var sucursal = 'SUCURSAL ' + almacenSeleccionado + ' - ' + fechaRango;
-
-                                                    // Fija el título del reporte a "HOKA - VENTA POR PRODUCTO".
                                                     var tituloReporte = 'HOKA - REPORTE VENTA POR PRODUCTO';
                                                     var reporteDelDia = 'REPORTE DEL DÍA ' + currentDateTimeString;
 
-                                                    // Agrega el título en la parte superior del documento con texto en negrita.
                                                     doc.content.splice(0, 0, {
                                                         text: tituloReporte,
                                                         alignment: 'center',
                                                         margin: [0, 0, 20, 20],
                                                         fontSize: 24,
-                                                        bold: true  // Texto en negrita
+                                                        bold: true
                                                     });
 
-                                                    // Agrega la fecha del reporte y la información del almacén en la misma línea, alineados a la izquierda y a la derecha, respectivamente.
                                                     doc.content.splice(1, 0, {
                                                         columns: [
                                                             {
@@ -529,24 +471,13 @@
                                                                 fontSize: 18
                                                             }
                                                         ],
-                                                        columnGap: 10  // Ajusta el espacio entre las columnas.
+                                                        columnGap: 10
                                                     });
                                                 },
                                                 footer: {
                                                     columns: [3]
                                                 },
                                             },
-                                            //boton de imprimir
-
-                                            @*{
-                                                extend: 'print',
-                                                className: 'btn btn-dark rounded-0',
-                                                text: '<i class="fas fa-print"></i> Imprimir',
-                                                footer: {
-                                                    columns: [3]
-                                                },
-
-                                            },*@
                                         ],
 
                                         columns: [
@@ -555,7 +486,6 @@
                                             { data: 'Group_almacen' },
                                             { data: 'Group_categoria' },
                                             { data: 'Group_grupo' },
-                                            @*{ data: 'Group_cantidadsrotacion' },*@
                                             { data: 'Group_cantidads' },
                                             {
                                                 data: 'Group_VentaReal',
@@ -569,39 +499,18 @@
                                                     return parseFloat(data).toLocaleString('es-MX', { style: 'currency', currency: 'MXN' });
                                                 }
                                             },
-                                            //{
-                                            //    data: 'Group_VentaIVA',
-                                            //    render: function (data, type, row) {
-                                            //        return parseFloat(data).toLocaleString('es-MX', { style: 'currency', currency: 'MXN' });
-                                            //    }
-                                            //},
-                                            //{
-                                            //    data: 'Group_VentaConIVA',
-                                            //    render: function (data, type, row) {
-                                            //        return parseFloat(data).toLocaleString('es-MX', { style: 'currency', currency: 'MXN' });
-                                            //    }
-                                            //},
                                             {
                                                 data: 'Group_vcosto',
                                                 render: function (data, type, row) {
                                                     return parseFloat(data).toLocaleString('es-MX', { style: 'currency', currency: 'MXN' });
                                                 }
                                             },
-
-                                            //{
-                                            //    data: 'Group_costo',
-                                            //    render: function (data, type, row) {
-                                            //        return parseFloat(data).toLocaleString('es-MX', { style: 'currency', currency: 'MXN' });
-                                            //    }
-                                            //},
-
                                             {
                                                 data: 'ultcost',
                                                 render: function (data, type, row) {
                                                     return parseFloat(data).toLocaleString('es-MX', { style: 'currency', currency: 'MXN' });
                                                 }
                                             },
-
                                             { data: 'Group_Existencia' },
                                             {
                                                 data: 'Group_VInventario',
@@ -642,20 +551,10 @@
                                             {
                                                 data: 'Depor_string',
                                             },
-                                            //{
-                                            //    data: 'ultcost',
-                                            //    render: function (data, type, row) {
-                                            //        return parseFloat(data).toLocaleString('es-MX', { style: 'currency', currency: 'MXN' });
-                                            //    }
-                                            //},
-
-
                                         ],
 
-                                        deferRender: true, // Se habilita el renderizado diferido
-
+                                        deferRender: true,
                                         drawCallback: function (settings) {
-
                                         },
                                         footerCallback: function (row, data, start, end, display) {
                                             var api = this.api();
@@ -667,26 +566,13 @@
                                             var totalCantidads = api.column(5, { page: 'current' }).data().reduce(function (a, b) { return a + (parseFloat(b) || 0); }, 0);
                                             var totalVentaReal = api.column(6, { page: 'current' }).data().reduce(function (a, b) { return a + (parseFloat(b) || 0); }, 0);
                                             var totalVentaSinIVA = api.column(7, { page: 'current' }).data().reduce(function (a, b) { return a + (parseFloat(b) || 0); }, 0);
-                                            //var totalVentaIVA = api.column(8, { page: 'current' }).data().reduce(function (a, b) { return a + (parseFloat(b) || 0); }, 0);
-                                            //var totalVentaConIVA = api.column(9, { page: 'current' }).data().reduce(function (a, b) { return a + (parseFloat(b) || 0); }, 0);
-
-                                            //var totalVentaCosto = api.column(10, { page: 'current' }).data().reduce(function (a, b) { return a + (parseFloat(b) || 0); }, 0);
-                                            //var totalCosto = api.column(11, { page: 'current' }).data().reduce(function (a, b) { return a + (parseFloat(b) || 0); }, 0);
-                                            //var totalVInventario = api.column(13, { page: 'current' }).data().reduce(function (a, b) { return a + (parseFloat(b) || 0); }, 0);
-                                            //var totalUtilidad = api.column(15, { page: 'current' }).data().reduce(function (a, b) { return a + (parseFloat(b) || 0); }, 0);
-
                                             var totalVentaCosto = api.column(8, { page: 'current' }).data().reduce(function (a, b) { return a + (parseFloat(b) || 0); }, 0);
-
                                             var totalCosto = api.column(9, { page: 'current' }).data().reduce(function (a, b) { return a + (parseFloat(b) || 0); }, 0);
-
                                             var totalVInventario = api.column(11, { page: 'current' }).data().reduce(function (a, b) { return a + (parseFloat(b) || 0); }, 0);
                                             var totalUtilidad = api.column(13, { page: 'current' }).data().reduce(function (a, b) { return a + (parseFloat(b) || 0); }, 0);
 
-
                                             totalVentaReal = roundToTwoDecimals(totalVentaReal);
                                             totalVentaSinIVA = roundToTwoDecimals(totalVentaSinIVA);
-                                            //totalVentaIVA = roundToTwoDecimals(totalVentaIVA);
-                                            //totalVentaConIVA = roundToTwoDecimals(totalVentaConIVA);
                                             totalVentaCosto = roundToTwoDecimals(totalVentaCosto);
                                             totalCosto = roundToTwoDecimals(totalCosto);
                                             totalVInventario = roundToTwoDecimals(totalVInventario);
@@ -695,80 +581,175 @@
                                             $('#sumaCantidads').html('Total Cantidad: ' + totalCantidads);
                                             $('#sumaVreal').html('Total Venta Real: $' + totalVentaReal.toLocaleString('es-MX'));
                                             $('#sumaVSiva').html('Total Venta S/IVA: $' + totalVentaSinIVA.toLocaleString('es-MX'));
-                                            //$('#sumaViva').html('Total Venta IVA: $' + totalVentaIVA.toLocaleString('es-MX'));
-                                            //$('#sumaVCiva').html('Total Venta C/IVA: $' + totalVentaConIVA.toLocaleString('es-MX'));
                                             $('#sumaVcosto').html('Total Venta Costo: $' + totalVentaCosto.toLocaleString('es-MX'));
                                             $('#sumaCosto').html('Total Costo: $' + totalCosto.toLocaleString('es-MX'));
                                             $('#sumaVInventario').html('Total Valor Inventario: $' + totalVInventario.toLocaleString('es-MX'));
                                             $('#sumaUtilidad').html('Total Utilidad: $' + totalUtilidad.toLocaleString('es-MX'));
                                         },
-
                                     });
+
+                                    // Reemplaza la función $filtrarBusqueda.on('submit', ...) con este código:
 
                                     $filtrarBusqueda.on('submit', function (event) {
                                         event.preventDefault();
 
+                                        // Limpiar la tabla antes de nueva búsqueda
+                                        var table = $tablaRemisiod.DataTable();
+                                        table.clear().draw();
+
                                         var fechaInicio = $('#fechaInicio').val();
                                         var fechaFin = $('#fechaFin').val();
                                         var almacen = $('#almacen').val();
-                                        var categoria = $('#categoria').val();
-                                        var grupo = $('#grupo').val();
+                                        var categoria = $('#categoria').val() || [];
+                                        var grupo = $('#grupo').val() || [];
 
-
-                                        // Validar campos
-                                        if (!fechaInicio || !fechaFin ||  !almacen || !categoria.length || !grupo.length) {
-                                            Swal.fire({
-                                                icon: 'error',
-                                                title: 'Ups...',
-                                                text: 'Por favor, complete todos los campos antes de realizar la búsqueda.',
-                                            });
+                                        // Validación básica
+                                        if (!fechaInicio || !fechaFin || !almacen) {
+                                            Swal.fire('Error', 'Fechas y almacén son requeridos', 'error');
                                             return;
                                         }
 
-                                        var formData = {
-                                            fechaInicio: fechaInicio,
-                                            fechaFin: fechaFin,
-                                            almacen: almacen,
-                                            categoria: categoria,
-                                            grupo: grupo
-                                        };
+                                        // Variables para la paginación
+                                        var currentPage = 1;
+                                        var pageSize = 5000; // Puedes ajustar este valor según necesidad
+                                        var isLoading = false;
+                                        var hasMoreData = true;
+                                        var totalLoaded = 0;
 
-                                        var PaginaActual = $tablaRemisiod.DataTable().page();
-                                        var PaginaCantidad = $('#PaginaCantidad').val();
-                                        formData.page = PaginaActual;
-                                        formData.PaginaCantidad = PaginaCantidad;
-
-                                        $.ajax({
-                                            //url: '/AdminPages/filtrarTablaR',
-                                            url: '/AdminPages/getReportSalesByProduct',
-                                            type: 'POST',
-                                            data: formData,
-                                            success: function (data) {
-                                                // Comprobar si los datos están vacíos
-                                                if (!data || data.length === 0) {
-                                                    Swal.fire({
-                                                        icon: 'error',
-                                                        title: 'No se han registrado datos para este filtro',
-                                                        text: 'Seleccione los campos donde si haya datos y vuelva a intentar',
-                                                    });
-                                                } else {
-                                                    // Actualizar los datos de la tabla con la respuesta del servidor
-                                                    $tablaRemisiod.DataTable().clear().rows.add(data).draw();
-
-                                                }
-                                            },
-                                            error: function (jqXHR, textStatus, errorThrown) {
-                                                alert('Error al filtrar/verificar filtrobusqueda');
+                                        // Mostrar loading con progreso
+                                        var progressSwal = Swal.fire({
+                                            title: 'Procesando',
+                                            html: 'Buscando registros...<br><div id="progress" style="margin-top:10px">0 registros cargados</div>',
+                                            allowOutsideClick: false,
+                                            didOpen: () => {
+                                                Swal.showLoading();
                                             }
                                         });
+
+                                        // Función para cargar la siguiente página
+                                        function loadNextPage() {
+                                            if (isLoading || !hasMoreData) return;
+
+                                            isLoading = true;
+
+                                            $.ajax({
+                                                url: '@Url.Action("getReportSalesByProduct", "AdminPages")',
+                                                type: 'POST',
+                                                contentType: 'application/json',
+                                                dataType: 'json',
+                                                data: JSON.stringify({
+                                                    fechaInicio: fechaInicio,
+                                                    fechaFin: fechaFin,
+                                                    almacen: almacen,
+                                                    categoria: categoria,
+                                                    grupo: grupo,
+                                                    page: currentPage,
+                                                    pageSize: pageSize
+                                                }),
+                                                success: function (response) {
+                                                    if (!response.success) {
+                                                        Swal.fire('Error', response.message || 'Error desconocido', 'error');
+                                                        return;
+                                                    }
+
+                                                    // Procesar los datos recibidos
+                                                    if (response.data && response.data.length > 0) {
+                                                        table.rows.add(response.data).draw(false);
+                                                        totalLoaded += response.data.length;
+
+                                                        // Actualizar el contador en el modal
+                                                        $('#progress').html(totalLoaded + ' registros cargados');
+                                                    }
+
+                                                    // Verificar si hay más datos
+                                                    hasMoreData = response.hasMore;
+                                                    currentPage++;
+
+                                                    // Si hay más datos, cargar la siguiente página
+                                                    if (hasMoreData) {
+                                                        setTimeout(loadNextPage, 100); // Pequeño delay para no saturar
+                                                    } else {
+                                                        // Cuando se terminan los datos, redibujar la tabla completa
+                                                        table.draw();
+                                                        progressSwal.close();
+                                                        Swal.fire('Completado', `Se cargaron ${totalLoaded} registros`, 'success');
+                                                    }
+
+                                                    isLoading = false;
+                                                },
+                                                error: function (xhr, status, error) {
+                                                    progressSwal.close();
+                                                    isLoading = false;
+
+                                                    var errorMsg = `Status: ${xhr.status} - ${error}`;
+                                                    if (xhr.status === 500 && xhr.responseText.includes('maxJsonLength')) {
+                                                        errorMsg = "Los datos son demasiado grandes. Intenta con un rango de fechas más pequeño.";
+                                                    }
+
+                                                    Swal.fire({
+                                                        title: 'Error en la solicitud',
+                                                        text: errorMsg,
+                                                        icon: 'error'
+                                                    });
+                                                }
+                                            });
+                                        }
+
+                                        // Iniciar la carga de la primera página
+                                        loadNextPage();
                                     });
+
+                                    // Agregar scroll infinito
+                                    $('.dataTables_scrollBody').scroll(function() {
+                                        var scrollTop = $(this).scrollTop();
+                                        var scrollHeight = $(this).prop('scrollHeight');
+                                        var clientHeight = $(this).height();
+
+                                        // Si estamos cerca del final (100px), cargar más datos
+                                        if (scrollTop + clientHeight >= scrollHeight - 100) {
+                                            $filtrarBusqueda.trigger('scroll-to-bottom');
+                                        }
+                                    });
+
+                                    // Escuchar evento personalizado para cargar más datos
+                                    $filtrarBusqueda.on('scroll-to-bottom', function() {
+                                        // La función loadNextPage ya está definida en el submit
+                                        // Solo necesitamos asegurarnos de que se pueda llamar
+                                        if (typeof loadNextPage === 'function') {
+                                            loadNextPage();
+                                        }
+                                    });
+
+                                    // Función para procesar datos en lotes
+                                    function processDataInBatches(data, batchSize) {
+                                        var table = $tablaRemisiod.DataTable();
+                                        var total = data.length;
+                                        var processed = 0;
+
+                                        function processBatch(start) {
+                                            var end = Math.min(start + batchSize, total);
+                                            var batch = data.slice(start, end);
+
+                                            requestAnimationFrame(function() {
+                                                table.rows.add(batch).draw(false);
+                                                processed += batch.length;
+
+                                                if (end < total) {
+                                                    processBatch(end);
+                                                } else {
+                                                    table.draw();
+                                                    Swal.fire('Completado', `Se cargaron ${total} registros`, 'success');
+                                                }
+                                            });
+                                        }
+
+                                        processBatch(0);
+                                    }
 
                                     $tablaRemisiod.on('length.dt', function (e, settings, len) {
-
+                                        // Si requieres alguna acción al cambiar la cantidad de registros, ponla aquí
                                     });
-
                                 });
-
                             </script>
                         }
                     </div>
@@ -776,8 +757,5 @@
             </section>
         </div>
     </div>
-
-    @*<script src="~/Scripts/ScriptsAdmins/ScriptVentasAdminTotal.js"></script>*@
-
 </body>
 </html>

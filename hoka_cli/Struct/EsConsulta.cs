@@ -1,5 +1,6 @@
 ﻿using hoka_cli.Context.EntityFramework.Entities;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace hoka_cli.Struct
@@ -24,23 +25,12 @@ namespace hoka_cli.Struct
         public bool B_TablaRegistroDescendente { get; set; }
         public int NumeroRegistros { get; set; }
         public EnPaginacion Paginacion { get; set; }
+        public List<int> ListaIds { get; set; }
 
         [NotMapped]
-        public string FechaInicioFormatoFecha
-        {
-            get
-            {
-                return FechaInicio?.ToString("yyyyMMdd") ?? "";
-            }
-        }
+        public string FechaInicioFormatoFecha => FechaInicio?.ToString("yyyyMMdd") ?? "";
 
         [NotMapped]
-        public string FechaFinFormatoFecha
-        {
-            get
-            {
-                return FechaFin?.ToString("yyyyMMdd") ?? "";
-            }
-        }
+        public string FechaFinFormatoFecha => FechaFin?.ToString("yyyyMMdd") ?? "";
     }
 }

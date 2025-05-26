@@ -5,6 +5,9 @@ using hoka_cli.Models.Ingresos.AlmacenCaratulaVoucher.Voucher;
 using hoka_cli.Models.Ingresos.AlmacenCaratulaVoucher.Voucher.Recibo;
 using hoka_cli.Models.Utileria.BaseDatos;
 using System;
+using System.Configuration;
+using System.IO;
+using System.Linq;
 
 namespace hoka_cli.Models.Ingresos.AlmacenCaratulaVoucher
 {
@@ -18,6 +21,7 @@ namespace hoka_cli.Models.Ingresos.AlmacenCaratulaVoucher
         private RpAlmacenCaratulaVoucherRecibo _rpAlmacenCaratulaVoucherRecibo;
         private EnAlmacenCaratula _caratula;
         public EnAlmacenCaratulaVoucher Entidad;
+        private readonly string _rutaBase = ConfigurationManager.AppSettings["RutaAlmacenCaratulaVoucherRecibo"];
 
         public SvAlmacenCaratulaVoucherCrear(
             EsAlmacenCaratulaVoucher esAlmacenCaratulaVoucher)
@@ -87,6 +91,41 @@ namespace hoka_cli.Models.Ingresos.AlmacenCaratulaVoucher
                 catch (Exception e)
                 {
                     Transaccion.Rollback();
+                    string mensaje = e.InnerException != null ? e.InnerException.Message : e.Message;
+                    throw new Exception(mensaje);
+                }
+            }
+            bool b_Recibos = Entidad.Vouchers.Any(v => v.Recibos.Any(r => !string.IsNullOrEmpty(r.Archivo)));
+            if (b_Recibos)
+            {
+                try
+                {
+                    var recibosValidos = Entidad.Vouchers.Where(x => x.Recibos != null && x.Recibos.Count > 0);
+                    var vouchersEvidencia = recibosValidos.Where(x => x.Recibos.Any(y => !string.IsNullOrEmpty(y.Archivo)));
+                    foreach (var voucher in vouchersEvidencia)
+                    {
+                        var recibosEvidencia = voucher.Recibos.Where(x => x.Archivo != null);
+                        foreach (var recibo in recibosEvidencia)
+                        {
+                            if (!string.IsNullOrEmpty(recibo.Archivo))
+                            {
+                                string base64Data = recibo.Archivo.Contains(",")
+                                    ? recibo.Archivo.Split(',')[1]
+                                    : recibo.Archivo;
+                                byte[] archivoBytes = Convert.FromBase64String(base64Data);
+
+                                if (!Directory.Exists(_rutaBase))
+                                    Directory.CreateDirectory(_rutaBase);
+
+                                string nombreArchivo = $"{recibo.AlmacenCaratulaVoucherReciboId}_{recibo.ArchivoNombre}";
+                                string rutaArchivo = Path.Combine(_rutaBase, nombreArchivo);
+                                File.WriteAllBytes(rutaArchivo, archivoBytes);
+                            }
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
                     string mensaje = e.InnerException != null ? e.InnerException.Message : e.Message;
                     throw new Exception(mensaje);
                 }

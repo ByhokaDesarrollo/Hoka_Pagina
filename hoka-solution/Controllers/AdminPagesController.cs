@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -26,6 +26,7 @@ using System.Runtime.Remoting.Messaging;
 using System.Web.Services.Description;
 using System.Web.Script.Serialization;
 using System.Xml.Linq;
+using System.Web.UI.WebControls.WebParts;
 
 namespace hoka.Controllers
 {
@@ -2350,15 +2351,15 @@ namespace hoka.Controllers
         }
 
 
-         
-        
-
-         
 
 
-       
 
- 
+
+
+
+
+
+
 
         //PAGINA DE REPORTE DE VENTAS POR PRODUCTO (FILTROS)
         [HttpGet]
@@ -3334,6 +3335,7 @@ namespace hoka.Controllers
 
 
         //FILTRO QUE NOS SERVIRA PARA LA VISTA DE VAlmacenAdminTotal
+        //FILTRO QUE NOS SERVIRA PARA LA VISTA DE VAlmacenAdminTotal
         [HttpPost]
         public ActionResult filtrarTablaA(string fechaInicio, string fechaFin, string almacen)
         {
@@ -3348,17 +3350,38 @@ namespace hoka.Controllers
 
             using (SqlConnection cn = new SqlConnection(conexionDBHoka))
             {
+                cn.Open();
+
+                // 1. OBTENER EL CONTEO DE TICKETS POR DÍA
+                string countQuery = @"SELECT CAST(fecha AS DATE) as FechaDia, COUNT(*) as ConteoDia 
+                            FROM remisioM
+                            WHERE fecha >= @fechaInicio AND fecha <= @fechaFin AND almacen = @almacen
+                            GROUP BY CAST(fecha AS DATE)";
+
+                SqlCommand countCmd = new SqlCommand(countQuery, cn);
+                countCmd.Parameters.AddWithValue("@fechaInicio", fechaInicioParsed);
+                countCmd.Parameters.AddWithValue("@fechaFin", fechaFinParsed);
+                countCmd.Parameters.AddWithValue("@almacen", almacen);
+
+                Dictionary<DateTime, int> conteoPorDia = new Dictionary<DateTime, int>();
+                using (SqlDataReader countReader = countCmd.ExecuteReader())
+                {
+                    while (countReader.Read())
+                    {
+                        DateTime fechaDia = Convert.ToDateTime(countReader["FechaDia"]);
+                        int conteo = Convert.ToInt32(countReader["ConteoDia"]);
+                        conteoPorDia[fechaDia] = conteo;
+                    }
+                }
+
+                // 2. OBTENER LOS DATOS DE VENTAS
                 string baseQuery = @"SELECT * FROM VRemisioDM
-             WHERE fecha >= @fechaInicio AND fecha <= @fechaFin AND almacen = @almacen";
+                            WHERE fecha >= @fechaInicio AND fecha <= @fechaFin AND almacen = @almacen";
 
                 SqlCommand cmd = new SqlCommand(baseQuery, cn);
-
                 cmd.Parameters.AddWithValue("@fechaInicio", fechaInicioParsed);
                 cmd.Parameters.AddWithValue("@fechaFin", fechaFinParsed);
                 cmd.Parameters.AddWithValue("@almacen", almacen);
-                cmd.CommandType = CommandType.Text;
-
-                cn.Open();
 
                 using (SqlDataReader dr = cmd.ExecuteReader())
                 {
@@ -3368,40 +3391,33 @@ namespace hoka.Controllers
                     {
                         RemisioDModel LRemisioD = new RemisioDModel();
 
-
                         LRemisioD.categoria = dr["categoria"].ToString();
                         LRemisioD.stotal = dr["stotal"] != DBNull.Value ? Convert.ToInt64(dr["stotal"]) : 0;
-
-                        //tabla remisioM
                         LRemisioD.total = dr["total"] != DBNull.Value ? Convert.ToInt64(dr["total"]) : 0;
                         LRemisioD.descuento = dr["descuento"] != DBNull.Value ? Convert.ToInt64(dr["descuento"]) : 0;
 
-                        // Conversión de la fecha
                         if (DateTime.TryParse(dr["fecha"].ToString(), out DateTime fecha))
                         {
                             LRemisioD.fecha = fecha.ToUniversalTime();
                         }
                         else
                         {
-                            LRemisioD.fecha = DateTime.MinValue; // o cualquier otro valor predeterminado
+                            LRemisioD.fecha = DateTime.MinValue;
                         }
 
-                        //validacion para la operacion del resultado Venta Real
                         if (LRemisioD.total > LRemisioD.descuento)
                         {
                             var resultado_1 = Math.Abs(LRemisioD.total - LRemisioD.descuento);
-                            var resultado_2 = (resultado_1 / LRemisioD.descuento) + 1;  // Asegúrate de que descuento no sea 0
+                            var resultado_2 = (resultado_1 / LRemisioD.descuento) + 1;
                             var resultado_3 = LRemisioD.stotal * resultado_2;
-
                             LRemisioD.VentaReal = resultado_3;
                         }
                         else if (LRemisioD.total < LRemisioD.descuento)
                         {
                             var resul_1 = Math.Abs(LRemisioD.total - LRemisioD.descuento);
-                            var resul_2 = resul_1 / LRemisioD.descuento;  // Asegúrate de que descuento no sea 0
+                            var resul_2 = resul_1 / LRemisioD.descuento;
                             var resul_ext = LRemisioD.stotal * resul_2;
                             var resul_3 = LRemisioD.stotal - resul_ext;
-
                             LRemisioD.VentaReal = resul_3;
                         }
                         else if (LRemisioD.total == LRemisioD.descuento)
@@ -3412,7 +3428,6 @@ namespace hoka.Controllers
                     }
 
                     Dictionary<DateTime, Dictionary<string, double>> dataProcessed = new Dictionary<DateTime, Dictionary<string, double>>();
-
 
                     foreach (var record in rawData)
                     {
@@ -3425,14 +3440,12 @@ namespace hoka.Controllers
                             dataProcessed[fecha] = new Dictionary<string, double>();
                         }
 
-                        // Agregar o sumar la venta real a la categoría correspondiente
                         if (!dataProcessed[fecha].ContainsKey(categoria))
                         {
                             dataProcessed[fecha][categoria] = 0;
                         }
                         dataProcessed[fecha][categoria] += ventaReal;
 
-                        // Aquí agregamos o sumamos la venta real al total importe para la fecha
                         if (!dataProcessed[fecha].ContainsKey("Group_TotalImporte"))
                         {
                             dataProcessed[fecha]["Group_TotalImporte"] = 0;
@@ -3443,7 +3456,7 @@ namespace hoka.Controllers
                     List<object> finalData = new List<object>();
                     var knownCategories = new List<string> {
                 "ALCOHOL", "SOUVENIR", "ARTESANIAS","ARTESANIAS PREMIUM", "TEXTIL", "FARMACIA",
-                "CERVEZA", "REFRESCOS", "AGUAS", "ABARROTES", "ENERGETICOS", "RTD", "SC","Group_TotalImporte"
+                "CERVEZA", "REFRESCOS", "AGUAS", "ABARROTES","TABAQUERIA","CALENDARIOS", "ENERGETICOS", "RTD", "SC","Group_TotalImporte"
             };
 
                     foreach (var date in dataProcessed.Keys)
@@ -3457,10 +3470,13 @@ namespace hoka.Controllers
                             }
                         }
 
+                        // Obtener el conteo para este día específico
+                        int conteoDia = conteoPorDia.ContainsKey(date.Date) ? conteoPorDia[date.Date] : 0;
+
                         var record = new
                         {
                             Gruop_fecha = date,
-                            Group_Alcohol = dataProcessed[date].ContainsKey("ALCOHOL") ? dataProcessed[date]["ALCOHOL"] : 0,
+
                             Group_Souvenir = dataProcessed[date].ContainsKey("SOUVENIR") ? dataProcessed[date]["SOUVENIR"] : 0,
                             Group_Artesanias = dataProcessed[date].ContainsKey("ARTESANIAS") ? dataProcessed[date]["ARTESANIAS"] : 0,
                             Group_Artesanias_Premium = dataProcessed[date].ContainsKey("ARTESANIAS PREMIUM") ? dataProcessed[date]["ARTESANIAS PREMIUM"] : 0,
@@ -3470,22 +3486,39 @@ namespace hoka.Controllers
                             Group_Refrescos = dataProcessed[date].ContainsKey("REFRESCOS") ? dataProcessed[date]["REFRESCOS"] : 0,
                             Group_Aguas = dataProcessed[date].ContainsKey("AGUAS") ? dataProcessed[date]["AGUAS"] : 0,
                             Group_Abarrotes = dataProcessed[date].ContainsKey("ABARROTES") ? dataProcessed[date]["ABARROTES"] : 0,
+                            Group_Tabaqueria = dataProcessed[date].ContainsKey("TABAQUERIA") ? dataProcessed[date]["TABAQUERIA"] : 0,
+                            Group_Calendarios = dataProcessed[date].ContainsKey("CALENDARIOS") ? dataProcessed[date]["CALENDARIOS"] : 0,
                             Group_Energeticos = dataProcessed[date].ContainsKey("ENERGETICOS") ? dataProcessed[date]["ENERGETICOS"] : 0,
                             Group_RTD = dataProcessed[date].ContainsKey("RTD") ? dataProcessed[date]["RTD"] : 0,
                             Group_SC = dataProcessed[date].ContainsKey("SC") ? dataProcessed[date]["SC"] : 0,
                             Group_TotalImporte = dataProcessed[date].ContainsKey("Group_TotalImporte") ? dataProcessed[date]["Group_TotalImporte"] : 0,
-                            Group_SinCategoria = sinCategoria
+                            Group_SinCategoria = sinCategoria,
+                            Group_TotalTickets = conteoDia
                         };
 
                         finalData.Add(record);
                     }
 
-                    var jsonResult = Json(finalData, JsonRequestBehavior.AllowGet);
+                    var jsonResult = Json(new
+                    {
+                        data = finalData,
+                        totalRegistrosBD = conteoPorDia.Values.Sum()
+                    }, JsonRequestBehavior.AllowGet);
+
                     jsonResult.MaxJsonLength = int.MaxValue;
                     return jsonResult;
                 }
             }
         }
+
+
+
+
+
+
+
+
+
 
         //FILTRO QUE NOS SERVIRA PARA LA VISTA DE VproductosNoVendidos
         [HttpPost]
@@ -4169,244 +4202,513 @@ namespace hoka.Controllers
             }
         }
 
-        // fn hugo
-        [HttpPost]
-        public ActionResult getReportSalesByProduct(string fechaInicio, string fechaFin, string almacen, string[] categoria, string[] grupo)
-        {
-            DateTime fechaInicioParsed;
-            DateTime fechaFinParsed;
 
-            if (!DateTime.TryParseExact(fechaInicio, "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out fechaInicioParsed) ||
-                !DateTime.TryParseExact(fechaFin, "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out fechaFinParsed))
+
+
+
+        //FUNCION DE LA VISTA DE VProductosAdminTotal ( Reporte de vendidos y no vendidos de productos)
+        // Método auxiliar para verificar si existe una columna en el SqlDataReader
+        [HttpPost]
+        public ActionResult getReportSalesByProduct(
+     string fechaInicio,
+     string fechaFin,
+     string almacen,
+     string[] categoria,
+     string[] grupo,
+     int page = 1,
+     int pageSize = 5000)
+        {
+            try
             {
-                return Json(new { success = false, message = "Formato de fecha incorrecto." }, JsonRequestBehavior.AllowGet);
+                // Validaciones (mantener igual)
+                if (string.IsNullOrWhiteSpace(fechaInicio) ||
+                    string.IsNullOrWhiteSpace(fechaFin) ||
+                    string.IsNullOrWhiteSpace(almacen))
+                {
+                    return Json(new { success = false, message = "Fechas y almacén son requeridos" });
+                }
+
+                // Parseo de fechas (mantener igual)
+                DateTime fechaInicioParsed, fechaFinParsed;
+                string[] formats = { "dd/MM/yyyy", "MM/dd/yyyy", "yyyy-MM-dd" };
+
+                if (!DateTime.TryParseExact(fechaInicio, formats, CultureInfo.InvariantCulture,
+                                        DateTimeStyles.None, out fechaInicioParsed) ||
+                    !DateTime.TryParseExact(fechaFin, formats, CultureInfo.InvariantCulture,
+                                        DateTimeStyles.None, out fechaFinParsed))
+                {
+                    return Json(new { success = false, message = "Formato de fecha incorrecto. Use dd/MM/yyyy" });
+                }
+
+                fechaInicioParsed = fechaInicioParsed.Date;
+                fechaFinParsed = fechaFinParsed.Date.AddDays(1).AddSeconds(-1);
+
+                // Validar rango de fechas (máximo 3 meses)
+                if ((fechaFinParsed - fechaInicioParsed).TotalDays > 90)
+                {
+                    return Json(new { success = false, message = "El rango de fechas no puede ser mayor a 3 meses" });
+                }
+
+                // Almacén (mantener igual)
+                if (!long.TryParse(almacen, out long almacenId))
+                {
+                    return Json(new { success = false, message = "El almacén debe ser un número válido." });
+                }
+
+                // Normalizar arrays (mantener igual)
+                if (categoria == null) categoria = Array.Empty<string>();
+                if (grupo == null) grupo = Array.Empty<string>();
+
+                using (SqlConnection cn = new SqlConnection(conexionDBHoka))
+                {
+                    cn.Open();
+
+                    var result = new List<object>();
+                    int offset = (page - 1) * pageSize;
+
+                    // 1. PRIMERO OBTENER EL TOTAL GENERAL (antes de la paginación)
+                    double totalGeneral = 0;
+                    var queryTotal = new StringBuilder(@"
+SELECT COALESCE(SUM(rd.stotal), 0) AS totalGeneral
+FROM VReportSalesByProduct rd WITH (NOLOCK)
+WHERE rd.almacen = @almacen
+  AND rd.fecha BETWEEN @fechaInicio AND @fechaFin");
+
+                    // Agregar condiciones de categoría/grupo si hay valores específicos
+                    if (categoria != null && categoria.Length > 0 && !categoria.Any(c => c?.Trim().ToLower() == "all"))
+                    {
+                        AddArrayParameters(queryTotal, "categoria", "rd.categoria", categoria);
+                    }
+
+                    if (grupo != null && grupo.Length > 0 && !grupo.Any(g => g?.Trim().ToLower() == "all"))
+                    {
+                        AddArrayParameters(queryTotal, "grupo", "rd.grupo", grupo);
+                    }
+
+                    using (SqlCommand cmdTotal = new SqlCommand(queryTotal.ToString(), cn))
+                    {
+                        cmdTotal.Parameters.AddWithValue("@fechaInicio", fechaInicioParsed);
+                        cmdTotal.Parameters.AddWithValue("@fechaFin", fechaFinParsed);
+                        cmdTotal.Parameters.AddWithValue("@almacen", almacenId);
+
+                        AddArrayParametersToCommand(cmdTotal, "categoria", categoria);
+                        AddArrayParametersToCommand(cmdTotal, "grupo", grupo);
+
+                        var totalObj = cmdTotal.ExecuteScalar();
+                        totalGeneral = totalObj != DBNull.Value ? Convert.ToDouble(totalObj) : 0;
+                    }
+
+                    // 2. Obtener datos paginados
+                    var batchData = new List<RemisioDModel>();
+
+                    // 2.1. Productos vendidos (con paginación)
+                    var queryVendidos = new StringBuilder(@"
+SELECT 
+    rd.codigobarras,
+    rd.descripcion_larga AS productoNombre,
+    rd.almacen,
+    rd.categoria,
+    rd.grupo,
+    rd.deportiva,
+    rd.cantidads,
+    rd.stotal,
+    rd.costo,
+    rd.impuesto,
+    rd.fecha,
+    rd.existencia,
+    rd.pventareal,
+    rd.pventareal AS preciopub,
+    rd.costo AS ucosto
+FROM VReportSalesByProduct rd WITH (NOLOCK)
+WHERE rd.almacen = @almacen
+  AND rd.fecha BETWEEN @fechaInicio AND @fechaFin");
+
+                    // Solo agregar condiciones de categoría/grupo si hay valores específicos
+                    if (categoria != null && categoria.Length > 0 && !categoria.Any(c => c?.Trim().ToLower() == "all"))
+                    {
+                        AddArrayParameters(queryVendidos, "categoria", "rd.categoria", categoria);
+                    }
+
+                    if (grupo != null && grupo.Length > 0 && !grupo.Any(g => g?.Trim().ToLower() == "all"))
+                    {
+                        AddArrayParameters(queryVendidos, "grupo", "rd.grupo", grupo);
+                    }
+
+                    queryVendidos.Append(@"
+ORDER BY rd.codigobarras
+OFFSET @offset ROWS FETCH NEXT @pageSize ROWS ONLY");
+
+                    using (SqlCommand cmdVendidos = new SqlCommand(queryVendidos.ToString(), cn))
+                    {
+                        cmdVendidos.Parameters.AddWithValue("@fechaInicio", fechaInicioParsed);
+                        cmdVendidos.Parameters.AddWithValue("@fechaFin", fechaFinParsed);
+                        cmdVendidos.Parameters.AddWithValue("@almacen", almacenId);
+                        cmdVendidos.Parameters.AddWithValue("@offset", offset);
+                        cmdVendidos.Parameters.AddWithValue("@pageSize", pageSize);
+
+                        AddArrayParametersToCommand(cmdVendidos, "categoria", categoria);
+                        AddArrayParametersToCommand(cmdVendidos, "grupo", grupo);
+
+                        using (SqlDataReader dr = cmdVendidos.ExecuteReader())
+                        {
+                            while (dr.Read())
+                            {
+                                RemisioDModel item = MapRemisioDFromReader(dr);
+                                batchData.Add(item);
+                            }
+                        }
+                    }
+
+                    // 2.2. Productos NO vendidos (solo si es el primer lote)
+                    if (page == 1)
+                    {
+                        var queryNoVendidos = new StringBuilder(@"
+SELECT 
+    ap.codigobarra AS codigobarras,
+    MAX(p.Nombre) AS productoNombre,
+    ap.almacen,
+    MAX(cat.Nombre) AS categoria,
+    MAX(p.grupo) AS grupo,
+    MAX(p.ultcost) AS costo,
+    MAX(p.preciopub) AS preciopub,
+    MAX(ap.[if]) AS existencia,
+    @fechaInicio AS fecha,
+    'F' AS deportiva,
+    0 AS cantidads,
+    0 AS stotal,
+    0 AS impuesto,
+    MAX(p.preciopub) AS pventareal,
+    MAX(p.ultcost) AS ucosto
+FROM alma_prod ap WITH (NOLOCK)
+INNER JOIN productos p WITH (NOLOCK) ON ap.producto = p.producto
+LEFT JOIN categorias cat WITH (NOLOCK) ON p.categoria = cat.categoria
+WHERE ap.almacen = @almacen
+  AND NOT EXISTS (
+    SELECT 1
+    FROM VReportSalesByProduct v WITH (NOLOCK)
+    WHERE v.codigobarras = ap.codigobarra
+      AND v.almacen = ap.almacen
+      AND v.fecha BETWEEN @fechaInicio AND @fechaFin
+)");
+
+                        // Manejo de categorías
+                        if (categoria != null && categoria.Length > 0 && !categoria.Any(c => c?.Trim().ToLower() == "all"))
+                        {
+                            queryNoVendidos.Append(" AND (");
+                            bool isNumeric = categoria.All(c => int.TryParse(c, out _));
+                            if (isNumeric)
+                            {
+                                if (categoria.Length == 1)
+                                    queryNoVendidos.Append("p.categoria = CAST(@categoria0 AS int)");
+                                else
+                                    for (int i = 0; i < categoria.Length; i++)
+                                    {
+                                        if (i > 0) queryNoVendidos.Append(" OR ");
+                                        queryNoVendidos.Append($"p.categoria = CAST(@categoria{i} AS int)");
+                                    }
+                            }
+                            else
+                            {
+                                if (categoria.Length == 1)
+                                    queryNoVendidos.Append("cat.Nombre = @categoria0");
+                                else
+                                    for (int i = 0; i < categoria.Length; i++)
+                                    {
+                                        if (i > 0) queryNoVendidos.Append(" OR ");
+                                        queryNoVendidos.Append($"cat.Nombre = @categoria{i}");
+                                    }
+                            }
+                            queryNoVendidos.Append(")");
+                        }
+
+                        // Manejo de grupos
+                        if (grupo != null && grupo.Length > 0 && !grupo.Any(g => g?.Trim().ToLower() == "all"))
+                        {
+                            queryNoVendidos.Append(" AND (");
+                            if (grupo.Length == 1)
+                            {
+                                queryNoVendidos.Append("p.grupo = @grupo0");
+                            }
+                            else
+                            {
+                                for (int i = 0; i < grupo.Length; i++)
+                                {
+                                    if (i > 0) queryNoVendidos.Append(" OR ");
+                                    queryNoVendidos.Append($"p.grupo = @grupo{i}");
+                                }
+                            }
+                            queryNoVendidos.Append(")");
+                        }
+
+                        queryNoVendidos.Append(@"
+GROUP BY ap.codigobarra, ap.almacen");
+
+                        using (SqlCommand cmdNoVendidos = new SqlCommand(queryNoVendidos.ToString(), cn))
+                        {
+                            cmdNoVendidos.Parameters.AddWithValue("@fechaInicio", fechaInicioParsed);
+                            cmdNoVendidos.Parameters.AddWithValue("@fechaFin", fechaFinParsed);
+                            cmdNoVendidos.Parameters.AddWithValue("@almacen", almacenId);
+
+                            // Agregar parámetros de categoría
+                            if (categoria != null && categoria.Length > 0 && !categoria.Any(c => c?.Trim().ToLower() == "all"))
+                            {
+                                bool isNumeric = categoria.All(c => int.TryParse(c, out _));
+                                for (int i = 0; i < categoria.Length; i++)
+                                {
+                                    if (isNumeric)
+                                        cmdNoVendidos.Parameters.AddWithValue($"@categoria{i}", int.Parse(categoria[i]));
+                                    else
+                                        cmdNoVendidos.Parameters.AddWithValue($"@categoria{i}", categoria[i]);
+                                }
+                            }
+                            // Agregar parámetros de grupo
+                            if (grupo != null && grupo.Length > 0 && !grupo.Any(g => g?.Trim().ToLower() == "all"))
+                            {
+                                for (int i = 0; i < grupo.Length; i++)
+                                {
+                                    cmdNoVendidos.Parameters.AddWithValue($"@grupo{i}", grupo[i]);
+                                }
+                            }
+
+                            using (SqlDataReader dr = cmdNoVendidos.ExecuteReader())
+                            {
+                                while (dr.Read())
+                                {
+                                    RemisioDModel item = MapRemisioDFromReader(dr);
+                                    batchData.Add(item);
+                                }
+                            }
+                        }
+                    }
+
+                    // 3. Procesar lote actual
+                    var groupedBatch = ProcessBatch(batchData);
+                    result.AddRange(groupedBatch);
+
+                    // 4. Retornar resultados paginados + el total
+                    return new JsonResult()
+                    {
+                        Data = new
+                        {
+                            success = true,
+                            data = result,
+                            currentPage = page,
+                            pageSize = pageSize,
+                            hasMore = batchData.Count >= pageSize,
+                            totalGeneral = totalGeneral // Ahora es un valor fijo calculado aparte
+                        },
+                        MaxJsonLength = int.MaxValue,
+                        JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(new
+                {
+                    success = false,
+                    message = $"Error: {ex.Message}",
+                    stackTrace = ex.StackTrace,
+                    innerException = ex.InnerException?.Message
+                }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        // Método para mapear desde SqlDataReader
+        private RemisioDModel MapRemisioDFromReader(SqlDataReader dr)
+        {
+            RemisioDModel item = new RemisioDModel();
+
+            item.codigobarras = GetValueOrDefault<string>(dr, "codigobarras", string.Empty);
+            item.productoNombre = GetValueOrDefault<string>(dr, "productoNombre", string.Empty);
+            item.almacen = GetValueOrDefault<string>(dr, "almacen", string.Empty);
+            item.categoria = GetValueOrDefault<string>(dr, "categoria", string.Empty);
+            item.grupo = GetValueOrDefault<string>(dr, "grupo", string.Empty);
+            item.deportiva = GetValueOrDefault<string>(dr, "deportiva", "F");
+            item.cantidads = GetValueOrDefault<long>(dr, "cantidads", 0);
+            item.stotal = GetValueOrDefault<long>(dr, "stotal", 0);
+            item.costo = GetValueOrDefault<double>(dr, "costo", 0);
+            item.ultcost = item.costo;
+            item.impuesto = GetValueOrDefault<long>(dr, "impuesto", 0);
+            item.fecha = GetValueOrDefault<DateTime>(dr, "fecha", DateTime.MinValue);
+            item.preciopub = GetValueOrDefault<float>(dr, "preciopub", 0);
+
+            item.Existencia = dr["existencia"] != DBNull.Value ? Convert.ToInt64(dr["existencia"]) : 0;
+
+            if (item.cantidads == 0)
+            {
+                item.VentaReal = 0;
+                item.VentaSinIVA = 0;
+                item.VentaIVA = 0;
+                item.VentaConIVA = 0;
+                item.total_fijo = 0;
+                item.total_depor = 0;
+                item.vcosto = item.costo;
+                item.utilidad = 0;
+            }
+            else
+            {
+                // 👇 CORRIGE ESTA LÍNEA 👇
+                item.VentaReal = GetValueOrDefault<double>(dr, "pventareal", 0);
+
+                item.vcosto = item.cantidads * item.costo;
+                item.utilidad = item.VentaReal - item.vcosto;
+
+                if (item.deportiva == "F")
+                    item.total_fijo = item.VentaReal;
+                else
+                    item.total_depor = item.VentaReal;
+
+                if (item.impuesto >= 1)
+                {
+                    item.VentaSinIVA = item.VentaReal / 1.16;
+                    item.VentaIVA = item.VentaReal - item.VentaSinIVA;
+                    item.VentaConIVA = item.VentaReal;
+                }
+                else
+                {
+                    item.VentaSinIVA = item.VentaReal;
+                    item.VentaConIVA = item.VentaReal;
+                }
             }
 
-            using (SqlConnection cn = new SqlConnection(conexionDBHoka))
+            item.VInventario = item.costo * item.Existencia;
+
+            return item;
+        }
+
+        // Método para procesar por lotes
+        private List<object> ProcessBatch(List<RemisioDModel> batchData)
+        {
+            return batchData
+                .GroupBy(d => new
+                {
+                    d.codigobarras,
+                    d.productoNombre,
+                    d.almacen,
+                    d.categoria,
+                    d.grupo,
+                })
+                .Select(g => new
+                {
+                    Group_codigobarras = g.Key.codigobarras,
+                    Group_productoNombre = g.Key.productoNombre,
+                    Group_almacen = g.Key.almacen,
+                    Group_categoria = g.Key.categoria,
+                    Group_grupo = g.Key.grupo,
+                    Group_costo = g.Average(x => x.costo),
+                    Group_Existencia = g.First().Existencia,
+                    // 👇 CAMBIA ESTO: el precio publicado puedes dejarlo promedio o mejor el primero también:
+                    Group_preciopub = g.First().preciopub,
+                    // 👇 AGREGA ESTO: el precio de venta real UNITARIO (el que NO debe variar)
+                    Group_pventareal = g.First().pventareal,
+                    Depor_string = g.First().deportiva,
+                    ultcost = g.Average(x => x.costo),
+                    Group_cantidads = g.Sum(x => x.cantidads),
+                    Group_VentaReal = g.Sum(x => x.VentaReal),
+                    Group_VentaSinIVA = g.Sum(x => x.VentaSinIVA),
+                    Group_VentaIVA = g.Sum(x => x.VentaIVA),
+                    Group_VentaConIVA = g.Sum(x => x.VentaConIVA),
+                    Group_total_fijo = g.Where(x => x.deportiva == "F").Sum(x => x.total_fijo),
+                    Group_total_depor = g.Where(x => x.deportiva != "F").Sum(x => x.total_depor),
+                    Group_vcosto = g.Sum(x => x.vcosto),
+                    Group_VInventario = g.Sum(x => x.VInventario),
+                    Group_utilidad = g.Sum(x => x.utilidad),
+                    Gruop_fecha = g.Max(x => x.fecha)
+                })
+                .ToList<object>();
+        }
+
+
+
+        // Métodos auxiliares (sin cambios)
+        private bool ColumnExists(SqlDataReader reader, string columnName)
+        {
+            var schemaTable = reader.GetSchemaTable();
+            if (schemaTable == null)
+                return false;
+            foreach (DataRow row in schemaTable.Rows)
             {
-                string baseQuery = @"SELECT * FROM VReportSalesByProduct
-                 WHERE fecha >= @fechaInicio AND fecha <= @fechaFin AND almacen = @almacen";
+                if (row["ColumnName"].ToString().Equals(columnName, StringComparison.OrdinalIgnoreCase))
+                    return true;
+            }
+            return false;
+        }
 
-                SqlCommand cmd = new SqlCommand(baseQuery, cn);
+        private T GetValueOrDefault<T>(SqlDataReader dr, string columnName, T defaultValue)
+        {
+            if (!ColumnExists(dr, columnName))
+                return defaultValue;
 
-                cmd.Parameters.AddWithValue("@fechaInicio", fechaInicioParsed);
-                cmd.Parameters.AddWithValue("@fechaFin", fechaFinParsed);
-                cmd.Parameters.AddWithValue("@almacen", almacen);
-                cmd.CommandType = CommandType.Text;
+            int ordinal = dr.GetOrdinal(columnName);
+            if (dr.IsDBNull(ordinal))
+                return defaultValue;
 
+            object value = dr.GetValue(ordinal);
+            if (value is T)
+            {
+                return (T)value;
+            }
+            try
+            {
+                return (T)Convert.ChangeType(value, typeof(T));
+            }
+            catch
+            {
+                return defaultValue;
+            }
+        }
 
-                cn.Open();
-
-                // Verificar si se seleccionaron categorías
-                if (categoria != null && categoria.Length > 0)
+        private void AddArrayParameters(StringBuilder query, string paramName, string fieldName, string[] values)
+        {
+            if (values != null && values.Length > 0)
+            {
+                // Caso cuando se selecciona "all" o el array está vacío (no agregar filtro)
+                if (values.Any(v => v?.Trim().ToLower() == "all"))
                 {
-                    // Construir la cláusula OR para las categorías
-                    StringBuilder categoriaClause = new StringBuilder();
-                    for (int i = 0; i < categoria.Length; i++)
-                    {
-                        string paramName = "@categoria" + i;
-                        categoriaClause.Append("categoria = ").Append(paramName);
-                        cmd.Parameters.AddWithValue(paramName, categoria[i]);
-                        if (i < categoria.Length - 1)
-                        {
-                            categoriaClause.Append(" OR ");
-                        }
-                    }
-
-                    cmd.CommandText += " AND (" + categoriaClause.ToString() + ")";
+                    return;
                 }
 
-                // Verificar si se seleccionaron grupos
-                if (grupo != null && grupo.Length > 0)
-                {
-                    // Construir la cláusula OR para los grupos
-                    StringBuilder grupoClause = new StringBuilder();
-                    for (int i = 0; i < grupo.Length; i++)
-                    {
-                        string paramName = "@grupo" + i;
-                        grupoClause.Append("grupo = ").Append(paramName);
-                        cmd.Parameters.AddWithValue(paramName, grupo[i]);
-                        if (i < grupo.Length - 1)
-                        {
-                            grupoClause.Append(" OR ");
-                        }
-                    }
+                query.Append(" AND (");
 
-                    cmd.CommandText += " AND (" + grupoClause.ToString() + ")";
+                // Caso especial para un solo valor
+                if (values.Length == 1)
+                {
+                    query.Append($"{fieldName} = @{paramName}0");
+                }
+                else
+                {
+                    for (int i = 0; i < values.Length; i++)
+                    {
+                        if (i > 0) query.Append(" OR ");
+                        query.Append($"{fieldName} = @{paramName}{i}");
+                    }
                 }
 
-                using (SqlDataReader dr = cmd.ExecuteReader())
+                query.Append(")");
+            }
+        }
+
+        private void AddArrayParametersToCommand(SqlCommand cmd, string paramName, string[] values)
+        {
+            if (values != null && values.Length > 0 && !values.Any(v => v?.Trim().ToLower() == "all"))
+            {
+                for (int i = 0; i < values.Length; i++)
                 {
-                    List<RemisioDModel> rawData = new List<RemisioDModel>();
-
-                    while (dr.Read())
-                    {
-                        RemisioDModel LRemisioD = new RemisioDModel();
-                        LRemisioD.codigobarras = dr["codigobarras"].ToString();
-                        LRemisioD.productoNombre = dr["productoNombre"].ToString();
-                        LRemisioD.almacen = dr["almacen"].ToString();
-                        LRemisioD.categoria = dr["categoria"].ToString();
-                        LRemisioD.grupo = dr["grupo"].ToString();
-                        LRemisioD.cantidads = dr["cantidads"] != DBNull.Value ? Convert.ToInt64(dr["cantidads"]) : 0;
-                        LRemisioD.stotal = dr["stotal"] != DBNull.Value ? Convert.ToInt64(dr["stotal"]) : 0;
-                        LRemisioD.costo = dr["costo"] != DBNull.Value ? Convert.ToInt64(dr["costo"]) : 0;
-                        LRemisioD.Existencia = dr["if"] != DBNull.Value ? Convert.ToInt64(dr["if"]) : 0;
-                        LRemisioD.preciopub = dr["preciopub"] != DBNull.Value ? Convert.ToSingle(dr["preciopub"]) : 0;
-                        //LRemisioD.ultcost = String.Format("{0:00}", dr["ultcost"]);
-                        LRemisioD.ultcost = dr["ultcost"] != DBNull.Value ? Convert.ToInt64(dr["ultcost"]) : 0;
-                        //LRemisioD.ultcost = "0";
-
-                        //revisar
-                        LRemisioD.deportiva = dr["deportiva"].ToString();
-
-                        LRemisioD.impuesto = dr["impuesto"] != DBNull.Value ? Convert.ToInt64(dr["impuesto"]) : 0;
-
-                        //tabla remisioM
-                        LRemisioD.total = dr["total"] != DBNull.Value ? Convert.ToInt64(dr["total"]) : 0;
-                        LRemisioD.descuento = dr["descuento"] != DBNull.Value ? Convert.ToInt64(dr["descuento"]) : 0;
-
-                        // Conversión de la fecha
-                        if (DateTime.TryParse(dr["fecha"].ToString(), out DateTime fecha))
-                        {
-                            LRemisioD.fecha = fecha.ToUniversalTime();
-                        }
-                        else
-                        {
-                            LRemisioD.fecha = DateTime.MinValue; // o cualquier otro valor predeterminado
-                        }
-
-                        //validacion para la operacion del resultado Venta Real
-                        if (LRemisioD.total > LRemisioD.descuento)
-                        {
-                            var resultado_1 = Math.Abs(LRemisioD.total - LRemisioD.descuento);
-                            var resultado_2 = (resultado_1 / LRemisioD.descuento) + 1;  // Asegúrate de que descuento no sea 0
-                            var resultado_3 = LRemisioD.stotal * resultado_2;
-
-                            LRemisioD.VentaReal = resultado_3;
-                        }
-                        else if (LRemisioD.total < LRemisioD.descuento)
-                        {
-                            var resul_1 = Math.Abs(LRemisioD.total - LRemisioD.descuento);
-                            var resul_2 = resul_1 / LRemisioD.descuento;  // Asegúrate de que descuento no sea 0
-                            var resul_ext = LRemisioD.stotal * resul_2;
-                            var resul_3 = LRemisioD.stotal - resul_ext;
-
-                            LRemisioD.VentaReal = resul_3;
-                        }
-                        else if (LRemisioD.total == LRemisioD.descuento)
-                        {
-                            LRemisioD.VentaReal = LRemisioD.stotal;
-                        }
-
-                        // Identificar si deportiva es 'F'
-                        //revisar
-                        if (LRemisioD.deportiva == "F")
-                        {
-                            LRemisioD.total_fijo = LRemisioD.VentaReal;
-                        }
-                        else
-                        {
-                            // revisar
-                            LRemisioD.total_depor = LRemisioD.VentaReal;
-                        }
-
-                        // Cálculo de vcosto y utilidad
-                        LRemisioD.vcosto = LRemisioD.cantidads * LRemisioD.costo;
-                        LRemisioD.utilidad = LRemisioD.VentaReal - LRemisioD.vcosto;
-
-                        //Calculo de IVA    
-                        if (LRemisioD.impuesto >= 1)
-                        {
-                            // Calculo de IVAa
-                            LRemisioD.VentaSinIVA = LRemisioD.VentaReal / 1.16;
-                            LRemisioD.VentaIVA = LRemisioD.VentaReal - LRemisioD.VentaSinIVA;
-                            LRemisioD.VentaConIVA = LRemisioD.VentaSinIVA + LRemisioD.VentaIVA;
-                        }
-                        else if (LRemisioD.impuesto == 0)
-                        {
-
-                            // Y también es igual a la venta con IVA
-                            LRemisioD.VentaConIVA = LRemisioD.VentaReal;
-                        }
-
-                        //Calculo para el valor de inventario tomando la existencia
-                        LRemisioD.VInventario = LRemisioD.costo * LRemisioD.Existencia;
-
-
-
-                        rawData.Add(LRemisioD);
-                    }
-
-                    var groupedData = rawData.GroupBy(d => new
-                    {
-                        d.codigobarras,
-                        d.productoNombre,
-                        d.almacen,
-                        d.categoria,
-                        d.grupo,
-                        d.costo,
-                        d.preciopub,
-                        d.Existencia,
-                        d.deportiva,
-                        d.ultcost
-                    })
-                    .Select(g => new
-                    {
-                        Group_codigobarras = g.Key.codigobarras,
-                        Group_productoNombre = g.Key.productoNombre,
-                        Group_almacen = g.Key.almacen,
-                        Group_categoria = g.Key.categoria,
-                        Group_grupo = g.Key.grupo,
-                        Group_costo = g.Key.costo,
-                        Group_Existencia = g.Key.Existencia,
-                        Group_preciopub = g.Key.preciopub,
-                        Depor_string = g.Key.deportiva,
-                        ultcost = g.Key.ultcost,
-
-                        //Group_codigobarras = g.Select(x => x.codigobarras).Last(),
-                        //Group_productoNombre = g.Select(x => x.productoNombre).Last(),
-                        //Group_almacen = g.Select(x => x.almacen).Last(),
-                        //Group_categoria = g.Select(x => x.categoria).Last(),
-                        //Group_grupo = g.Select(x => x.grupo).Last(),
-                        //Group_costo = g.Select(x => x.costo).Last(),
-                        //Group_Existencia = g.Select(x => x.Existencia).Last(),
-                        //Group_preciopub = g.Select(x => x.preciopub).Last(),
-                        //Depor_string = g.Select(x => x.deportiva).Last(),
-                        //ultcost = g.Select(x => x.ultcost).Last(),
-
-
-
-                        //Todos estos valores se suman
-                        Group_cantidads = g.Sum(x => x.cantidads),
-                        Group_VentaReal = g.Sum(x => x.VentaReal),
-                        Group_VentaSinIVA = g.Sum(x => x.VentaSinIVA),    // Sumatoria de VentaSinIVA
-                        Group_VentaIVA = g.Sum(x => x.VentaIVA),          // Sumatoria de VentaIVA
-                        Group_VentaConIVA = g.Sum(x => x.VentaConIVA),    // Sumatoria de VentaConIVA
-                        Group_total_fijo = g.Where(x => x.deportiva == "F").Sum(x => x.total_fijo),
-
-                        Group_total_depor = g.Where(x => x.deportiva != "F").Sum(x => x.total_depor),
-
-
-                        //Depor_string = g.Select(x => x.deportiva),
-                        //ultcost = g.Select(x => x.ultcost),
-
-                        //Group_total_depor = g.Key.preciopub,
-
-                        Group_vcosto = g.Sum(x => x.vcosto),
-                        Group_VInventario = g.Sum(x => x.VInventario),
-                        Group_utilidad = g.Sum(x => x.utilidad),
-                        Gruop_fecha = (DateTime)g.Max(x => x.fecha),
-
-                    })
-                    .ToList();
-
-                    var jsonResult = Json(groupedData, JsonRequestBehavior.AllowGet);
-                    jsonResult.MaxJsonLength = int.MaxValue; // Ajuste a un valor grande como sea necesario
-                    return jsonResult;
-
+                    cmd.Parameters.AddWithValue($"@{paramName}{i}", values[i]);
                 }
             }
         }
+
+        private double CalculateVentaReal(double stotal, double total, double descuento)
+        {
+            return stotal - descuento;
+        }
+
+
+
+
+
 
         //FILTRO QUE NOS SERVIRA PARA LA VISTA DE VproductosAdminTotal
         // fn hugo
@@ -4424,7 +4726,7 @@ namespace hoka.Controllers
 
             using (SqlConnection cn = new SqlConnection(conexionDBHoka))
             {
-                string baseQuery = @"SELECT * FROM VRemisioDM
+                string baseQuery = @"SELECT * FROM remisioD
                  WHERE fecha >= @fechaInicio AND fecha <= @fechaFin AND almacen = @almacen";
 
                 SqlCommand cmd = new SqlCommand(baseQuery, cn);
@@ -4490,7 +4792,7 @@ namespace hoka.Controllers
                         LRemisioD.cantidads = dr["cantidads"] != DBNull.Value ? Convert.ToInt64(dr["cantidads"]) : 0;
                         LRemisioD.stotal = dr["stotal"] != DBNull.Value ? Convert.ToInt64(dr["stotal"]) : 0;
                         LRemisioD.costo = dr["costo"] != DBNull.Value ? Convert.ToInt64(dr["costo"]) : 0;
-                        LRemisioD.Existencia = dr["if"] != DBNull.Value ? Convert.ToInt64(dr["if"]) : 0;
+                        LRemisioD.Existencia = dr["existencia"] != DBNull.Value ? Convert.ToInt64(dr["existencia"]) : 0;
                         LRemisioD.preciopub = dr["preciopub"] != DBNull.Value ? Convert.ToSingle(dr["preciopub"]) : 0;
                         //LRemisioD.ultcost = String.Format("{0:00}", dr["ultcost"]);
                         LRemisioD.ultcost = dr["ultcost"] != DBNull.Value ? Convert.ToInt64(dr["ultcost"]) : 0;

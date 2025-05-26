@@ -4,8 +4,15 @@
 @{
     ViewBag.Title = "Index";
     DateTime FechaActual = ViewBag.FechaActual;
-    Layout = "~/Views/Shared/_LayoutUser.cshtml";
     EnUsuario Usuario = ViewBag.Usuario;
+    int UsuarioId = ViewBag.Usuario.UsuarioId;
+    string layoutUsuario =
+        Usuario.UsuarioRol.Prefijo == "ADMT"
+            ? "_LayoutAdminTotal.cshtml" :
+            Usuario.UsuarioRol.Prefijo == "ADM"
+                ? "_LayoutAdmin.cshtml"
+                : "_LayoutUser.cshtml";
+    Layout = $"~/Views/Shared/{layoutUsuario}";
     string TextoCaratulaVenta = ViewBag.TextoCaratulaVenta;
     string TextoCaratulaEfectivo = ViewBag.TextoCaratulaEfectivo;
     string TextoCaratulaVoucher = ViewBag.TextoCaratulaVoucher;
@@ -16,6 +23,9 @@
     string tablaEncabezadoFondoColor = "#f3f3f3";
     string idTableAlmacenCaratula = "idTableAlmacenCaratula";
 }
+@*<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>*@
+
 <div class="container-fluid">
     @*Título*@
     <div class="row mb-2">
@@ -35,258 +45,250 @@
                 @*FILA PARA BOTONES*@
             </div>
         </div>
-        @*Caratulas*@
-        <div class="row">
-            <div class="col text-center">
-                <table id="@idTableAlmacenCaratula"
-                       class="table table-sm table-responsive display"
-                       style="margin-right: auto; margin-left: auto; ">
-                    <thead>
-                        <tr>
-                            <th class="text-center"
-                                width="150"
-                                style="background-color: @(tablaEncabezadoFondoColor);">
-                                Fecha
-                            </th>
-                            <th class="text-center"
-                                width="200"
-                                style="background-color: @(tablaEncabezadoFondoColor);">
-                                Estado
-                            </th>
-                            <th class="text-center"
-                                width="200"
-                                style="background-color: @(tablaEncabezadoFondoColor);">
-                                Ciudad
-                            </th>
-                            <th class="text-center"
-                                width="200"
-                                style="background-color: @(tablaEncabezadoFondoColor);">
-                                Sucursal
-                            </th>
-                            <th class="text-center"
-                                width="180"
-                                style="background-color: @(tablaEncabezadoFondoColor);">
-                                Folio
-                            </th>
-                            <th class="text-center"
-                                width="180"
-                                style="background-color: @(tablaEncabezadoFondoColor);">
-                                Estatus
-                            </th>
-                            <th class="text-center"
-                                width="200"
-                                style="background-color: @(tablaEncabezadoFondoColor);">
-                                Usuario
-                            </th>
-                            <th class="text-center"
-                                width="150"
-                                style="background-color: @(tablaEncabezadoFondoColor);">
-                                Ventas
-                            </th>
-                            <th class="text-center"
-                                width="150"
-                                style="background-color: @(tablaEncabezadoFondoColor);">
-                                Efectivo
-                            </th>
-                            <th class="text-center"
-                                width="150"
-                                style="background-color: @(tablaEncabezadoFondoColor);">
-                                Vouchers
-                            </th>
-                            <th class="text-center"
-                                width="150"
-                                style="background-color: @(tablaEncabezadoFondoColor);">
-                                Caratula
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @if (Model?.Count > 0)
-                        {
-                            foreach (var caratula in Model)
-                            {
-                                var PermisoAlmacenCaratula = Usuario
-                                    .Permiso
-                                    .PermisosAlmacenCaratula
-                                    .Where(
-                                        x =>
-                                        x.AlmacenId == caratula.AlmacenId)
-                                    .Single();
-                                string jsonCaratula = JsonConvert.SerializeObject(caratula);
-                                <tr>
-                                    <td>@(caratula.FechaRegistro?.ToString("yyyy/MM/dd"))</td>
-                                    <td>@caratula.Almacen.Estado</td>
-                                    <td>@caratula.Almacen.Ciudad</td>
-                                    <td>@caratula.Almacen.Nombre</td>
-                                    <td>@caratula.Folio</td>
-                                    <td>@caratula.Estatus.Nombre</td>
-                                    <td>@(caratula.Usuario?.Nombre ?? "Sin Capturar")</td>
-                                    <td>
-                                        @switch (@caratula.EstatusCaratulaVenta)
-                                        {
-                                            case 1:
-                                                if (PermisoAlmacenCaratula.B_CaratulaVentaCrear)
-                                                {
-                                                    <a href="@Url.Action("Index", @TextoCaratulaVenta, caratula)"
-                                                       class="btn btn-sm btn-success"
-                                                       role="button"
-                                                       aria-disabled="false">
-                                                        <i class="bi bi-clipboard2-plus-fill"></i>
-                                                        Capturar
-                                                    </a>
-                                                }
-                                                break;
-                                            case 2:
-                                                if (PermisoAlmacenCaratula.B_CaratulaVentaActualizar)
-                                                {
-                                                    <a href="@Url.Action("Actualizar", @TextoCaratulaVenta, caratula)"
-                                                       class="btn btn-sm btn-primary"
-                                                       role="button"
-                                                       aria-disabled="false">
-                                                        <i class="bi bi-pen-fill"></i>
-                                                        Actualizar
-                                                    </a>
-                                                }
-                                                break;
-                                            case 3:
-                                                if (PermisoAlmacenCaratula.B_CaratulaVentaConsultar)
-                                                {
-                                                    <a href="@Url.Action("Consultar", @TextoCaratulaVenta, caratula)"
-                                                       class="btn btn-sm btn-info"
-                                                       role="button"
-                                                       aria-disabled="false">
-                                                        <i class="bi bi-search"></i>
-                                                        Consultar
-                                                    </a>
-                                                }
-                                                break;
-                                            default:
-                                                break;
-                                        }
-                                    </td>
-                                    <td>
-                                        @if (@caratula.EstatusCaratulaVenta > 1)
-                                        {
-                                            switch (@caratula.EstatusCaratulaEfectivo)
-                                            {
-                                                case 1:
-                                                    if (PermisoAlmacenCaratula.B_CaratulaEfectivoCrear)
-                                                    {
-                                                        <a href="@Url.Action("Index", @TextoCaratulaEfectivo, caratula)"
-                                                           class="btn btn-sm btn-success"
-                                                           role="button"
-                                                           aria-disabled="false">
-                                                            <i class="bi bi-clipboard2-plus-fill"></i>
-                                                            Capturar
-                                                        </a>
-                                                    }
-                                                    break;
-                                                case 2:
-                                                    if (PermisoAlmacenCaratula.B_CaratulaEfectivoActualizar)
-                                                    {
-                                                        <a href="@Url.Action("Actualizar", @TextoCaratulaEfectivo, caratula)"
-                                                           class="btn btn-sm btn-primary"
-                                                           role="button"
-                                                           aria-disabled="false">
-                                                            <i class="bi bi-pen-fill"></i>
-                                                            Actualizar
-                                                        </a>
-                                                    }
-                                                    break;
-                                                case 3:
-                                                    if (PermisoAlmacenCaratula.B_CaratulaEfectivoConsultar)
-                                                    {
-                                                        <a href="@Url.Action("Consultar", @TextoCaratulaEfectivo, caratula)"
-                                                           class="btn btn-sm btn-info"
-                                                           role="button"
-                                                           aria-disabled="false">
-                                                            <i class="bi bi-search"></i>
-                                                            Consultar
-                                                        </a>
-                                                    }
-                                                    break;
-                                                default:
-                                                    break;
-                                            }
-                                        }
-                                    </td>
-                                    <td>
-                                        @if (@caratula.EstatusCaratulaEfectivo > 1)
-                                        {
-                                            switch (@caratula.EstatusCaratulaVoucher)
-                                            {
-                                                case 1:
-                                                    if (PermisoAlmacenCaratula.B_CaratulaVoucherCrear)
-                                                    {
-                                                        <a href="@Url.Action("Index", @TextoCaratulaVoucher, caratula)"
-                                                           class="btn btn-sm btn-success"
-                                                           role="button"
-                                                           aria-disabled="false">
-                                                            <i class="bi bi-clipboard2-plus-fill"></i>
-                                                            Capturar
-                                                        </a>
-                                                    }
-                                                    break;
-                                                case 2:
-                                                    if (PermisoAlmacenCaratula.B_CaratulaVoucherActualizar)
-                                                    {
-                                                        <a href="@Url.Action("Actualizar", @TextoCaratulaVoucher, caratula)"
-                                                           class="btn btn-sm btn-primary"
-                                                           role="button"
-                                                           aria-disabled="false">
-                                                            <i class="bi bi-pen-fill"></i>
-                                                            Actualizar
-                                                        </a>
-                                                    }
-                                                    break;
-                                                case 3:
-                                                    if (PermisoAlmacenCaratula.B_CaratulaVoucherConsultar)
-                                                    {
-                                                        <a href="@Url.Action("Consultar", @TextoCaratulaVoucher, caratula)"
-                                                           class="btn btn-sm btn-info"
-                                                           role="button"
-                                                           aria-disabled="false">
-                                                            <i class="bi bi-search"></i>
-                                                            Consultar
-                                                        </a>
-                                                    }
-                                                    break;
-                                                default:
-                                                    break;
-                                            }
-                                        }
-                                    </td>
-                                    <td>
-                                        @if (PermisoAlmacenCaratula.B_CaratulaConsultar)
-                                        {
-                                            if (caratula.EstatusCaratulaVoucher > 1)
-                                            {
-                                                if (caratula.B_ConsultarCaratula)
-                                                {
-                                                    <a href="@Url.Action("Index", @TextoCaratulaReporte, caratula)"
-                                                       class="btn btn-sm btn-primary"
-                                                       role="button"
-                                                       aria-disabled="false">
-                                                        <i class="bi bi-clipboard-data"></i>
-                                                        Caratula
-                                                    </a>
-                                                }
-                                            }
-                                        }
-                                    </td>
-                                </tr>
-                            }
-                        }
-                    </tbody>
-                </table>
+
+        <div class="row mb-3">
+            <div class="col-md-3">
+                <label for="fechaInicio">Fecha Inicio:</label>
+                <input type="date" id="fechaInicio" class="form-control form-control-sm">
             </div>
+            <div class="col-md-3">
+                <label for="fechaFin">Fecha Fin:</label>
+                <input type="date" id="fechaFin" class="form-control form-control-sm">
+            </div>
+            <div class="col-md-3">
+                <label for="almacenes">Almacenes:</label>
+                <select id="almacenes" class="form-control form-control-sm">
+                    <option value="0">Todos</option>
+                    @foreach (var almacen in ViewBag.Almacenes)
+                    {
+                        <option value="@almacen.AlmacenId">@almacen.Nombre</option>
+                    }
+                </select>
+            </div>
+            @*<div class="col-md-3">
+                <label for="almacenes">Almacenes:</label>
+                <select id="almacenes" class="form-control" multiple>
+                    @foreach (var almacen in ViewBag.Almacenes)
+                    {
+                        <option value="@almacen.AlmacenId">@almacen.Nombre</option>
+                    }
+                </select>
+            </div>*@
+            <div class="col-md-3 d-flex align-items-end">
+                <button id="btnBuscar" class="btn btn-sm btn-primary">
+                    <i class="bi bi-search"></i> Buscar
+                </button>
+            </div>
+        </div>
+        <div class="row mb-1">
+            <table id="tablaCaratula" class="table table-striped display nowrap" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Estado</th>
+                        <th>Ciudad</th>
+                        <th>Sucursal</th>
+                        <th>Folio</th>
+                        <th>Estatus</th>
+                        <th>Usuario</th>
+                        <th>Ventas</th>
+                        <th>Efectivo</th>
+                        <th>Vouchers</th>
+                        <th>Gastos</th>
+                        <th>Carátula</th>
+                    </tr>
+                </thead>
+            </table>
         </div>
     </div>
 </div>
 @section scripts {
     <script type="text/javascript">
         $(document).ready(function () {
-            $('#@(idTableAlmacenCaratula)').DataTable();
+            let fecha = new Date();
+            fecha.setDate(fecha.getDate() - 7);
+            let fechaFormateada = fecha.toISOString().split('T')[0];
+            $('#fechaInicio').val(fechaFormateada);
+            fecha = new Date();
+            fecha.setDate(fecha.getDate());
+            fechaFormateada = fecha.toISOString().split('T')[0];
+            $('#fechaFin').val(fechaFormateada);
+
+            // Inicializar Select2 en el select de almacenes
+            //$('#almacenes').select2({
+            //    placeholder: "Seleccione los almacenes",
+            //    allowClear: true,
+            //    width: '100%'  // Ajuste para que se adapte al contenedor
+            //});
+
+            var table = $('#tablaCaratula').DataTable({
+                dom: 'Bfrtip',
+                buttons: ['excel'],
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    url: '@Url.Action("ObtenerAlmacenCaratula", "AlmacenCaratula")',
+                    type: 'POST',
+                    data: function (d) {
+                        d.fechaInicio = $('#fechaInicio').val();
+                        d.fechaFin = $('#fechaFin').val();
+                        d.almacenId  = $('#almacenes').val();
+                    }
+                },
+                columns: [
+                    {
+                        data: 'FechaRegistro',
+                        render: function (data, type, row) {
+                            //console.log(data);
+                            //console.log(row['FechaRegistro']);
+                            var year = data.substring(0, 4);
+                            var month = data.substring(4, 6);
+                            var day = data.substring(6, 8);
+                            var date = new Date(year, month, day);
+                            return `${year}-${month}-${day}`;
+                        }
+                    },
+                    { data: 'AlmacenEstado' },
+                    { data: 'AlmacenCiudad' },
+                    { data: 'AlmacenSucursalPrefijo' },
+                    { data: 'Folio' },
+                    { data: 'EstatusCaratula' },
+                    { data: 'UsuarioNombre' },
+                    { data: 'EstatusCaratulaVenta', render: function (data, type, row) { return generarBoton(row, 'Venta'); } },
+                    { data: 'EstatusCaratulaEfectivo', render: function (data, type, row) { return generarBoton(row, 'Efectivo'); } },
+                    { data: 'EstatusCaratulaVoucher', render: function (data, type, row) { return generarBoton(row, 'Voucher'); } },
+                    { data: 'CaratulaGastos', render: function (data, type, row) { return generarBotonGastos(row, 'Gasto'); } },
+                    { data: 'B_ConsultarCaratula', render: function (data, type, row) { return generarBoton(row, 'Caratula'); } }
+                ]
+            });
+
+            $('#btnBuscar').on('click', function () {
+                table.ajax.reload();
+            });
         });
+
+        function generarBoton(row, tipo) {
+            let permisos = @Html.Raw(Json.Encode(ViewBag.Usuario.Permiso.PermisosAlmacenCaratula));
+            let urlBaseCaratulaVentaIndex = '@Url.Action("Index", "AlmacenCaratulaVenta")';
+            let urlBaseCaratulaVentaActualizar = '@Url.Action("Actualizar", "AlmacenCaratulaVenta")';
+            let urlBaseCaratulaVentaConsultar = '@Url.Action("Consultar", "AlmacenCaratulaVenta")';
+            let urlBaseCaratulaEfectivoIndex = '@Url.Action("Index", "AlmacenCaratulaEfectivo")';
+            let urlBaseCaratulaEfectivoActualizar = '@Url.Action("Actualizar", "AlmacenCaratulaEfectivo")';
+            let urlBaseCaratulaEfectivoConsultar = '@Url.Action("Consultar", "AlmacenCaratulaEfectivo")';
+            let urlBaseCaratulaVoucherIndex = '@Url.Action("Index", "AlmacenCaratulaVoucher")';
+            let urlBaseCaratulaVoucherActualizar = '@Url.Action("Actualizar", "AlmacenCaratulaVoucher")';
+            let urlBaseCaratulaVoucherConsultar = '@Url.Action("Consultar", "AlmacenCaratulaVoucher")';
+            let urlBaseAlmacenCaratulaConsultar = '@Url.Action("Index", "AlmacenCaratulaReporte")';
+
+            let permiso = permisos.find(p => p.AlmacenId === row.AlmacenId);
+            //console.log(permiso);
+            if (!permiso)
+                return '';
+
+            let Folio = row['Folio'];
+            let EstatusCaratulaVenta = row['EstatusCaratulaVenta'];
+            let EstatusCaratulaEfectivo = row['EstatusCaratulaEfectivo'];
+            let EstatusCaratulaVoucher = row['EstatusCaratulaVoucher'];
+            let B_ConsultarCaratula = row['B_ConsultarCaratula'];
+            console.log("----------------------------------------------------------");
+            console.log("Folio " + Folio);
+            //console.log("EstatusCaratulaVenta " + EstatusCaratulaVenta);
+            //console.log("EstatusCaratulaEfectivo " + EstatusCaratulaEfectivo);
+            //console.log("EstatusCaratulaVoucher " + EstatusCaratulaVoucher);
+
+            let estatus = row[`EstatusCaratula${tipo}`];
+            let permisoCrear = permiso[`B_Caratula${tipo}Crear`];
+            let permisoActualizar = permiso[`B_Caratula${tipo}Actualizar`];
+            let permisoConsultar = permiso[`B_Caratula${tipo}Consultar`];
+            let b_CaratulaConsultar = permiso["B_CaratulaConsultar"];
+
+            console.log("b_CaratulaConsultar " + b_CaratulaConsultar);
+            console.log("B_ConsultarCaratula " + B_ConsultarCaratula);
+
+            let urlBase = "";
+
+            if (tipo == "Caratula")
+                if (b_CaratulaConsultar &&
+                    B_ConsultarCaratula)
+                    return `<a href='${urlBaseAlmacenCaratulaConsultar}?almacenCaratulaId=${row["AlmacenCaratulaId"]}' class='btn btn-sm btn-info'><i class='bi bi-search'></i> Consultar</a>`;
+
+
+            if (tipo != "Caratula") {
+                if (estatus == 1 && permisoCrear) {
+                    switch (tipo) {
+                        case "Venta":
+                            urlBase = urlBaseCaratulaVentaIndex;
+                            break;
+                        case "Efectivo":
+                            urlBase = urlBaseCaratulaEfectivoIndex;
+                            break;
+                        case "Voucher":
+                            urlBase = urlBaseCaratulaVoucherIndex;
+                            break;
+                        default:
+                            break;
+                    }
+                    if (tipo == "Efectivo" && EstatusCaratulaVenta <= 1)
+                        return '';
+                    if (tipo == "Voucher" && EstatusCaratulaEfectivo <= 1)
+                        return '';
+                    return `<a href='${urlBase}?almacenCaratulaId=${row["AlmacenCaratulaId"]}' class="btn btn-sm btn-success"><i class="bi bi-clipboard2-plus-fill"></i> Capturar</a>`;
+                } else if (estatus == 2 && permisoActualizar) {
+                    switch (tipo) {
+                        case "Venta":
+                            urlBase = urlBaseCaratulaVentaActualizar;
+                            break;
+                        case "Efectivo":
+                            urlBase = urlBaseCaratulaEfectivoActualizar;
+                            break;
+                        case "Voucher":
+                            urlBase = urlBaseCaratulaVoucherActualizar;
+                            break;
+                        default:
+                            break;
+                    }
+                    if (tipo == "Efectivo" && EstatusCaratulaVenta <= 1)
+                        return '';
+                    if (tipo == "Voucher" && EstatusCaratulaEfectivo <= 1)
+                        return '';
+                    return `<a href='${urlBase}?almacenCaratulaId=${row["AlmacenCaratulaId"]}' class='btn btn-sm btn-primary'><i class='bi bi-pen-fill'></i> Actualizar</a>`;
+                } else if (estatus == 3 && permisoConsultar) {
+                    switch (tipo) {
+                        case "Venta":
+                            urlBase = urlBaseCaratulaVentaConsultar;
+                            break;
+                        case "Efectivo":
+                            urlBase = urlBaseCaratulaEfectivoConsultar;
+                            break;
+                        case "Voucher":
+                            urlBase = urlBaseCaratulaVoucherConsultar;
+                            break;
+                        default:
+                            break;
+                    }
+                    if (tipo == "Efectivo" && EstatusCaratulaVenta <= 1)
+                        return '';
+                    if (tipo == "Voucher" && EstatusCaratulaEfectivo <= 1)
+                        return '';
+                    return `<a href='${urlBase}?almacenCaratulaId=${row["AlmacenCaratulaId"]}' class='btn btn-sm btn-info'><i class='bi bi-search'></i> Consultar</a>`;
+                }
+            }
+            return '';
+        }
+
+    function generarBotonGastos(row, tipo) {
+    let almacenCaratulaId = row["AlmacenCaratulaId"];
+    let urlReembolso = '@Url.Action("Reembolso", "Reembolsos")';
+    return `<button class='btn btn-sm btn-info'
+                onclick="window.location.href='${urlReembolso}?almacenCaratulaId=${almacenCaratulaId}'">
+                <i class='bi bi-search'></i> Gastos
+            </button>`;
+}
+
+        function consultarGastos(UrlCaratulaGastos, UsuarioId, FechaRegistro, AlmacenId) {
+            let Url = `${UrlCaratulaGastos}?UsuarioId=${UsuarioId}&FechaRegistro=${FechaRegistro}&AlmacenId=${AlmacenId}`;
+            console.log(Url);
+            window.open(Url);
+        }
     </script>
 }

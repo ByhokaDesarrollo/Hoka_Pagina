@@ -7,6 +7,9 @@ namespace hoka.Models
 {
     public class RemisioDModel
     {
+        public double pventareal { get; set; }
+
+
         public string codigobarras { get; set; }
         public int producto { get; set; } // por si queremos conocer el codigo 
         public string productoNombre { get; set; }
@@ -27,7 +30,7 @@ namespace hoka.Models
         public double utilidad { get; set; } // sirve para venta real - venta costo
         public double depor { get; set; } // validadcion de a excepcion de solo 1 f
         public string deportiva { get; set; } // validadcion de a excepcion de solo 1 f
-        public string depor_string { get; set; } 
+        public string depor_string { get; set; }
         public double fijo { get; set; } //validacion cuando solo hay una f
         public DateTime? fecha { get; set; }
         public DateTime? ultVentafecha { get; set; }
@@ -54,7 +57,7 @@ namespace hoka.Models
 
         //tabla almaproductos
         public double ultcost { get; set; }
-        
+
     }
 
 

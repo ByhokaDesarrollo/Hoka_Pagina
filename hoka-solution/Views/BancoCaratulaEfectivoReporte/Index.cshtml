@@ -1,0 +1,218 @@
+﻿@model ICollection<hoka.HokaCli.Models.Ingresos.AlmacenCaratula.EnAlmacenCaratula>
+@using hoka.HokaCli.Models.Compuadmo.Usuario;
+@using hoka.HokaCli.Models.Compuadmo.Usuario;
+@using Newtonsoft.Json;
+@{
+    ViewBag.Title = "Reporte";
+    DateTime FechaActual = ViewBag.FechaActual;
+    EnUsuario Usuario = ViewBag.Usuario;
+    string layoutUsuario =
+        Usuario.UsuarioRol.Prefijo == "ADMT"
+            ? "_LayoutAdminTotal.cshtml" :
+            Usuario.UsuarioRol.Prefijo == "ADM"
+                ? "_LayoutAdmin.cshtml"
+                : "_LayoutUser.cshtml";
+    Layout = $"~/Views/Shared/{layoutUsuario}";
+    string TextoCaratulaVenta = ViewBag.TextoCaratulaVenta;
+    string TextoCaratulaEfectivo = ViewBag.TextoCaratulaEfectivo;
+    string TextoCaratulaVoucher = ViewBag.TextoCaratulaVoucher;
+    string TextoCaratulaReporte = ViewBag.TextoCaratulaReporte;
+    string tituloFondoColor = "#9c8050";
+    string tituloTexto = "REPORTE BANCO EFECTIVO";
+    string tituloTextoColor = "#fff";
+    string tablaEncabezadoFondoColor = "#f3f3f3";
+    string idTableAlmacenCaratula = "idTableAlmacenCaratula";
+}
+@*<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>*@
+
+<div class="container-fluid">
+    @*Título*@
+    <div class="row mb-2">
+        <div class="col text-center"
+             style="background-color: @(tituloFondoColor); color: @(tituloTextoColor)">
+            <strong>
+                @tituloTexto
+            </strong>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="card ml-2 mr-2 p-2">
+        @*Acciones*@
+        <div class="row mb-1">
+            <div class="col">
+                @*FILA PARA BOTONES*@
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-3">
+                <label for="fechaInicio">Fecha Inicio:</label>
+                <input type="date" id="fechaInicio" class="form-control form-control-sm">
+            </div>
+            <div class="col-md-3">
+                <label for="fechaFin">Fecha Fin:</label>
+                <input type="date" id="fechaFin" class="form-control form-control-sm">
+            </div>
+            <div class="col-md-3">
+                <label for="almacenes">Almacenes:</label>
+                <select id="almacenes" class="form-control form-control-sm">
+                    <option value="0">Todos</option>
+                    @foreach (var almacen in ViewBag.Almacenes)
+                    {
+                        <option value="@almacen.AlmacenId">@almacen.Nombre</option>
+                    }
+                </select>
+            </div>
+            @*<div class="col-md-3">
+                    <label for="almacenes">Almacenes:</label>
+                    <select id="almacenes" class="form-control" multiple>
+                        @foreach (var almacen in ViewBag.Almacenes)
+                        {
+                            <option value="@almacen.AlmacenId">@almacen.Nombre</option>
+                        }
+                    </select>
+                </div>*@
+            <div class="col-md-3 d-flex align-items-end">
+                <button id="btnBuscar" class="btn btn-sm btn-primary">
+                    <i class="bi bi-search"></i> Buscar
+                </button>
+            </div>
+        </div>
+        <div class="row mb-1">
+            <table id="tablaCaratula" class="table table-striped display nowrap" style="width:100%">
+                <thead>
+                    <tr>
+                        <th colspan="7" class="text-right">Totales:</th>
+                        <th id="ImporteTotal" class="text-right"></th> <!-- Para mantener la estructura -->
+                        <th id="ImporteTotalBanco" class="text-right"></th> <!-- Para mantener la estructura -->
+                    </tr>
+                    <tr>
+                        <th>Fecha Tienda</th>
+                        <th>Fecha Banco</th>
+                        <th>Fecha Banco Act</th>
+                        <th>Estado</th>
+                        <th>Ciudad</th>
+                        <th>Sucursal</th>
+                        <th>Folio</th>
+                        <th>Imp.TotalTienda</th>
+                        <th>Imp.TotalBanco</th>
+                    </tr>
+
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+@section scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            let fecha = new Date();
+            fecha.setDate(fecha.getDate() - 7);
+            let fechaFormateada = fecha.toISOString().split('T')[0];
+            $('#fechaInicio').val(fechaFormateada);
+            fecha = new Date();
+            fecha.setDate(fecha.getDate());
+            fechaFormateada = fecha.toISOString().split('T')[0];
+            $('#fechaFin').val(fechaFormateada);
+
+            // Inicializar Select2 en el select de almacenes
+            //$('#almacenes').select2({
+            //    placeholder: "Seleccione los almacenes",
+            //    allowClear: true,
+            //    width: '100%'  // Ajuste para que se adapte al contenedor
+            //});
+
+            var table = $('#tablaCaratula').DataTable({
+                dom: 'Bfrtip',
+                buttons: ['excel'],
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    url: '@Url.Action("ObtenerAlmacenCaratula", "BancoCaratulaEfectivoReporte")',
+                    type: 'POST',
+                    data: function (d) {
+                        d.fechaInicio = $('#fechaInicio').val();
+                        d.fechaFin = $('#fechaFin').val();
+                        d.almacenId  = $('#almacenes').val();
+                    }
+                },
+                columns: [
+                    {
+                        data: 'CaratulaEfectivoFechaCaptura',
+                        render: function (data, type, row) {
+                            var year = data.substring(0, 4);
+                            var month = data.substring(4, 6);
+                            var day = data.substring(6, 8);
+                            var date = new Date(year, month, day);
+                            return `${year}-${month}-${day}`;
+                        }
+                    },
+                    {
+                        data: 'CaratulaEfectivoFechaCapturaBanco',
+                        render: function (data, type, row) {
+                            var year = data.substring(0, 4);
+                            var month = data.substring(4, 6);
+                            var day = data.substring(6, 8);
+                            var date = new Date(year, month, day);
+                            return `${year}-${month}-${day}`;
+                        }
+                    },
+                    {
+                        data: 'CaratulaEfectivoFechaActualizacionBanco',
+                        render: function (data, type, row) {
+                            var year = data.substring(0, 4);
+                            var month = data.substring(4, 6);
+                            var day = data.substring(6, 8);
+                            var date = new Date(year, month, day);
+                            return `${year}-${month}-${day}`;
+                        }
+                    },
+                    { data: 'AlmacenEstado' },
+                    { data: 'AlmacenCiudad' },
+                    { data: 'AlmacenSucursalPrefijo' },
+                    { data: 'Folio' },
+                    {
+                        data: 'ImporteTotal',
+                        render: function (data) {
+                            return data ? parseFloat(data).toLocaleString('es-MX', { style: 'currency', currency: 'MXN' }) : '$0.00';
+                        }
+                    },
+                    {
+                        data: 'ImporteTotalBanco',
+                        render: function (data) {
+                            return data ? parseFloat(data).toLocaleString('es-MX', { style: 'currency', currency: 'MXN' }) : '$0.00';
+                        }
+                    }
+                ],
+                createdRow: function (row, data, dataIndex) {
+                    $('td:eq(7)', row).css('text-align', 'right');
+                    $('td:eq(8)', row).css('color', 'green');
+                    $('td:eq(8)', row).css('text-align', 'right');
+                },
+                drawCallback: function () {
+                    var api = this.api();
+                    //Tienda
+                    var importeTotal = api.column(7, { page: 'current' }).data().sum();
+                    var inporteTotalTexto = importeTotal
+                        ? parseFloat(importeTotal).toLocaleString('es-MX', { style: 'currency', currency: 'MXN' })
+                        : '$0.00';
+                    $('#ImporteTotal').html(inporteTotalTexto);
+                    //Banco
+                    var importeTotalBanco = api.column(8, { page: 'current' }).data().sum();
+                    var importeTotalBancoTexto = importeTotalBanco
+                        ? parseFloat(importeTotalBanco).toLocaleString('es-MX', { style: 'currency', currency: 'MXN' })
+                        : '$0.00';
+                    $('#ImporteTotalBanco').html(importeTotalBancoTexto);
+                }
+            });
+
+            $('#btnBuscar').on('click', function () {
+                table.ajax.reload();
+            });
+        });
+
+
+    </script>
+}

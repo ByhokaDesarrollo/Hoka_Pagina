@@ -223,6 +223,17 @@ namespace hoka
                 }
             );
 
+            // BANCO:CAJA:REPORTE
+            routes.MapRoute(
+                name: "banco-caratula-efectivo-reporte",
+                url: "banco/caratula/reporte-efectivo",
+                defaults: new
+                {
+                    controller = "BancoCaratulaEfectivoReporte",
+                    action = "Index"
+                }
+            );
+
             // ALMACEN:CAJA:CARATULA
             routes.MapRoute(
                 name: "almacen-caja-caratula",

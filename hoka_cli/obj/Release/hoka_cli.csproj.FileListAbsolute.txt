@@ -40,3 +40,17 @@ D:\H\repositorios\hoka-solution\hoka_cli\obj\Release\hoka_cli.csproj.CoreCompile
 D:\H\repositorios\hoka-solution\hoka_cli\obj\Release\hoka_cli.csproj.Up2Date
 D:\H\repositorios\hoka-solution\hoka_cli\obj\Release\hoka_cli.exe
 D:\H\repositorios\hoka-solution\hoka_cli\obj\Release\hoka_cli.pdb
+D:\H\hoka-solution\hoka_cli\bin\Release\hoka_cli.exe.config
+D:\H\hoka-solution\hoka_cli\bin\Release\hoka_cli.exe
+D:\H\hoka-solution\hoka_cli\bin\Release\hoka_cli.pdb
+D:\H\hoka-solution\hoka_cli\bin\Release\EntityFramework.dll
+D:\H\hoka-solution\hoka_cli\bin\Release\EntityFramework.SqlServer.dll
+D:\H\hoka-solution\hoka_cli\bin\Release\Newtonsoft.Json.dll
+D:\H\hoka-solution\hoka_cli\bin\Release\EntityFramework.xml
+D:\H\hoka-solution\hoka_cli\bin\Release\EntityFramework.SqlServer.xml
+D:\H\hoka-solution\hoka_cli\bin\Release\Newtonsoft.Json.xml
+D:\H\hoka-solution\hoka_cli\obj\Release\hoka_cli.csproj.AssemblyReference.cache
+D:\H\hoka-solution\hoka_cli\obj\Release\hoka_cli.csproj.CoreCompileInputs.cache
+D:\H\hoka-solution\hoka_cli\obj\Release\hoka_cli.csproj.Up2Date
+D:\H\hoka-solution\hoka_cli\obj\Release\hoka_cli.exe
+D:\H\hoka-solution\hoka_cli\obj\Release\hoka_cli.pdb
