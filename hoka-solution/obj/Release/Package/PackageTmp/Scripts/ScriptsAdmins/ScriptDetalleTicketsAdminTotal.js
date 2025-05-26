@@ -1,3 +1,0 @@
-﻿function closeCurrentTab() {
-    window.close();
-}
