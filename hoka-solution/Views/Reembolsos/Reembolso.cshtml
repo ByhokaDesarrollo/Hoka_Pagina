@@ -9,11 +9,11 @@
 <div class="container-fluid py-4">
     <div class="row justify-content-center">
         <div class="col-12 col-md-10 col-lg-8 col-xl-7">
-            <div class="card border-0 shadow-lg custom-card-reembolso">
-                <div class="card-header bg-gradient-primary text-white py-3">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-white border-bottom py-3">
                     <div class="d-flex justify-content-between align-items-center">
-                        <h5 class="mb-0 fw-bold"><i class="fas fa-file-invoice-dollar me-2"></i>Solicitud de Reembolso</h5>
-                        <span class="badge bg-white text-primary">Nuevo</span>
+                        <h5 class="mb-0 fw-bold">SOLICITUD DE REEMBOLSO</h5>
+     
                     </div>
                 </div>
                 <div class="card-body p-4">
@@ -22,301 +22,271 @@
                         @Html.AntiForgeryToken()
                         @Html.ValidationSummary(true, "", new { @class = "alert alert-danger alert-dismissible fade show" })
 
-                        <div class="row g-4">
-                            <div class="col-md-4">
-                                <div class="mb-3">
-                                    @Html.LabelFor(model => model.Folio, htmlAttributes: new { @class = "form-label custom-label" })
-                                    @Html.EditorFor(model => model.Folio, new { htmlAttributes = new { @class = "form-control custom-input", placeholder = "Folio", id = "folioInput" } })
-                                    @Html.ValidationMessageFor(model => model.Folio, "", new { @class = "invalid-feedback" })
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="mb-3">
-                                    @Html.LabelFor(model => model.FechaSolicitud, htmlAttributes: new { @class = "form-label custom-label" })
-                                    @Html.TextBoxFor(model => model.FechaSolicitud, "{0:dd/MM/yyyy}", new { @class = "form-control custom-input datepicker", placeholder = "Fecha de solicitud", autocomplete = "off" })
-                                    @Html.ValidationMessageFor(model => model.FechaSolicitud, "", new { @class = "invalid-feedback" })
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="mb-3">
-                                    @Html.LabelFor(model => model.NombreSolicitante, htmlAttributes: new { @class = "form-label custom-label" })
-                                    @Html.EditorFor(model => model.NombreSolicitante, new { htmlAttributes = new { @class = "form-control custom-input", placeholder = "Nombre del solicitante" } })
-                                    @Html.ValidationMessageFor(model => model.NombreSolicitante, "", new { @class = "invalid-feedback" })
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row g-4">
-                            <div class="col-md-4">
-                                <div class="mb-3">
-                                    @Html.LabelFor(model => model.TipoDocumento, htmlAttributes: new { @class = "form-label custom-label" })
-                                    @Html.DropDownListFor(model => model.TipoDocumento, new SelectList(new[] { "Factura", "Nota" }), "Seleccione...", new { @class = "form-select custom-input", id = "tipoDocumento" })
-                                    @Html.ValidationMessageFor(model => model.TipoDocumento, "", new { @class = "invalid-feedback" })
-                                </div>
-                            </div>
-                            <div class="col-md-4" id="numeroDocumentoGroup" style="display:none;">
-                                <div class="mb-3">
-                                    @Html.LabelFor(model => model.NumeroDocumento, htmlAttributes: new { @class = "form-label custom-label" })
-                                    @Html.EditorFor(model => model.NumeroDocumento, new { htmlAttributes = new { @class = "form-control custom-input", placeholder = "Número de documento" } })
-                                    @Html.ValidationMessageFor(model => model.NumeroDocumento, "", new { @class = "invalid-feedback" })
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="mb-3">
-                                    @Html.LabelFor(model => model.TipoOperacion, htmlAttributes: new { @class = "form-label custom-label" })
-                                    @Html.DropDownListFor(model => model.TipoOperacion, new SelectList(new[] { "Compra", "Gasto" }), "Seleccione...", new { @class = "form-select custom-input" })
-                                    @Html.ValidationMessageFor(model => model.TipoOperacion, "", new { @class = "invalid-feedback" })
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row g-4">
-                            <div class="col-md-4">
-                                <div class="mb-3">
-                                    @Html.LabelFor(model => model.Uuid, htmlAttributes: new { @class = "form-label custom-label" })
-                                    @Html.EditorFor(model => model.Uuid, new { htmlAttributes = new { @class = "form-control custom-input", placeholder = "UUID del comprobante" } })
-                                    @Html.ValidationMessageFor(model => model.Uuid, "", new { @class = "invalid-feedback" })
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Sección NO MOVER -->
-                        <div class="card mt-4 border-primary">
-                            <div class="card-header bg-light-primary py-2">
-                                <h6 class="mb-0 fw-semibold text-primary">
-                                    <i class="fas fa-file-invoice-dollar me-2"></i>Detalles del Reembolso
-                                </h6>
-                            </div>
-                            <div class="card-body">
-                                <!-- Primera fila -->
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="mb-3">
-                                            <label for="NombreProveedor" class="form-label custom-label">Proveedor</label>
-                                            <input type="text"
-                                                   class="form-control custom-input"
-                                                   list="proveedoresList"
-                                                   id="NombreProveedor"
-                                                   name="NombreProveedor"
-                                                   placeholder="Busque o seleccione un proveedor"
-                                                   value="@Model.NombreProveedor" />
-                                            <datalist id="proveedoresList">
-                                                @foreach (var proveedor in ViewBag.Proveedores)
-                                                {
-                                                    <option value="@proveedor">@proveedor</option>
-                                                }
-                                            </datalist>
-                                            @Html.ValidationMessageFor(model => model.NombreProveedor, "", new { @class = "invalid-feedback" })
-                                        </div>
+                        <!-- Primera sección - similar a la imagen -->
+                        <div class="border-bottom pb-3 mb-4">
+
+                            <div class="row g-3">
+                                <div class="col-md-2 col-6">
+                                    <div class="mb-2">
+                                        @Html.LabelFor(model => model.Folio, htmlAttributes: new { @class = "form-label small fw-bold" })
+                                        @Html.EditorFor(model => model.Folio, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Folio", id = "folioInput" } })
+                                        @Html.ValidationMessageFor(model => model.Folio, "", new { @class = "invalid-feedback" })
                                     </div>
-                                    <div class="col-md-4">
-                                        <div class="mb-3">
-                                            @Html.LabelFor(model => model.Sucursal, htmlAttributes: new { @class = "form-label custom-label" })
-                                            @Html.EditorFor(model => model.Sucursal, new
+                                </div>
+                                <div class="col-md-2 col-6">
+                                    <div class="mb-2">
+                                        @Html.LabelFor(model => model.FechaSolicitud, htmlAttributes: new { @class = "form-label small fw-bold" })
+                                        @Html.TextBoxFor(model => model.FechaSolicitud, "{0:dd/MM/yyyy}", new { @class = "form-control form-control-sm datepicker", placeholder = "Fecha de solicitud", autocomplete = "off" })
+                                        @Html.ValidationMessageFor(model => model.FechaSolicitud, "", new { @class = "invalid-feedback" })
+                                    </div>
+                                </div>
+                                <div class="col-md-2 col-6">
+                                    <div class="mb-2">
+                                        @Html.LabelFor(model => model.FormaPago, htmlAttributes: new { @class = "form-label small fw-bold" })
+                                        @Html.DropDownListFor(model => model.FormaPago, (IEnumerable<SelectListItem>)ViewBag.FormasPago,
+                                            new { @class = "form-select form-select-sm", @placeholder = "Forma de pago" })
+                                        @Html.ValidationMessageFor(model => model.FormaPago, "", new { @class = "invalid-feedback" })
+                                    </div>
+                                </div>
+                                <div class="col-md-2 col-6">
+                                    <div class="mb-2">
+                                        @Html.LabelFor(model => model.TipoMoneda, htmlAttributes: new { @class = "form-label small fw-bold" })
+                                        @Html.EditorFor(model => model.TipoMoneda, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Tipo de moneda" } })
+                                        @Html.ValidationMessageFor(model => model.TipoMoneda, "", new { @class = "invalid-feedback" })
+                                    </div>
+                                </div>
+                                <div class="col-md-2 col-6">
+                                    <div class="mb-2">
+                                        @Html.LabelFor(model => model.Banco, htmlAttributes: new { @class = "form-label small fw-bold" })
+                                        @Html.EditorFor(model => model.Banco, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Nombre del banco" } })
+                                        @Html.ValidationMessageFor(model => model.Banco, "", new { @class = "invalid-feedback" })
+                                    </div>
+                                </div>
+                                <div class="col-md-2 col-6">
+                                    <div class="mb-2">
+                                        @Html.LabelFor(model => model.CuentaBancaria, htmlAttributes: new { @class = "form-label small fw-bold" })
+                                        @Html.EditorFor(model => model.CuentaBancaria, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Número de cuenta" } })
+                                        @Html.ValidationMessageFor(model => model.CuentaBancaria, "", new { @class = "invalid-feedback" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Segunda sección - similar a la imagen -->
+                        <div class="border-bottom pb-3 mb-4">
+
+                            <div class="row g-3">
+                                <div class="col-md-2 col-6">
+                                    <div class="mb-2">
+                                        <label for="NombreProveedor" class="form-label small fw-bold">Nombre Proveedor</label>
+                                        <input type="text"
+                                               class="form-control form-control-sm"
+                                               list="proveedoresList"
+                                               id="NombreProveedor"
+                                               name="NombreProveedor"
+                                               placeholder="Nombre proveedor"
+                                               value="@Model.NombreProveedor" />
+                                        <datalist id="proveedoresList">
+                                            @foreach (var proveedor in ViewBag.Proveedores)
                                             {
-                                                htmlAttributes = new
+                                                <option value="@proveedor">@proveedor</option>
+                                            }
+                                        </datalist>
+                                        @Html.ValidationMessageFor(model => model.NombreProveedor, "", new { @class = "invalid-feedback" })
+                                    </div>
+                                </div>
+                                <div class="col-md-2 col-6">
+                                    <div class="mb-2">
+                                        @Html.LabelFor(model => model.NombreSolicitante, htmlAttributes: new { @class = "form-label small fw-bold" })
+                                        @Html.EditorFor(model => model.NombreSolicitante, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Solicitante" } })
+                                        @Html.ValidationMessageFor(model => model.NombreSolicitante, "", new { @class = "invalid-feedback" })
+                                    </div>
+                                </div>
+                                <div class="col-md-2 col-6">
+                                    <div class="mb-2">
+                                        @Html.LabelFor(model => model.Concepto, htmlAttributes: new { @class = "form-label small fw-bold" })
+                                        @Html.DropDownListFor(model => model.Concepto,
+                                            new SelectList(ViewBag.Conceptos ?? new List<string>()),
+                                            "Concepto",
+                                            new { @class = "form-select form-select-sm", id = "ConceptoDropdown" })
+                                        @Html.ValidationMessageFor(model => model.Concepto, "", new { @class = "invalid-feedback" })
+                                    </div>
+                                </div>
+                                <div class="col-md-2 col-6">
+                                    <div class="mb-2">
+                                        @Html.LabelFor(model => model.Subconcepto, htmlAttributes: new { @class = "form-label small fw-bold" })
+                                        @Html.DropDownListFor(model => model.Subconcepto,
+                                            new SelectList(Enumerable.Empty<SelectListItem>()),
+                                            "Subconcepto",
+                                            new { @class = "form-select form-select-sm", id = "SubconceptoDropdown", disabled = "disabled" })
+                                        @Html.ValidationMessageFor(model => model.Subconcepto, "", new { @class = "invalid-feedback" })
+                                    </div>
+                                </div>
+                                <div class="col-md-2 col-6">
+                                    <div class="mb-2">
+                                        @Html.LabelFor(model => model.Sucursal, htmlAttributes: new { @class = "form-label small fw-bold" })
+                                        @Html.EditorFor(model => model.Sucursal, new
+                                        {
+                                            htmlAttributes = new
+                                            {
+                                                @class = "form-control form-control-sm",
+                                                placeholder = "Sucursal",
+                                                list = "sucursalesDatalist"
+                                            }
+                                        })
+                                        @Html.ValidationMessageFor(model => model.Sucursal, "", new { @class = "invalid-feedback" })
+                                        <datalist id="sucursalesDatalist">
+                                            @if (ViewBag.Sucursales != null)
+                                            {
+                                                foreach (var sucursal in ViewBag.Sucursales)
                                                 {
-                                                    @class = "form-control custom-input",
-                                                    placeholder = "Sucursal ",
-                                                    list = "sucursalesDatalist"  // Agregamos la referencia al datalist
+                                                    <option value="@sucursal">@sucursal</option>
                                                 }
-                                            })
-                                            @Html.ValidationMessageFor(model => model.Sucursal, "", new { @class = "invalid-feedback" })
-
-                                            <!-- Datalist con las opciones de sucursales -->
-                                            <datalist id="sucursalesDatalist">
-                                                @if (ViewBag.Sucursales != null)
-                                                {
-                                                    foreach (var sucursal in ViewBag.Sucursales)
-                                                    {
-                                                        <option value="@sucursal">@sucursal</option>
-                                                    }
-                                                }
-                                            </datalist>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="mb-3">
-                                            @Html.LabelFor(model => model.ImporteSinIva, htmlAttributes: new { @class = "form-label custom-label" })
-                                            <div class="input-group">
-                                                <span class="input-group-text">$</span>
-                                                @Html.EditorFor(model => model.ImporteSinIva, new { htmlAttributes = new { @class = "form-control custom-input", placeholder = "0.00", id = "ImporteSinIva" } })
-                                            </div>
-                                            @Html.ValidationMessageFor(model => model.ImporteSinIva, "", new { @class = "invalid-feedback d-block" })
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Segunda fila NO MOVER -->
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="mb-3">
-                                            @Html.LabelFor(model => model.Concepto, htmlAttributes: new { @class = "form-label custom-label" })
-                                            @Html.DropDownListFor(model => model.Concepto,
-                                                new SelectList(ViewBag.Conceptos ?? new List<string>()),
-                                                "Seleccione un concepto",
-                                                new { @class = "form-select custom-input", id = "ConceptoDropdown" })
-                                            @Html.ValidationMessageFor(model => model.Concepto, "", new { @class = "invalid-feedback" })
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="mb-3">
-                                            @Html.LabelFor(model => model.Subconcepto, htmlAttributes: new { @class = "form-label custom-label" })
-                                            @Html.DropDownListFor(model => model.Subconcepto,
-                                                new SelectList(Enumerable.Empty<SelectListItem>()),
-                                                "Seleccione un subconcepto",
-                                                new { @class = "form-select custom-input", id = "SubconceptoDropdown", disabled = "disabled" })
-                                            @Html.ValidationMessageFor(model => model.Subconcepto, "", new { @class = "invalid-feedback" })
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="mb-3">
-                                            @Html.LabelFor(model => model.ImporteIva, htmlAttributes: new { @class = "form-label custom-label" })
-                                            <div class="input-group">
-                                                <span class="input-group-text">$</span>
-                                                @Html.EditorFor(model => model.ImporteIva, new { htmlAttributes = new { @class = "form-control custom-input", placeholder = "0.00", id = "ImporteIva" } })
-                                            </div>
-                                            @Html.ValidationMessageFor(model => model.ImporteIva, "", new { @class = "invalid-feedback d-block" })
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Tercera fila NO MOVER -->
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="mb-3">
-                                            @Html.LabelFor(model => model.FormaPago, htmlAttributes: new { @class = "form-label custom-label" })
-                                            @Html.DropDownListFor(model => model.FormaPago, (IEnumerable<SelectListItem>)ViewBag.FormasPago,
-                                                new { @class = "form-select custom-input", @placeholder = "Forma de pago" })
-                                            @Html.ValidationMessageFor(model => model.FormaPago, "", new { @class = "invalid-feedback" })
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="mb-3">
-                                            @Html.LabelFor(model => model.TipoMoneda, htmlAttributes: new { @class = "form-label custom-label" })
-                                            @Html.EditorFor(model => model.TipoMoneda, new { htmlAttributes = new { @class = "form-control custom-input", placeholder = "Tipo de moneda" } })
-                                            @Html.ValidationMessageFor(model => model.TipoMoneda, "", new { @class = "invalid-feedback" })
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="mb-3">
-                                            @Html.LabelFor(model => model.RetencionIsr, htmlAttributes: new { @class = "form-label custom-label" })
-                                            <div class="input-group">
-                                                <span class="input-group-text">$</span>
-                                                @Html.EditorFor(model => model.RetencionIsr, new { htmlAttributes = new { @class = "form-control custom-input", placeholder = "0.00", id = "RetencionIsr" } })
-                                            </div>
-                                            @Html.ValidationMessageFor(model => model.RetencionIsr, "", new { @class = "invalid-feedback d-block" })
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Cuarta fila NO MOVER -->
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="mb-3">
-                                            @Html.LabelFor(model => model.Banco, htmlAttributes: new { @class = "form-label custom-label" })
-                                            @Html.EditorFor(model => model.Banco, new { htmlAttributes = new { @class = "form-control custom-input", placeholder = "Nombre del banco" } })
-                                            @Html.ValidationMessageFor(model => model.Banco, "", new { @class = "invalid-feedback" })
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="mb-3">
-                                            @Html.LabelFor(model => model.CuentaBancaria, htmlAttributes: new { @class = "form-label custom-label" })
-                                            @Html.EditorFor(model => model.CuentaBancaria, new { htmlAttributes = new { @class = "form-control custom-input", placeholder = "Número de cuenta" } })
-                                            @Html.ValidationMessageFor(model => model.CuentaBancaria, "", new { @class = "invalid-feedback" })
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="mb-3">
-                                            @Html.LabelFor(model => model.RetencionIva, htmlAttributes: new { @class = "form-label custom-label" })
-                                            <div class="input-group">
-                                                <span class="input-group-text">$</span>
-                                                @Html.EditorFor(model => model.RetencionIva, new { htmlAttributes = new { @class = "form-control custom-input", placeholder = "0.00", id = "RetencionIva" } })
-                                            </div>
-                                            @Html.ValidationMessageFor(model => model.RetencionIva, "", new { @class = "invalid-feedback d-block" })
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Quinta fila NO MOVER -->
-                                <div class="row justify-content-center">
-                                    <div class="col-md-4">
-                                        <div class="mb-3">
-                                            @Html.LabelFor(model => model.OpcionPago, htmlAttributes: new { @class = "form-label custom-label" })
-                                            @Html.EditorFor(model => model.OpcionPago, new { htmlAttributes = new { @class = "form-control custom-input", placeholder = "Opción de pago" } })
-                                            @Html.ValidationMessageFor(model => model.OpcionPago, "", new { @class = "invalid-feedback" })
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4"></div>
-                                    <div class="col-md-4">
-                                        <div class="mb-3">
-                                            @Html.LabelFor(model => model.Total, htmlAttributes: new { @class = "form-label custom-label" })
-                                            <div class="input-group">
-                                                <span class="input-group-text">$</span>
-                                                @Html.EditorFor(model => model.Total, new { htmlAttributes = new { @class = "form-control custom-input bg-light", @readonly = "readonly", placeholder = "0.00", id = "Total" } })
-                                            </div>
-                                            @Html.ValidationMessageFor(model => model.Total, "", new { @class = "invalid-feedback d-block" })
-                                        </div>
+                                            }
+                                        </datalist>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Documentos -->
-                        <div class="card mt-4 border-primary">
-                            <div class="card-header bg-light-primary py-2">
-                                <h6 class="mb-0 fw-semibold text-primary">
-                                    <i class="fas fa-paperclip me-2"></i>Documentos Adjuntos
-                                </h6>
-                                <small class="text-muted">Formatos permitidos: PDF, XML. Tamaño máximo: 5MB</small>
-                            </div>
-                            <div class="card-body">
-                                <div class="row g-3">
-                                    <div class="col-md-4">
-                                        <div class="mb-3">
-                                            @Html.LabelFor(model => model.XmlFile, htmlAttributes: new { @class = "form-label custom-label fw-bold" })
-                                            <input type="file" class="form-control custom-input" id="xmlFile" name="XmlFile" accept=".xml">
-                                            @Html.ValidationMessageFor(model => model.XmlFile, "", new { @class = "invalid-feedback d-block" })
-                                        </div>
+                        <!-- Tercera sección - similar a la imagen -->
+                        <div class="border-bottom pb-3 mb-4">
+
+                            <div class="row g-3">
+                                <div class="col-md-2 col-6">
+                                    <div class="mb-2">
+                                        @Html.LabelFor(model => model.TipoDocumento, htmlAttributes: new { @class = "form-label small fw-bold" })
+                                        @Html.DropDownListFor(model => model.TipoDocumento, new SelectList(new[] { "Factura", "Nota" }), "Tipo doc.", new { @class = "form-select form-select-sm", id = "tipoDocumento" })
+                                        @Html.ValidationMessageFor(model => model.TipoDocumento, "", new { @class = "invalid-feedback" })
                                     </div>
-                                    <div class="col-md-4">
-                                        <div class="mb-3">
-                                            @Html.LabelFor(model => model.PdfFile, htmlAttributes: new { @class = "form-label custom-label fw-bold" })
-                                            <input type="file" class="form-control custom-input" id="pdfFile" name="PdfFile" accept=".pdf">
-                                            @Html.ValidationMessageFor(model => model.PdfFile, "", new { @class = "invalid-feedback d-block" })
-                                        </div>
+                                </div>
+                                <div class="col-md-2 col-6" id="numeroDocumentoGroup" style="display:none;">
+                                    <div class="mb-2">
+                                        @Html.LabelFor(model => model.NumeroDocumento, htmlAttributes: new { @class = "form-label small fw-bold" })
+                                        @Html.EditorFor(model => model.NumeroDocumento, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "Núm. doc." } })
+                                        @Html.ValidationMessageFor(model => model.NumeroDocumento, "", new { @class = "invalid-feedback" })
                                     </div>
-                                    <div class="col-md-4">
-                                        <div class="mb-3">
-                                            @Html.LabelFor(model => model.CotizacionFile, htmlAttributes: new { @class = "form-label custom-label fw-bold" })
-                                            <input type="file" class="form-control custom-input" id="cotizacionFile" name="CotizacionFile" accept=".pdf,.jpg,.png">
-                                            @Html.ValidationMessageFor(model => model.CotizacionFile, "", new { @class = "invalid-feedback d-block" })
-                                        </div>
+                                </div>
+                                <div class="col-md-2 col-6">
+                                    <div class="mb-2">
+                                        @Html.LabelFor(model => model.TipoOperacion, htmlAttributes: new { @class = "form-label small fw-bold" })
+                                        @Html.DropDownListFor(model => model.TipoOperacion, new SelectList(new[] { "Compra", "Gasto" }), "Tipo op.", new { @class = "form-select form-select-sm" })
+                                        @Html.ValidationMessageFor(model => model.TipoOperacion, "", new { @class = "invalid-feedback" })
+                                    </div>
+                                </div>
+                                <div class="col-md-2 col-6">
+                                    <div class="mb-2">
+                                        @Html.LabelFor(model => model.Uuid, htmlAttributes: new { @class = "form-label small fw-bold" })
+                                        @Html.EditorFor(model => model.Uuid, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "UUID" } })
+                                        @Html.ValidationMessageFor(model => model.Uuid, "", new { @class = "invalid-feedback" })
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-12">
+                                    <div class="mb-2">
+                                        @Html.LabelFor(model => model.Observaciones, htmlAttributes: new { @class = "form-label small fw-bold" })
+                                        @Html.TextAreaFor(model => model.Observaciones, new { @class = "form-control form-control-sm", rows = 1, placeholder = "Observaciones" })
+                                        @Html.ValidationMessageFor(model => model.Observaciones, "", new { @class = "invalid-feedback" })
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Observaciones -->
-                        <div class="card mt-4 border-primary">
-                            <div class="card-header bg-light-primary py-2">
-                                <h6 class="mb-0 fw-semibold text-primary">
-                                    <i class="fas fa-info-circle me-2"></i>Información Adicional
-                                </h6>
+                        <!-- Campos de importes al lado derecho -->
+                        <div class="row">
+                            <div class="col-md-8">
+                                <!-- Contenido de la izquierda (vacío o con otros campos si es necesario) -->
                             </div>
-                            <div class="card-body">
-                                <div class="mb-3">
-                                    @Html.LabelFor(model => model.Observaciones, htmlAttributes: new { @class = "form-label custom-label" })
-                                    @Html.TextAreaFor(model => model.Observaciones, new { @class = "form-control custom-input", rows = 3, placeholder = "Ingrese observaciones relevantes..." })
-                                    @Html.ValidationMessageFor(model => model.Observaciones, "", new { @class = "invalid-feedback" })
+                            <div class="col-md-4">
+                                <div class="border p-3 mb-4 bg-light">
+                                    <div class="mb-2">
+                                        @Html.LabelFor(model => model.ImporteSinIva, htmlAttributes: new { @class = "form-label small fw-bold" })
+                                        <div class="input-group input-group-sm">
+                                            <span class="input-group-text">$</span>
+                                            @Html.EditorFor(model => model.ImporteSinIva, new { htmlAttributes = new { @class = "form-control", placeholder = "0.00", id = "ImporteSinIva" } })
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.ImporteSinIva, "", new { @class = "invalid-feedback d-block" })
+                                    </div>
+                                    <div class="mb-2">
+                                        @Html.LabelFor(model => model.ImporteIva, htmlAttributes: new { @class = "form-label small fw-bold" })
+                                        <div class="input-group input-group-sm">
+                                            <span class="input-group-text">$</span>
+                                            @Html.EditorFor(model => model.ImporteIva, new { htmlAttributes = new { @class = "form-control", placeholder = "0.00", id = "ImporteIva" } })
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.ImporteIva, "", new { @class = "invalid-feedback d-block" })
+                                    </div>
+                                    <div class="mb-2">
+                                        @Html.LabelFor(model => model.RetencionIsr, htmlAttributes: new { @class = "form-label small fw-bold" })
+                                        <div class="input-group input-group-sm">
+                                            <span class="input-group-text">$</span>
+                                            @Html.EditorFor(model => model.RetencionIsr, new { htmlAttributes = new { @class = "form-control", placeholder = "0.00", id = "RetencionIsr" } })
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.RetencionIsr, "", new { @class = "invalid-feedback d-block" })
+                                    </div>
+                                    <div class="mb-2">
+                                        @Html.LabelFor(model => model.RetencionIva, htmlAttributes: new { @class = "form-label small fw-bold" })
+                                        <div class="input-group input-group-sm">
+                                            <span class="input-group-text">$</span>
+                                            @Html.EditorFor(model => model.RetencionIva, new { htmlAttributes = new { @class = "form-control", placeholder = "0.00", id = "RetencionIva" } })
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.RetencionIva, "", new { @class = "invalid-feedback d-block" })
+                                    </div>
+                                    <div class="mb-2">
+                                        @Html.LabelFor(model => model.Total, htmlAttributes: new { @class = "form-label small fw-bold" })
+                                        <div class="input-group input-group-sm">
+                                            <span class="input-group-text">$</span>
+                                            @Html.EditorFor(model => model.Total, new { htmlAttributes = new { @class = "form-control bg-white", @readonly = "readonly", placeholder = "0.00", id = "Total" } })
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.Total, "", new { @class = "invalid-feedback d-block" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Sección de archivos movida debajo de los importes -->
+                        <div class="border-bottom pb-3 mb-4">
+                            <div class="row g-3">
+                                <div class="col-md-3 col-6">
+                                    <div class="mb-2">
+                                        @Html.LabelFor(model => model.PdfFile, htmlAttributes: new { @class = "form-label small fw-bold" })
+                                        <input type="file" class="form-control form-control-sm" id="pdfFile" name="PdfFile" accept=".pdf">
+                                        @Html.ValidationMessageFor(model => model.PdfFile, "", new { @class = "invalid-feedback" })
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-6">
+                                    <div class="mb-2">
+                                        @Html.LabelFor(model => model.XmlFile, htmlAttributes: new { @class = "form-label small fw-bold" })
+                                        <input type="file" class="form-control form-control-sm" id="xmlFile" name="XmlFile" accept=".xml">
+                                        @Html.ValidationMessageFor(model => model.XmlFile, "", new { @class = "invalid-feedback" })
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-6">
+                                    <div class="mb-2">
+                                        @Html.LabelFor(model => model.CotizacionFile, htmlAttributes: new { @class = "form-label small fw-bold" })
+                                        <input type="file" class="form-control form-control-sm" id="cotizacionFile" name="CotizacionFile" accept=".pdf,.jpg,.png">
+                                        @Html.ValidationMessageFor(model => model.CotizacionFile, "", new { @class = "invalid-feedback" })
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-6">
+                                    <div class="mb-2">
+                                        @Html.LabelFor(model => model.OpcionPago, htmlAttributes: new { @class = "form-label small fw-bold" })
+                                        @Html.EditorFor(model => model.OpcionPago, new { htmlAttributes = new { @class = "form-control form-control-sm", placeholder = "dd/mm/aaaa" } })
+                                        @Html.ValidationMessageFor(model => model.OpcionPago, "", new { @class = "invalid-feedback" })
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Botones -->
-                        <div class="d-flex justify-content-between mt-5 flex-wrap gap-2">
-                            <a href="@Url.Action("Index")" class="btn btn-outline-secondary px-4">
-                                <i class="fas fa-arrow-left me-2"></i>Regresar
+                        <div class="d-flex justify-content-between mt-4">
+                            <a href="@Url.Action("Index")" class="btn btn-outline-secondary btn-sm">
+                                <i class="fas fa-arrow-left me-1"></i>Regresar
                             </a>
                             <div>
-                                <button type="reset" class="btn btn-outline-danger me-2 px-4">
-                                    <i class="fas fa-eraser me-2"></i>Limpiar
+                                <button type="reset" class="btn btn-outline-danger btn-sm me-2">
+                                    <i class="fas fa-eraser me-1"></i>Limpiar
                                 </button>
-                                <button type="submit" class="btn btn-primary px-4">
-                                    <i class="fas fa-save me-2"></i>Guardar Solicitud
+                                <button type="submit" class="btn btn-primary btn-sm">
+                                    <i class="fas fa-save me-1"></i>Guardar Solicitud
                                 </button>
                             </div>
                         </div>
@@ -329,135 +299,87 @@
 
 @section Styles {
     <style>
-        :root {
-            --primary-color: #4e73df;
-            --light-primary: #f8f9fc;
-            --secondary-color: #858796;
-            --heading-color: #1b2838;
-            --input-radius: 0.65rem;
-        }
-
         body {
-            background-color: #f8f9fc;
+            background-color: #f8f9fa;
         }
 
-        .custom-card-reembolso {
-            border-radius: 1.1rem;
-            box-shadow: 0 0.15rem 2.5rem 0 rgba(58,59,69,.11), 0 1.5rem 1rem -1rem rgba(33,44,90,.05);
-            max-width: 900px;
-            margin: auto;
+        .card {
+            border-radius: 0;
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+            border: 1px solid #dee2e6;
         }
 
         .card-header {
-            border-bottom: none;
-            border-radius: 1.1rem 1.1rem 0 0 !important;
+            background-color: #fff;
+            border-bottom: 1px solid #dee2e6;
         }
 
-        .bg-gradient-primary {
-            background: linear-gradient(135deg, #4e73df 0%, #224abe 100%);
-        }
-
-        .bg-light-primary {
-            background-color: rgba(78,115,223,0.07);
-        }
-
-        .custom-label, .form-label {
-            font-size: 1rem !important;
-            color: #23375a !important;
-            font-weight: 700 !important;
+        .form-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #495057;
+            margin-bottom: 0.25rem;
             text-transform: uppercase;
-            letter-spacing: 0.01em;
-            margin-bottom: .35rem;
         }
 
-        .custom-input, .form-select {
-            border-radius: var(--input-radius) !important;
-            background-color: #f8f9fa !important;
-            font-size: 1rem;
-            color: #22304a;
-            border: 1px solid #d1d3e2;
-            min-height: 2.5rem;
+        .form-control, .form-select {
+            font-size: 0.875rem;
+            border-radius: 0.2rem;
+            border: 1px solid #ced4da;
+            padding: 0.25rem 0.5rem;
+            height: calc(1.5em + 0.5rem + 2px);
         }
 
-            .form-control:focus, .form-select:focus {
-                border-color: #b8d0fc;
-                box-shadow: 0 0 0 0.15rem rgba(78,115,223,0.18);
-                background: #f4f8fd;
-            }
+        .form-control-sm {
+            font-size: 0.75rem;
+            height: calc(1.5em + 0.5rem + 2px);
+        }
 
-        .input-group-text {
-            background-color: #e8ecf5 !important;
-            border: 1px solid #d1d3e2;
-            font-weight: 700;
+        .input-group-sm > .form-control,
+        .input-group-sm > .form-select,
+        .input-group-sm > .input-group-text {
+            font-size: 0.75rem;
+            height: calc(1.5em + 0.5rem + 2px);
         }
 
         .btn {
-            border-radius: 0.5rem;
-            font-weight: 600;
-            font-size: 1rem;
-            transition: all 0.2s;
-            box-shadow: 0 1px 6px rgba(30,46,70,0.06);
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
         }
 
-        .btn-primary {
-            background-color: var(--primary-color);
-            border-color: var(--primary-color);
+        .btn-sm {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
         }
 
-            .btn-primary:hover {
-                background-color: #2653d4;
-                border-color: #224abe;
-            }
-
-        .btn-outline-secondary {
-            color: var(--secondary-color);
-            border-color: var(--secondary-color);
+        .border-bottom {
+            border-bottom: 1px solid #dee2e6 !important;
         }
 
-            .btn-outline-secondary:hover {
-                background-color: var(--secondary-color);
-                color: #fff;
-            }
+        .bg-light {
+            background-color: #f8f9fa !important;
+        }
 
         .invalid-feedback {
-            font-size: 0.88rem;
+            font-size: 0.6875rem;
+        }
+
+        h5, h6 {
+            color: #212529;
+        }
+
+        h6 {
+            font-size: 0.875rem;
         }
 
         .datepicker {
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%234e73df' viewBox='0 0 16 16'%3E%3Cpath d='M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z'/%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23212529' viewBox='0 0 16 16'%3E%3Cpath d='M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z'/%3E%3C/svg%3E");
             background-repeat: no-repeat;
-            background-position: right 0.75rem center;
-            background-size: 16px 16px;
-        }
-
-        @@media (max-width: 991px) {
-            .custom-card-reembolso {
-                max-width: 97vw;
-            }
-        }
-
-        @@media (max-width: 767px) {
-            .custom-card-reembolso {
-                padding: 1rem;
-            }
-
-            .btn {
-                width: 100%;
-                margin-bottom: .5rem;
-            }
-
-            .d-flex.justify-content-between {
-                flex-direction: column;
-            }
-
-            .row.g-4 > [class^="col-"] {
-                flex: 0 0 100%;
-                max-width: 100%;
-            }
+            background-position: right 0.5rem center;
+            background-size: 12px 12px;
         }
     </style>
 }
-
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>

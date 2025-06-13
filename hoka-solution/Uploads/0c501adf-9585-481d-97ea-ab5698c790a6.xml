@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<cfdi:Comprobante xmlns:cfdi="http://www.sat.gob.mx/cfd/4" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sat.gob.mx/cfd/4 http://www.sat.gob.mx/sitio_internet/cfd/4/cfdv40.xsd" Version="4.0" Fecha="2024-09-03T00:00:00" SubTotal="2990.00" Total="3468.40" Moneda="MXN" TipoDeComprobante="I" LugarExpedicion="77517" Exportacion="01" Sello="fanOfqyAxvYNbdjTNfJLVC+KxSJ4c8frc8X9qMFDavO81TiKxJE2iFbIfQLFuUGIYZ7Jr4pK+t7vrjcpnCzklzz959bxffALE72zwApashHn3K17K14eXIM/+uuzzWnhcjB8x7Dpv1t5pH1iM667m+SjF8gEfE5MQQzLHOmdMoWT1qtiku9IgU+gXGfb/F9mu/JldY1byE0dVXC30bP5fwVt5XYiYcy1CSC+eEApzFKOFmnSEfIAPS8PpIkSBbSo3I5ZeTP0+3mSwiNUlXOgbPjlT3x+6G1Ifo3v8s1v3H5YDe0jZ1tkIbDlSKGDXVH/70NhsAkiZlMJyjlBgwuLig==" Certificado="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" NoCertificado="00001000000519007929" FormaPago="99" Folio="1321" Serie="CE" MetodoPago="PPD">
+  <cfdi:Emisor Rfc="UNM180717E61" RegimenFiscal="601" Nombre="UN NUEVO MAÑANA SUSTENTABLE" />
+  <cfdi:Receptor Rfc="HIL170208K38" Nombre="HOKA ILUSIONES" DomicilioFiscalReceptor="77509" RegimenFiscalReceptor="601" UsoCFDI="G01" />
+  <cfdi:Conceptos>
+    <cfdi:Concepto ClaveProdServ="49101600" Cantidad="50" ClaveUnidad="H87" Descripcion="IMAN RESINA TIPO HUESO" ValorUnitario="7.00" Importe="350.00" ObjetoImp="02">
+      <cfdi:Impuestos>
+        <cfdi:Traslados>
+          <cfdi:Traslado Impuesto="002" Base="350" TipoFactor="Tasa" TasaOCuota="0.160000" Importe="56.00" />
+        </cfdi:Traslados>
+      </cfdi:Impuestos>
+    </cfdi:Concepto>
+    <cfdi:Concepto ClaveProdServ="49101600" Cantidad="60" ClaveUnidad="H87" Descripcion="IMAN METAL DESTAPADOR DESTINO" ValorUnitario="12.00" Importe="720.00" ObjetoImp="02">
+      <cfdi:Impuestos>
+        <cfdi:Traslados>
+          <cfdi:Traslado Impuesto="002" Base="720" TipoFactor="Tasa" TasaOCuota="0.160000" Importe="115.20" />
+        </cfdi:Traslados>
+      </cfdi:Impuestos>
+    </cfdi:Concepto>
+    <cfdi:Concepto ClaveProdServ="49101600" Cantidad="100" ClaveUnidad="H87" Descripcion="IMAN METAL TORTUGA" ValorUnitario="12.00" Importe="1200.00" ObjetoImp="02">
+      <cfdi:Impuestos>
+        <cfdi:Traslados>
+          <cfdi:Traslado Impuesto="002" Base="1200" TipoFactor="Tasa" TasaOCuota="0.160000" Importe="192.00" />
+        </cfdi:Traslados>
+      </cfdi:Impuestos>
+    </cfdi:Concepto>
+    <cfdi:Concepto ClaveProdServ="49101600" Cantidad="60" ClaveUnidad="H87" Descripcion="IMAN RESINA DESTAPADOR DEST" ValorUnitario="12.00" Importe="720.00" ObjetoImp="02">
+      <cfdi:Impuestos>
+        <cfdi:Traslados>
+          <cfdi:Traslado Impuesto="002" Base="720" TipoFactor="Tasa" TasaOCuota="0.160000" Importe="115.20" />
+        </cfdi:Traslados>
+      </cfdi:Impuestos>
+    </cfdi:Concepto>
+  </cfdi:Conceptos>
+  <cfdi:Impuestos TotalImpuestosTrasladados="478.40">
+    <cfdi:Traslados>
+      <cfdi:Traslado Base="2990.00" Impuesto="002" Importe="478.40" TipoFactor="Tasa" TasaOCuota="0.160000" />
+    </cfdi:Traslados>
+  </cfdi:Impuestos>
+  <cfdi:Complemento>
+    <tfd:TimbreFiscalDigital xmlns:tfd="http://www.sat.gob.mx/TimbreFiscalDigital" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sat.gob.mx/TimbreFiscalDigital http://www.sat.gob.mx/sitio_internet/cfd/TimbreFiscalDigital/TimbreFiscalDigitalv11.xsd" Version="1.1" UUID="E58BCA3E-FFF2-4040-B4F5-0013DE6A503B" FechaTimbrado="2024-09-03T16:52:26" RfcProvCertif="MAS0810247C0" SelloCFD="fanOfqyAxvYNbdjTNfJLVC+KxSJ4c8frc8X9qMFDavO81TiKxJE2iFbIfQLFuUGIYZ7Jr4pK+t7vrjcpnCzklzz959bxffALE72zwApashHn3K17K14eXIM/+uuzzWnhcjB8x7Dpv1t5pH1iM667m+SjF8gEfE5MQQzLHOmdMoWT1qtiku9IgU+gXGfb/F9mu/JldY1byE0dVXC30bP5fwVt5XYiYcy1CSC+eEApzFKOFmnSEfIAPS8PpIkSBbSo3I5ZeTP0+3mSwiNUlXOgbPjlT3x+6G1Ifo3v8s1v3H5YDe0jZ1tkIbDlSKGDXVH/70NhsAkiZlMJyjlBgwuLig==" NoCertificadoSAT="00001000000709182898" SelloSAT="DAMn7R+INZ2XZU7Wj3HjiJLk/utVORYFS6qQUlbrSIaDANj1tH+SD3aJEpWgM+Tr5R8hdOVTfE0mFJFDrpaeD7UvBYOCcW1EvdFPGvms+gg9cDqjl57jW9wBKdIbaqgiYIXaz4HyM/hviZxEXxjwNnnzhH64BX/r4T28RrqcUhzc/iA82z07dpg2iJjjKJBuqzPiO7bsiGB5f7SIBc/hsHuYM0AtclaZ8Lq0UsOhVWSe0pXc7hPMmYVmFSQhXEaN+SZjDXRdZKbJ4k/BoVbjKwXvn9y3WS9fyKGJP/5vvP+E+fI96A2PhV2rK2Hktd0Ib2rkmqHB+sHIGktUcRKpEw==" />
+  </cfdi:Complemento>
+</cfdi:Comprobante>

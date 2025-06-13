@@ -13,52 +13,52 @@ namespace hoka.Controllers
 {
     public class ReembolsosController : Controller
     {
+        // Método para llenar todos los combos y listas del ViewBag
+        private void CargarCombos()
+        {
+            using (var db = new ApplicationDbContext())
+            {
+                ViewBag.Proveedores = db.Proveedores
+                    .OrderBy(p => p.NombreRazonSocial)
+                    .Select(p => p.NombreRazonSocial)
+                    .Distinct()
+                    .ToList();
+
+                ViewBag.Sucursales = db.Almacenes
+                    .OrderBy(a => a.Nombre)
+                    .Select(a => a.Nombre)
+                    .Distinct()
+                    .ToList();
+
+                ViewBag.Conceptos = db.Conceptos
+                    .Select(c => c.TipoConcepto)
+                    .Distinct()
+                    .OrderBy(t => t)
+                    .ToList();
+            }
+
+            ViewBag.FormasPago = new List<SelectListItem>
+            {
+                new SelectListItem { Text = "Efectivo", Value = "Efectivo" },
+                new SelectListItem { Text = "Deposito", Value = "Deposito" }
+            };
+        }
+
         // GET: Reembolsos/Reembolso
         public ActionResult Reembolso()
         {
             try
             {
-                using (var db = new ApplicationDbContext())
-                {
-                    // Obtener proveedores
-                    ViewBag.Proveedores = db.Proveedores
-                                           .OrderBy(p => p.NombreRazonSocial)
-                                           .Select(p => p.NombreRazonSocial)
-                                           .Distinct()
-                                           .ToList();
-
-                    // Obtener sucursales
-                    ViewBag.Sucursales = db.Almacenes
-                                         .OrderBy(a => a.Nombre)
-                                         .Select(a => a.Nombre)
-                                         .Distinct()
-                                         .ToList();
-
-                    // Obtener los tipos de concepto únicos (TipoConcepto)
-                    ViewBag.Conceptos = db.Conceptos
-                                       .Select(c => c.TipoConcepto)
-                                       .Distinct()
-                                       .OrderBy(t => t)
-                                       .ToList();
-                }
+                CargarCombos();
             }
             catch (Exception ex)
             {
-                // Manejo de errores
                 ViewBag.Proveedores = new List<string>();
                 ViewBag.Sucursales = new List<string>();
                 ViewBag.Conceptos = new List<string>();
-
-                // Log del error (puedes implementar tu propio sistema de logging)
+                ViewBag.FormasPago = new List<SelectListItem>();
                 System.Diagnostics.Debug.WriteLine($"Error al cargar datos iniciales: {ex.Message}");
             }
-
-            // >>>>>> AGREGADO: Opciones de forma de pago
-            ViewBag.FormasPago = new List<SelectListItem>
-            {
-                new SelectListItem { Text = "Efectivo", Value = "Efectivo", Selected = true },
-                new SelectListItem { Text = "Deposito", Value = "Deposito" }
-            };
 
             return View(new Reembolso { FechaSolicitud = DateTime.Now });
         }
@@ -71,11 +71,11 @@ namespace hoka.Controllers
                 using (var db = new ApplicationDbContext())
                 {
                     var subconceptos = db.Conceptos
-                                      .Where(c => c.TipoConcepto == concepto)
-                                      .Select(c => c.Concepto)
-                                      .Distinct()
-                                      .OrderBy(s => s)
-                                      .ToList();
+                        .Where(c => c.TipoConcepto == concepto)
+                        .Select(c => c.Concepto)
+                        .Distinct()
+                        .OrderBy(s => s)
+                        .ToList();
 
                     return Json(subconceptos, JsonRequestBehavior.AllowGet);
                 }
@@ -91,17 +91,13 @@ namespace hoka.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Reembolso reembolso)
         {
-            // Vuelve a poner el ViewBag para que el dropdown funcione después de error de validación
-            ViewBag.FormasPago = new List<SelectListItem>
-    {
-        new SelectListItem { Text = "Efectivo", Value = "Efectivo" },
-        new SelectListItem { Text = "Deposito", Value = "Deposito" }
-    };
-
             try
             {
                 if (!ModelState.IsValid)
+                {
+                    CargarCombos();
                     return View("Reembolso", reembolso);
+                }
 
                 using (var db = new ApplicationDbContext())
                 {
@@ -119,8 +115,8 @@ namespace hoka.Controllers
 
                     if (result > 0)
                     {
-                        // En lugar de redirigir, mostramos la misma vista pero en modo consulta
-                        return View("Reembolso", reembolso);
+                        CargarCombos();
+                        return View("Reembolso", new Reembolso { FechaSolicitud = DateTime.Now });
                     }
                     else
                     {
@@ -141,13 +137,21 @@ namespace hoka.Controllers
             }
             catch (Exception ex)
             {
-                ModelState.AddModelError("", $"Error al guardar: {ex.Message}");
+                var mensaje = $"Error al guardar: {ex.Message}";
                 if (ex.InnerException != null)
                 {
-                    ModelState.AddModelError("", $"Error interno: {ex.InnerException.Message}");
+                    mensaje += $"\nError interno: {ex.InnerException.Message}";
+                    if (ex.InnerException.InnerException != null)
+                    {
+                        mensaje += $"\nError SQL: {ex.InnerException.InnerException.Message}";
+                    }
                 }
+                ModelState.AddModelError("", mensaje);
             }
 
+
+
+            CargarCombos();
             return View("Reembolso", reembolso);
         }
 

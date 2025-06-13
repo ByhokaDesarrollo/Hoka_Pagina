@@ -54,3 +54,17 @@ D:\H\hoka-solution\hoka_cli\obj\Release\hoka_cli.csproj.CoreCompileInputs.cache
 D:\H\hoka-solution\hoka_cli\obj\Release\hoka_cli.csproj.Up2Date
 D:\H\hoka-solution\hoka_cli\obj\Release\hoka_cli.exe
 D:\H\hoka-solution\hoka_cli\obj\Release\hoka_cli.pdb
+C:\Users\USUARIO\Downloads\hoka-solution-voucher-evidencia\hoka-solution\hoka_cli\bin\Release\hoka_cli.exe.config
+C:\Users\USUARIO\Downloads\hoka-solution-voucher-evidencia\hoka-solution\hoka_cli\bin\Release\hoka_cli.exe
+C:\Users\USUARIO\Downloads\hoka-solution-voucher-evidencia\hoka-solution\hoka_cli\bin\Release\hoka_cli.pdb
+C:\Users\USUARIO\Downloads\hoka-solution-voucher-evidencia\hoka-solution\hoka_cli\bin\Release\EntityFramework.dll
+C:\Users\USUARIO\Downloads\hoka-solution-voucher-evidencia\hoka-solution\hoka_cli\bin\Release\EntityFramework.SqlServer.dll
+C:\Users\USUARIO\Downloads\hoka-solution-voucher-evidencia\hoka-solution\hoka_cli\bin\Release\Newtonsoft.Json.dll
+C:\Users\USUARIO\Downloads\hoka-solution-voucher-evidencia\hoka-solution\hoka_cli\bin\Release\EntityFramework.xml
+C:\Users\USUARIO\Downloads\hoka-solution-voucher-evidencia\hoka-solution\hoka_cli\bin\Release\EntityFramework.SqlServer.xml
+C:\Users\USUARIO\Downloads\hoka-solution-voucher-evidencia\hoka-solution\hoka_cli\bin\Release\Newtonsoft.Json.xml
+C:\Users\USUARIO\Downloads\hoka-solution-voucher-evidencia\hoka-solution\hoka_cli\obj\Release\hoka_cli.csproj.AssemblyReference.cache
+C:\Users\USUARIO\Downloads\hoka-solution-voucher-evidencia\hoka-solution\hoka_cli\obj\Release\hoka_cli.csproj.CoreCompileInputs.cache
+C:\Users\USUARIO\Downloads\hoka-solution-voucher-evidencia\hoka-solution\hoka_cli\obj\Release\hoka_cli.csproj.Up2Date
+C:\Users\USUARIO\Downloads\hoka-solution-voucher-evidencia\hoka-solution\hoka_cli\obj\Release\hoka_cli.exe
+C:\Users\USUARIO\Downloads\hoka-solution-voucher-evidencia\hoka-solution\hoka_cli\obj\Release\hoka_cli.pdb
