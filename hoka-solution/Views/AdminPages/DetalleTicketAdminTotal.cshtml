@@ -72,11 +72,12 @@
                     </div>
                 </div>
                 <hr />
-
-                <a href="@Url.Action("ExportarExcelDetalle", "NombreDeTuControlador")"
-                   class="btn btn-success"
-                   style="background-color:#217346;border-color:#217346;color:white;width:150px;height:60px;display:flex;align-items:center;justify-content:center;font-size:1.3em;">
-                    <img src="~/Content/img/excel_icon.png" style="width:28px;margin-right:10px;"> Excel
+                <a href="@Url.Action("ExportarDetalleTicketExcel", "AdminPages", new { idFolio = ViewBag.idFolio })"
+                   class="excel-btn" target="_blank"
+                   style="background-color: #10793F; color: white; padding: 8px 20px; border: 2px solid white; border-radius: 4px; text-decoration: none; display: inline-flex; align-items: center; font-weight: bold;">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/7/73/Microsoft_Excel_2013-2019_logo.svg"
+                         alt="Excel" style="height:20px; margin-right:8px;" />
+                    Excel
                 </a>
 
 

@@ -44,6 +44,18 @@
     });
 
     $tablaRemisiod.DataTable({
+        dom: 'Bfrtip',
+        buttons: [
+            {
+                extend: 'excel',
+                text: '<i class="fas fa-file-excel"></i> Excel',
+                title: 'REPORTE DE JOYERIA',
+                className: 'btn-excel-brillante', // Clase personalizada
+                exportOptions: {
+                    columns: ':visible'
+                }
+            }
+        ],
         language: {
             "sProcessing": "Procesando...",
             "sLengthMenu": "Mostrar _MENU_ registros",
@@ -105,13 +117,12 @@
             {
                 data: null,
                 render: function (data, type, row) {
-                    return `<a href="/AdminPages/DetalleTicketJoyAdminTotal?idFolio=${row.folio_factura}&almacen=${row.almacen}" target="_blank" class="btn btn-grey"><i class="fas fa-info-circle"></i> Detalle</a>`;
+                    return `<a href="/AdminPages/DetalleTicketJoyAdmin?idFolio=${row.folio_factura}&almacen=${row.almacen}" target="_blank" class="btn btn-grey"><i class="fas fa-info-circle"></i> Detalle</a>`;
                 },
                 orderable: false
             },
 
         ],
-
         deferRender: true, // Se habilita el renderizado diferido
 
         drawCallback: function (settings) {

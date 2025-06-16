@@ -27,6 +27,8 @@ using System.Web.Services.Description;
 using System.Web.Script.Serialization;
 using System.Xml.Linq;
 using System.Web.UI.WebControls.WebParts;
+using System.IO;
+using ClosedXML.Excel;
 
 namespace hoka.Controllers
 {
@@ -2927,6 +2929,278 @@ namespace hoka.Controllers
             }
         }
 
+
+
+        [HttpGet]
+
+        public ActionResult ExportarDetalleTicketExcel(string idFolio)
+        {
+            if (Session["usuario"] == null)
+                return RedirectToAction("Login", "Acceso");
+
+            var allHokaModels = new AllHokaModels();
+            allHokaModels.RemisioMM = new List<RemisioMModel>();
+            allHokaModels.RemisioMPagoM = new List<RemisioMPagoModel>();
+            allHokaModels.RemisioDyMM = new List<RemisioDyMModel>();
+            allHokaModels.RemisioMVendedorM = new List<RemisioMVendedorModel>();
+
+            using (SqlConnection cn = new SqlConnection(conexionDBHoka))
+            {
+                cn.Open();
+
+                // Pagos
+                SqlCommand cmdRemisioPago = new SqlCommand("SELECT * FROM VRemisioMPagoMWeb WHERE folio_factura = @folio", cn);
+                cmdRemisioPago.Parameters.AddWithValue("@folio", idFolio);
+                using (SqlDataReader drRemisioPago = cmdRemisioPago.ExecuteReader())
+                {
+                    while (drRemisioPago.Read())
+                    {
+                        RemisioMPagoModel remisiopago = new RemisioMPagoModel();
+                        remisiopago.folio_factura = drRemisioPago["folio_factura"].ToString();
+                        remisiopago.total = Convert.ToDouble(drRemisioPago["total"]);
+                        remisiopago.NombreMoneda = drRemisioPago["NombreMoneda"].ToString();
+                        remisiopago.NombreAlmacen = drRemisioPago["NombreAlmacen"].ToString();
+                        string fechaPagostring = drRemisioPago["fecha_pago"].ToString();
+                        if (DateTime.TryParse(fechaPagostring, out DateTime fecha_pago))
+                            remisiopago.fecha_pago = fecha_pago;
+                        else
+                            remisiopago.fecha_pago = DateTime.MinValue;
+                        allHokaModels.RemisioMPagoM.Add(remisiopago);
+                    }
+                    drRemisioPago.Close();
+                }
+
+                // Productos
+                SqlCommand cmdRemisioProductos = new SqlCommand("SELECT * FROM VRemisioDyMWeb WHERE folio_remision = @folio", cn);
+                cmdRemisioProductos.Parameters.AddWithValue("@folio", idFolio);
+                using (SqlDataReader drRemisioProductoss = cmdRemisioProductos.ExecuteReader())
+                {
+                    while (drRemisioProductoss.Read())
+                    {
+                        RemisioDyMModel remisioproducto = new RemisioDyMModel();
+                        remisioproducto.folio_remision = drRemisioProductoss["folio_remision"].ToString();
+                        remisioproducto.descripcion_larga = drRemisioProductoss["descripcion_larga"].ToString();
+                        remisioproducto.codigobarras = drRemisioProductoss["codigobarras"].ToString();
+                        remisioproducto.NombreAlmacen = drRemisioProductoss["NombreAlmacen"].ToString();
+                        remisioproducto.cantidads = Convert.ToDouble(drRemisioProductoss["cantidads"]);
+                        remisioproducto.deportiva = drRemisioProductoss["deportiva"].ToString();
+                        string fechastring = drRemisioProductoss["fecha"].ToString();
+                        if (DateTime.TryParse(fechastring, out DateTime fecha))
+                            remisioproducto.fecha = fecha;
+                        else
+                            remisioproducto.fecha = DateTime.MinValue;
+                        allHokaModels.RemisioDyMM.Add(remisioproducto);
+                    }
+                    drRemisioProductoss.Close();
+                }
+
+                // Vendedores
+                SqlCommand cmdRemisioVendedores = new SqlCommand("SELECT * FROM VRemisioMVendedor WHERE folio_factura = @folio", cn);
+                cmdRemisioVendedores.Parameters.AddWithValue("@folio", idFolio);
+                using (SqlDataReader drRemisioVendedores = cmdRemisioVendedores.ExecuteReader())
+                {
+                    while (drRemisioVendedores.Read())
+                    {
+                        RemisioMVendedorModel remisiovendedor = new RemisioMVendedorModel();
+                        remisiovendedor.folio_factura = drRemisioVendedores["folio_factura"].ToString();
+                        remisiovendedor.NombreVendedor = drRemisioVendedores["NombreVendedor"].ToString();
+                        remisiovendedor.NombreAlmacen = drRemisioVendedores["NombreAlmacen"].ToString();
+                        string fechastring2 = drRemisioVendedores["fecha"].ToString();
+                        if (DateTime.TryParse(fechastring2, out DateTime fecha2))
+                            remisiovendedor.fecha = fecha2;
+                        else
+                            remisiovendedor.fecha = DateTime.MinValue;
+                        allHokaModels.RemisioMVendedorM.Add(remisiovendedor);
+                    }
+                    drRemisioVendedores.Close();
+                }
+
+                // Observaciones
+                SqlCommand cmdRemisioMObser = new SqlCommand("SELECT * FROM VRemisioMWeb WHERE folio_remision = @folio", cn);
+                cmdRemisioMObser.Parameters.AddWithValue("@folio", idFolio);
+                using (SqlDataReader drRemisioMObser = cmdRemisioMObser.ExecuteReader())
+                {
+                    while (drRemisioMObser.Read())
+                    {
+                        RemisioMModel remisioMObser = new RemisioMModel();
+                        remisioMObser.folio_remision = drRemisioMObser["folio_remision"].ToString();
+                        remisioMObser.observaciones = drRemisioMObser["observaciones"].ToString();
+                        string fechastring2 = drRemisioMObser["fecha"].ToString();
+                        if (DateTime.TryParse(fechastring2, out DateTime fecha2))
+                            remisioMObser.fecha = fecha2;
+                        else
+                            remisioMObser.fecha = DateTime.MinValue;
+                        allHokaModels.RemisioMM.Add(remisioMObser);
+                    }
+                    drRemisioMObser.Close();
+                }
+            }
+            using (var workbook = new XLWorkbook())
+            {
+                // =================== 1. Pagos =====================
+                var wsPagos = workbook.Worksheets.Add("Pagos");
+                wsPagos.Cell(1, 1).Value = "DETALLE DE PAGOS";
+                wsPagos.Range("A1:E1").Merge().Style
+                    .Font.SetBold()
+                    .Font.FontSize = 16;
+                wsPagos.Range("A1:E1").Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                wsPagos.Range("A1:E1").Style.Fill.BackgroundColor = XLColor.FromHtml("#1565C0"); // azul elegante
+                wsPagos.Range("A1:E1").Style.Font.FontColor = XLColor.White;
+
+                wsPagos.Cell(2, 1).Value = "Folio";
+                wsPagos.Cell(2, 2).Value = "Total";
+                wsPagos.Cell(2, 3).Value = "Tipo de pago";
+                wsPagos.Cell(2, 4).Value = "Almacén";
+                wsPagos.Cell(2, 5).Value = "Fecha de pago";
+                wsPagos.Range("A2:E2").Style.Font.SetBold();
+                wsPagos.Range("A2:E2").Style.Fill.BackgroundColor = XLColor.FromHtml("#E3F2FD");
+                wsPagos.Range("A2:E2").Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
+                wsPagos.Range("A2:E2").Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+
+                int row = 3;
+                foreach (var pago in allHokaModels.RemisioMPagoM)
+                {
+                    wsPagos.Cell(row, 1).Value = pago.folio_factura;
+                    wsPagos.Cell(row, 2).Value = pago.total;
+                    wsPagos.Cell(row, 3).Value = pago.NombreMoneda;
+                    wsPagos.Cell(row, 4).Value = pago.NombreAlmacen;
+                    wsPagos.Cell(row, 5).Value = pago.fecha_pago.HasValue && pago.fecha_pago != DateTime.MinValue
+                        ? pago.fecha_pago.Value.ToString("dd/MM/yyyy")
+                        : "";
+                    row++;
+                }
+                var pagosTableRange = wsPagos.Range(2, 1, row - 1, 5);
+                pagosTableRange.Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
+                pagosTableRange.Style.Border.InsideBorder = XLBorderStyleValues.Thin;
+
+                // =================== 2. Productos =====================
+                var wsProductos = workbook.Worksheets.Add("Productos");
+                wsProductos.Cell(1, 1).Value = "DETALLE DE PRODUCTOS";
+                wsProductos.Range("A1:G1").Merge().Style
+                    .Font.SetBold()
+                    .Font.FontSize = 16;
+                wsProductos.Range("A1:G1").Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                wsProductos.Range("A1:G1").Style.Fill.BackgroundColor = XLColor.FromHtml("#00897B"); // verde elegante
+                wsProductos.Range("A1:G1").Style.Font.FontColor = XLColor.White;
+
+                wsProductos.Cell(2, 1).Value = "Folio";
+                wsProductos.Cell(2, 2).Value = "Descripción";
+                wsProductos.Cell(2, 3).Value = "Código de barra";
+                wsProductos.Cell(2, 4).Value = "Almacén";
+                wsProductos.Cell(2, 5).Value = "Uni. Vendidas";
+                wsProductos.Cell(2, 6).Value = "Deportiva";
+                wsProductos.Cell(2, 7).Value = "Fecha";
+                wsProductos.Range("A2:G2").Style.Font.SetBold();
+                wsProductos.Range("A2:G2").Style.Fill.BackgroundColor = XLColor.FromHtml("#E0F2F1");
+                wsProductos.Range("A2:G2").Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
+                wsProductos.Range("A2:G2").Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+
+                row = 3;
+                foreach (var producto in allHokaModels.RemisioDyMM)
+                {
+                    wsProductos.Cell(row, 1).Value = producto.folio_remision;
+                    wsProductos.Cell(row, 2).Value = producto.descripcion_larga;
+                    wsProductos.Cell(row, 3).Value = producto.codigobarras;
+                    wsProductos.Cell(row, 4).Value = producto.NombreAlmacen;
+                    wsProductos.Cell(row, 5).Value = producto.cantidads;
+                    wsProductos.Cell(row, 6).Value = producto.deportiva;
+                    wsProductos.Cell(row, 7).Value = producto.fecha.HasValue && producto.fecha != DateTime.MinValue
+                        ? producto.fecha.Value.ToString("dd/MM/yyyy")
+                        : "";
+                    row++;
+                }
+                var productosTableRange = wsProductos.Range(2, 1, row - 1, 7);
+                productosTableRange.Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
+                productosTableRange.Style.Border.InsideBorder = XLBorderStyleValues.Thin;
+
+                // =================== 3. Vendedores =====================
+                var wsVendedores = workbook.Worksheets.Add("Vendedores");
+                wsVendedores.Cell(1, 1).Value = "DETALLE DE VENDEDORES";
+                wsVendedores.Range("A1:D1").Merge().Style
+                    .Font.SetBold()
+                    .Font.FontSize = 16;
+                wsVendedores.Range("A1:D1").Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                wsVendedores.Range("A1:D1").Style.Fill.BackgroundColor = XLColor.FromHtml("#6D4C41"); // café elegante
+                wsVendedores.Range("A1:D1").Style.Font.FontColor = XLColor.White;
+
+                wsVendedores.Cell(2, 1).Value = "Folio";
+                wsVendedores.Cell(2, 2).Value = "Vendedor";
+                wsVendedores.Cell(2, 3).Value = "Almacén";
+                wsVendedores.Cell(2, 4).Value = "Fecha";
+                wsVendedores.Range("A2:D2").Style.Font.SetBold();
+                wsVendedores.Range("A2:D2").Style.Fill.BackgroundColor = XLColor.FromHtml("#D7CCC8");
+                wsVendedores.Range("A2:D2").Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
+                wsVendedores.Range("A2:D2").Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+
+                row = 3;
+                foreach (var vendedor in allHokaModels.RemisioMVendedorM)
+                {
+                    wsVendedores.Cell(row, 1).Value = vendedor.folio_factura;
+                    wsVendedores.Cell(row, 2).Value = vendedor.NombreVendedor;
+                    wsVendedores.Cell(row, 3).Value = vendedor.NombreAlmacen;
+                    wsVendedores.Cell(row, 4).Value = vendedor.fecha.HasValue && vendedor.fecha != DateTime.MinValue
+                        ? vendedor.fecha.Value.ToString("dd/MM/yyyy")
+                        : "";
+                    row++;
+                }
+                var vendedoresTableRange = wsVendedores.Range(2, 1, row - 1, 4);
+                vendedoresTableRange.Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
+                vendedoresTableRange.Style.Border.InsideBorder = XLBorderStyleValues.Thin;
+
+                // =================== 4. Observaciones =====================
+                var wsObs = workbook.Worksheets.Add("Observaciones");
+                wsObs.Cell(1, 1).Value = "OBSERVACIONES DEL TICKET";
+                wsObs.Range("A1:C1").Merge().Style
+                    .Font.SetBold()
+                    .Font.FontSize = 16;
+                wsObs.Range("A1:C1").Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                wsObs.Range("A1:C1").Style.Fill.BackgroundColor = XLColor.FromHtml("#AB47BC"); // morado elegante
+                wsObs.Range("A1:C1").Style.Font.FontColor = XLColor.White;
+
+                wsObs.Cell(2, 1).Value = "Folio";
+                wsObs.Cell(2, 2).Value = "Observación";
+                wsObs.Cell(2, 3).Value = "Fecha";
+                wsObs.Range("A2:C2").Style.Font.SetBold();
+                wsObs.Range("A2:C2").Style.Fill.BackgroundColor = XLColor.FromHtml("#F3E5F5");
+                wsObs.Range("A2:C2").Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
+                wsObs.Range("A2:C2").Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+
+                row = 3;
+                foreach (var obs in allHokaModels.RemisioMM)
+                {
+                    wsObs.Cell(row, 1).Value = obs.folio_remision;
+                    wsObs.Cell(row, 2).Value = obs.observaciones;
+                    wsObs.Cell(row, 3).Value = obs.fecha != DateTime.MinValue
+                        ? obs.fecha.ToString("dd/MM/yyyy")
+                        : "";
+                    row++;
+                }
+                var obsTableRange = wsObs.Range(2, 1, row - 1, 3);
+                obsTableRange.Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
+                obsTableRange.Style.Border.InsideBorder = XLBorderStyleValues.Thin;
+
+                // Ajuste de columnas y fuentes
+                foreach (var ws in workbook.Worksheets)
+                {
+                    ws.Columns().AdjustToContents();
+                    ws.Rows().Style.Alignment.Vertical = XLAlignmentVerticalValues.Center;
+                    ws.Rows().Style.Font.FontSize = 11;
+                    ws.Rows(1, 1).Style.Font.FontSize = 16;
+                    ws.Rows(1, 1).Style.Font.Bold = true;
+                }
+
+                // Descargar
+                using (var stream = new MemoryStream())
+                {
+                    workbook.SaveAs(stream);
+                    stream.Position = 0;
+                    string fileName = $"DetalleTicket_{idFolio}.xlsx";
+                    return File(stream.ToArray(),
+                        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                        fileName);
+                }
+            }
+        }
 
         //BOTON DESPEGABLE DE PARA LA VISTA DE CONSULTAS PARA JOYERIA
 

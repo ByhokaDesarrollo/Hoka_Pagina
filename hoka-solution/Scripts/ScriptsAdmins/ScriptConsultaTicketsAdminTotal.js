@@ -1,10 +1,7 @@
 ﻿$(document).ready(function () {
-
     //Aqui empieza la tabla
-
     var $filtrarBusqueda = $('#filtrarBusqueda');
     var $tablaRemisiod = $('#tablaRemisiod');
-
 
     function isValidDate(d) {
         return d instanceof Date && !isNaN(d);
@@ -38,7 +35,6 @@
     });
 
     $('.select2').select2();
-
     $('.select2bs4').select2({
         theme: 'bootstrap4'
     });
@@ -68,7 +64,21 @@
                 "sSortDescending": ": Activar para ordenar la columna de manera descendente"
             }
         },
-        /*"dom": 'Blfrtip',*/
+        dom: '<"top"Bfl>rt<"bottom"ip>',
+        buttons: [
+            {
+                extend: 'excel',
+                text: '<i class="fas fa-file-excel"></i> Excel',
+                className: 'btn btn-excel-brillante', // Clase personalizada
+                title: 'Reporte Tickets',
+                exportOptions: {
+                    columns: ':visible',
+                    modifier: {
+                        page: 'all'
+                    }
+                }
+            }
+        ],
         "lengthMenu": [
             [10, 50, 100, 1000, 2000, -1],
             [10, 50, 100, 1000, 2000, "Todos"]
@@ -109,13 +119,12 @@
                 },
                 orderable: false
             },
-
         ],
 
         deferRender: true, // Se habilita el renderizado diferido
 
         drawCallback: function (settings) {
-
+            // Tu código de callback si es necesario
         },
 
         footerCallback: function (row, data, start, end, display) {
@@ -130,7 +139,6 @@
             sumaVentaTotal = roundToTwoDecimals(sumaVentaTotal);
 
             $('#sumaVentaTotal').html('Total Venta Real: $' + sumaVentaTotal.toLocaleString('es-MX'));
-
         },
     });
 
@@ -186,7 +194,8 @@
             }
         });
     });
-    $tablaRemisiod.on('length.dt', function (e, settings, len) {
 
+    $tablaRemisiod.on('length.dt', function (e, settings, len) {
+        // Tu código de callback si es necesario
     });
 });
